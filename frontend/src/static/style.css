@@ -1,0 +1,63 @@
+/* 页面整体 */
+/*body {*/
+/*    margin: auto;*/
+/*    max-width: 580px;*/
+/*    font-size: 14px;*/
+/*    font-family: Helvetica, Arial, sans-serif;*/
+/*}*/
+
+/* 页脚 */
+.my-footer {
+    color: #888;
+    margin-top: 30px;
+    text-align: center;
+    padding: 10px;
+}
+
+.main-text {
+    font-size: 40px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+/* 头像 */
+.image-style {
+    /*position: absolute;*/
+    top: -20px
+}
+
+.APP{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    /*background: rgba(7, 17, 27, .8);*/
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+}
+
+.contentStyle{
+    width: 100%;
+    flex: 1;
+    /* background: #143541; */
+    /*font-size: 40px;*/
+    text-align: center;
+    padding-bottom: 36px;
+}
+
+.header {
+    width: 100%;
+    height: 64px;
+    background: #eee;
+}
+
+.footerStyle{
+    text-align: center;
+    color: #fff;
+    background-color: #7dbcea;
+    flex: 0;
+    margin: 0 auto;
+}
