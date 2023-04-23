@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {UserContext} from "../Context/AuthContext";
-import Header from "../Index";
+import Header from "../Header";
 import Footer from "../Footer";
 
 export default function Home() {
@@ -15,20 +15,15 @@ export default function Home() {
     const user = useContext(UserContext)
 
     return (
-        <div style={{width:"100%",
-            // height:"100%",
-            display: "flex",
-            flexDirection: "column",
-        }}>
+        <>
             {/*<Header index={"home"}/>*/}
-
-                <div className='main-text'>
+            <Header index={"home"}/>
+                <div className='contentStyle'>
                     <p>
                         Hello!{user}
                     </p>
                 </div>
-
-            {/*<Footer/>*/}
-        </div>
+            <Footer/>
+        </>
     );
 }

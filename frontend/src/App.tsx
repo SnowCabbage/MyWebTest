@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
@@ -12,7 +12,7 @@ import Login from "./components/UserAuth/Login";
 import Logout from "./components/UserAuth/Logout";
 import Register from "./components/UserAuth/Register";
 import Home from "./components/views/Home";
-import Index from "./components/Index";
+import Header from "./components/Header";
 
 function App() {
 
@@ -22,30 +22,30 @@ function App() {
             <AuthContext.Provider value={!!cookie.load("access_token")}>
                 <UserContext.Provider value={cookie.load("user")}>
                     <Routes>
-                        <Route path="/home" element={<Index />} />
+                        <Route path="/home" element={<Home />} />
                             <Route path='/' element={ <Navigate to="/home" /> }/>
                             <Route path="/movies" element={
                                 <RequireAuth>
-                                    <Index index={"movies"}/>
+                                    <ListMovies/>
                                 </RequireAuth>
                             } />
                             <Route path="/setting" element={
                                 <RequireAuth>
-                                    <Index index={"setting"}/>
+                                    <Setting/>
                                 </RequireAuth>
                             } />
                             <Route path="/addentry" element={
                                 <RequireAuth>
-                                    <Index index={"addentry"}/>
+                                    <AddEntry/>
                                 </RequireAuth>
                             } />
-                            <Route path="/login" element={<Index index={"login"}/>} />
+                            <Route path="/login" element={<Login/>} />
                             <Route path="/logout" element={
                                 <RequireAuth>
-                                    <Index index={"logout"}/>
+                                    <Logout/>
                                 </RequireAuth>
                             } />
-                            <Route path="/register" element={<Index index={"register"}/>} />
+                            <Route path="/register" element={<Register/>} />
                     </Routes>
                 </UserContext.Provider>
             </AuthContext.Provider>

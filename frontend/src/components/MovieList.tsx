@@ -1,6 +1,6 @@
 // import React from "react";
 import React, {useEffect, useRef, useState} from "react";
-import Header from "./Index";
+import Header from "./Header";
 import Footer from "./Footer";
 import '../static/style.css'
 import {Avatar, List, Card, ConfigProvider, Switch, Skeleton, PaginationProps} from 'antd';
@@ -55,7 +55,8 @@ export default function ListMovies()  {
                     },
                 }}
             >
-                    <div>
+                <Header index={"movies"}/>
+                    <div className={"contentStyle"}>
                         {/*<Switch checked={!loading} onChange={onChange} style={{ marginBottom: 16 }} />*/}
                         <Card title="名单" bordered={false} style={{
                             width: 500,
@@ -136,7 +137,7 @@ export default function ListMovies()  {
                         </Card>
                     </div>
             </ConfigProvider>
-            {/*<Footer/>*/}
+            <Footer/>
         </>
     )
 }

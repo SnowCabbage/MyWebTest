@@ -5,7 +5,7 @@ import "../static/style.css"
 export default function Footer() {
     return (
         <>
-            <footer>
+            <div className={"footerStyle"}>
                 {/*<p style={{textAlign: 'center',lineHeight:'30px'}}>123</p>*/}
                 <small style={{textAlign: 'center',lineHeight:'1'}}>
                     <div style={{color: '#758a99', display: 'inline'}}>
@@ -13,7 +13,7 @@ export default function Footer() {
                     </div>
                     {/*<a href="https://v.qq.com/x/cover/mzc00200cgo4wcc/r00454x3b5p.html" target="_blank" rel="noreferrer">Click Me</a>*/}
                 </small>
-            </footer>
+            </div>
         </>
     );
 }

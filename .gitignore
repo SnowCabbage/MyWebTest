@@ -2,3 +2,4 @@
 __pycache__
 build
 node_modules
+*.db

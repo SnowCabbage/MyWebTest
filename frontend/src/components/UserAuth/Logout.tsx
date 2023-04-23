@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Avatar, Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
-import Header from "../Index";
+import Header from "../Header";
 import Footer from "../Footer";
 import {useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';

@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {Avatar, Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
-import Header from "../Index";
+import Header from "../Header";
 import Footer from "../Footer";
 import {useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
@@ -48,7 +48,7 @@ export default function Login(){
 
     const toHome = ()=>{
         navigate(state?.path || "/", {replace:true});
-        navigate(0);
+        // navigate(0);
     }
 
     const { state } = useLocation();
@@ -99,7 +99,8 @@ export default function Login(){
         >
                 {/*<Header index={"login"}/>*/}
                 {contextHolder}
-                {/*<main>*/}
+            <Header index="logIn"/>
+            <div className={"contentStyle"}>
                     <Card title="登录" bordered={false} style={{
                         width: 500,
                         margin: 'auto',
@@ -155,8 +156,8 @@ export default function Login(){
                             </Form.Item>
                         </Form>
                     </Card>
-                {/*</main>*/}
-                {/*<Footer/>*/}
+            </div>
+            <Footer/>
         </ConfigProvider>
     );
 }

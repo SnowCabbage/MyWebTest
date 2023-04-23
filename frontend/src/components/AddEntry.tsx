@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Avatar, ConfigProvider, Menu, MenuProps} from "antd";
-import Header from "./Index";
+import Header from "./Header";
 import Footer from "./Footer";
 import { Button, Checkbox, Form, Input ,message} from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -52,7 +52,7 @@ export default function AddEntry() {
             content: '上传成功',
         });
         setTimeout(()=>{
-            window.location.reload()
+            // window.location.reload()
             // return navigate('/')
         }, 2000)
 
@@ -89,9 +89,9 @@ export default function AddEntry() {
             }}
         >
             {/*<Header index={'addEntry'}/>*/}
-                <div>
                     {contextHolder}
-                    <main>
+            <Header index="addEntry"/>
+                    <div className={"contentStyle"}>
                         <Form
                             name="basic"
                             labelCol={{ span: 8 }}
@@ -182,9 +182,8 @@ export default function AddEntry() {
                                 </Button>
                             </Form.Item>
                         </Form>
-                    </main>
-                </div>
-            {/*<Footer/>*/}
+                    </div>
+            <Footer/>
         </ConfigProvider>
     );
 }
