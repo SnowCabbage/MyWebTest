@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Avatar, Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -11,6 +11,8 @@ export default function Login(){
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState("")
+    const {setCurrentUser} = useContext(UserContext)
 
     const sendMsg=(data) => {
         // console.log(data)
@@ -30,14 +32,17 @@ export default function Login(){
             .then(res=>res.json())
             .then(data=>{
                 console.log(data)
+                // console.log(data['user'])
                 if('access_token' in data){
+                    console.log(data['user'])
+                    setUser(data['user'])
+                    // console.log(user)
                     // contextData.setCurrentUser(data['user'])
                     // console.log(contextData.currentUser)
-                    // setUser(data['user'])
                     cookie.save('access_token',data['access_token'],{path:"/"})
-                    cookie.save('user',data['user'],{path:"/"})
-                    success()
-                    console.log(cookie.load('access_token'))
+                    // cookie.save('user',data['user'],{path:"/"})
+                    success(data)
+                    // console.log(cookie.load('access_token'))
                 }
                     // setResult(false)
                 else fail()
@@ -46,13 +51,19 @@ export default function Login(){
             .catch(e=>console.log('Error:',e))
     };
 
+    useEffect(()=>{
+        console.log(user)
+        setCurrentUser({name: user})
+    },[user])
+
     const toHome = ()=>{
-        navigate(state?.path || "/", {replace:true});
+        navigate(state?.path || "/home", {replace:true,state:{username: user}});
         // navigate(0);
     }
 
     const { state } = useLocation();
-    const success = () => {
+    const success = (data) => {
+
         setLoading(false)
         messageApi.open({
             type: 'success',
@@ -99,7 +110,7 @@ export default function Login(){
         >
                 {/*<Header index={"login"}/>*/}
                 {contextHolder}
-            <Header index="logIn"/>
+            {/*<Header index="logIn"/>*/}
             <div className={"contentStyle"}>
                     <Card title="登录" bordered={false} style={{
                         width: 500,

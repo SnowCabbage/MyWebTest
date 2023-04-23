@@ -12,15 +12,16 @@ export default function Home() {
     // setUser(contextData.user)
     // let currentUser = contextData.user
     // setUser(currentUser)
-    const user = useContext(UserContext)
+    const {currentUser} = useContext(UserContext)
 
     return (
         <>
             {/*<Header index={"home"}/>*/}
-            <Header index={"home"}/>
+            {/*<Header index={"home"}/>*/}
                 <div className='contentStyle'>
                     <p>
-                        Hello!{user}
+                        Hello!
+                        {currentUser===null ? "" :currentUser.name}
                     </p>
                 </div>
             <Footer/>

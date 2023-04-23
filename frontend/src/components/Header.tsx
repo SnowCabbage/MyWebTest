@@ -5,25 +5,16 @@ import type { MenuProps } from 'antd';
 import {AuthContext} from "./Context/AuthContext";
 import type { TabsProps } from 'antd';
 import {NavLink, useLocation} from "react-router-dom";
-import {Tabs} from "antd";
-import ListMovies from "./MovieList";
-import Login from "./UserAuth/Login";
-import Home from "./views/Home";
-import Register from "./UserAuth/Register";
-import AddEntry from "./AddEntry";
-import Logout from "./UserAuth/Logout";
-import Setting from "./Setting";
-import Footer from "./Footer";
 
 const authItems: MenuProps['items'] = [
     {
         label: (
-            // <a href="/" rel="noopener noreferrer">
-            //     主页
-            // </a>
-            <NavLink to="/">
+            <a href="/" rel="noopener noreferrer">
                 主页
-            </NavLink>
+            </a>
+            // <NavLink to="/">
+            //     主页
+            // </NavLink>
         ),
         key: 'home',
     },
@@ -64,25 +55,31 @@ const authItems: MenuProps['items'] = [
 const unAuthItems: MenuProps['items'] = [
     {
         label: (
-            <NavLink to="/">
+            <a href="/" rel="noopener noreferrer">
                 主页
-            </NavLink>
+            </a>
+            // <NavLink to="/">
+            //     主页
+            // </NavLink>
         ),
         key: 'home',
     },
     {
         label: (
-            <NavLink to="/login">
+            <a href="/login" rel="noopener noreferrer">
                 登录
-            </NavLink>
+            </a>
+            // <NavLink to="/login">
+            //     登录
+            // </NavLink>
         ),
         key: 'logIn'
     },
 ];
 
 
-export default function Header(props) {
-    const [current, setCurrent] = useState(props.index);
+export default function Header() {
+    const [current, setCurrent] = useState('');
     const isAuth = useContext(AuthContext)
     const location = useLocation()
     //取得当前url
@@ -92,7 +89,7 @@ export default function Header(props) {
         setCurrent(e.key)
         console.log('click',e)
         console.log(isAuth)
-        console.log(location)
+        console.log(location.state)
         console.log(initPath)
     }
 

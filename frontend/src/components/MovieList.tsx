@@ -55,7 +55,7 @@ export default function ListMovies()  {
                     },
                 }}
             >
-                <Header index={"movies"}/>
+                {/*<Header index={"movies"}/>*/}
                     <div className={"contentStyle"}>
                         {/*<Switch checked={!loading} onChange={onChange} style={{ marginBottom: 16 }} />*/}
                         <Card title="名单" bordered={false} style={{

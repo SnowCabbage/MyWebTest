@@ -90,7 +90,7 @@ export default function AddEntry() {
         >
             {/*<Header index={'addEntry'}/>*/}
                     {contextHolder}
-            <Header index="addEntry"/>
+            {/*<Header index="addEntry"/>*/}
                     <div className={"contentStyle"}>
                         <Form
                             name="basic"

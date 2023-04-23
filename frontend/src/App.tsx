@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
@@ -16,14 +16,20 @@ import Header from "./components/Header";
 
 function App() {
 
+    const [currentUser, setCurrentUser] = useState(null)
+
   // @ts-ignore
     return (
         <BrowserRouter>
             <AuthContext.Provider value={!!cookie.load("access_token")}>
-                <UserContext.Provider value={cookie.load("user")}>
+                <UserContext.Provider value={{
+                    currentUser,
+                    setCurrentUser
+                }}>
+                    <Header/>
                     <Routes>
+                        <Route path='/' element={ <Navigate to="/home" /> }/>
                         <Route path="/home" element={<Home />} />
-                            <Route path='/' element={ <Navigate to="/home" /> }/>
                             <Route path="/movies" element={
                                 <RequireAuth>
                                     <ListMovies/>
