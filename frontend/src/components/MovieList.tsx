@@ -1,7 +1,6 @@
 // import React from "react";
+import axios from "axios";
 import React, {useEffect, useRef, useState} from "react";
-import Header from "./Header";
-import Footer from "./Footer";
 import '../static/style.css'
 import {Avatar, List, Card, ConfigProvider, Switch, Skeleton, PaginationProps} from 'antd';
 import cookie from 'react-cookies';
@@ -20,27 +19,18 @@ export default function ListMovies()  {
     };
 
     useEffect(()=>{
-        fetch(
-            // 'http://lee666.sv1.k9s.run:2271/api/movies',
-            // 'http://127.0.0.1:5000/api/movies',
-            GetUrl("movies"),
-            {
-                // mode:"no-cors",
-                headers: {
-                    "Content-type": "application/json",
-                    "Authorization": "Bearer " + cookie.load("access_token"),
-                },
-            }
-        )
-            .then(res=>res.json())
-            .then(data=>{
-                // console.log(data)
-                setMovies(data['data']['movies'])
+        axios.get(GetUrl("movies"),{headers: {
+                            "Content-type": "application/json",
+                            "Authorization": "Bearer " + cookie.load("access_token"),
+                        }})
+            .then(response=>{
+                // setMovies(response['data']['movies'])
+                console.log(response)
                 setLoading(false)
-                setNums(data['data']['num'])
-                // console.log(movies)
-            })
-            .catch(e=>console.log('Error:',e))
+                setNums(response.data['data']['num'])
+                setMovies(response.data['data']['movies'])
+        })
+            .catch(e=>console.log('Error:', e))
 
         // console.log(moviesHeight.current.clientHeight)
     },[])
@@ -137,7 +127,6 @@ export default function ListMovies()  {
                         </Card>
                     </div>
             </ConfigProvider>
-            <Footer/>
         </>
     )
 }

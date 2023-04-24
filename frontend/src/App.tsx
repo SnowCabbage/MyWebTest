@@ -13,6 +13,7 @@ import Logout from "./components/UserAuth/Logout";
 import Register from "./components/UserAuth/Register";
 import Home from "./components/views/Home";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
                             } />
                             <Route path="/register" element={<Register/>} />
                     </Routes>
+                    <Footer/>
                 </UserContext.Provider>
             </AuthContext.Provider>
         </BrowserRouter>

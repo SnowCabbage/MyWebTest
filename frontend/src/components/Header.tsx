@@ -3,20 +3,22 @@ import {ConfigProvider, Menu} from "antd"
 import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
 import {AuthContext} from "./Context/AuthContext";
-import type { TabsProps } from 'antd';
 import {NavLink, useLocation} from "react-router-dom";
+import { Button, Tooltip, Space } from 'antd';
+import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 
 const authItems: MenuProps['items'] = [
     {
         label: (
-            <a href="/" rel="noopener noreferrer">
-                主页
-            </a>
-            // <NavLink to="/">
+            // <a href="/home" rel="noopener noreferrer">
             //     主页
-            // </NavLink>
+            // </a>
+            <NavLink to="/">
+                主页
+            </NavLink>
         ),
         key: 'home',
+        icon: <HomeOutlined/>
     },
     {
         label: (
@@ -42,39 +44,40 @@ const authItems: MenuProps['items'] = [
         ),
         key: 'addEntry'
     },
-    {
-        label: (
-            <NavLink to="/logout">
-                登出
-            </NavLink>
-        ),
-        key: 'logOut'
-    }
+    // {
+    //     label: (
+    //         <NavLink to="/logout">
+    //             登出
+    //         </NavLink>
+    //     ),
+    //     key: 'logOut'
+    // }
 ];
 
 const unAuthItems: MenuProps['items'] = [
     {
         label: (
-            <a href="/" rel="noopener noreferrer">
-                主页
-            </a>
-            // <NavLink to="/">
+            // <a href="/" rel="noopener noreferrer">
             //     主页
-            // </NavLink>
+            // </a>
+            <NavLink to="/">
+                主页
+            </NavLink>
         ),
         key: 'home',
+        icon: <HomeOutlined/>
     },
-    {
-        label: (
-            <a href="/login" rel="noopener noreferrer">
-                登录
-            </a>
-            // <NavLink to="/login">
-            //     登录
-            // </NavLink>
-        ),
-        key: 'logIn'
-    },
+    // {
+    //     label: (
+    //         // <a href="/login" rel="noopener noreferrer">
+    //         //     登录
+    //         // </a>
+    //         <NavLink to="/login">
+    //             登录
+    //         </NavLink>
+    //     ),
+    //     key: 'logIn'
+    // },
 ];
 
 
@@ -112,20 +115,57 @@ export default function Header() {
             }}
         >
             <div className={"header"}>
-                    <Avatar src={"../../dog.jpg"} style={{display:"block"}} alt="A dog" size={60}/>
-                    <Menu  style={{
-                        display:'block',
-                        background:'#d1d9e0',
-                        textAlign:'center',
-                        height: 50
-                    }}
-                           onClick={onClick}
-                           selectedKeys={[current]}
-                           mode="horizontal"
-                           items={isAuth? authItems : unAuthItems} />
+                <Avatar src={"../../dog.jpg"} style={{display:"block"}} alt="A dog" size={60}/>
+                <Menu  style={{
+                    display:'block',
+                    background:'#d1d9e0',
+                    textAlign:'center',
+                    height: 50
+                }}
+                       onClick={onClick}
+                       selectedKeys={[current]}
+                       mode="horizontal"
+                       items={isAuth? authItems : unAuthItems} />
+                {isAuth ? <NavLink to="/logout">
+                    <Tooltip title="退出当前账号">
+                        <Button style={{
+                            top: 25,
+                            display: 'inline-block',
+                            right: 0,
+                            position: 'absolute',
+                        }} type="primary" icon={<SearchOutlined spin/>}>
+                            退出登录
+                        </Button>
+                    </Tooltip>
+                </NavLink> :
+                    <div>
+                        <NavLink to="/login">
+                            <Tooltip title="登录账号">
+                                <Button style={{
+                                        top: 25,
+                                        display: 'inline-block',
+                                        right:120,
+                                        position: 'absolute',
+                                    }} type="primary" icon={<UserOutlined />}>
+                                    登录
+                                </Button>
+                            </Tooltip>
+                        </NavLink>
+                        <NavLink to="/register">
+                            <Tooltip title="注册账号">
+                                <Button style={{
+                                    top: 25,
+                                    display: 'inline-block',
+                                    right:20,
+                                    position: 'absolute',
+                                }} type="primary" icon={<UserOutlined spin/>}>
+                                    注册
+                                </Button>
+                            </Tooltip>
+                        </NavLink>
+                    </div>
+                }
             </div>
-
-
         </ConfigProvider>
     );
 }

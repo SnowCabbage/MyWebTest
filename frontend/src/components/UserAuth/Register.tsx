@@ -23,7 +23,6 @@ export default function Register(){
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    // "Authorization": "Basic QWVyaXRoOjEyMzQ1Njc4"
                 },
                 body: JSON.stringify(sendData),
                 // mode: "no-cors",
@@ -32,14 +31,11 @@ export default function Register(){
             .then(data=>{
                 console.log(data)
                 success()
-                // if('access_token' in data){
-                //     success()
-                //     cookie.save('access_token',data['access_token'],{path:"/"})
-                //     console.log(cookie.load('access_token'))
-                // }
-                // else fail()
             })
-            .catch(e=>console.log('Error:',e))
+            .catch(e=>{
+                console.log('Error:', e)
+                fail('连接超时')
+            })
     };
 
     const success = () => {
@@ -55,16 +51,12 @@ export default function Register(){
 
     };
 
-    const fail = () => {
+    const fail = (msg) => {
         setLoading(false)
         messageApi.open({
             type: 'error',
-            content: '密码或用户名错误',
+            content: msg,
         });
-        // setTimeout(()=>{
-        //     return navigate('/addentry')
-        // }, 2000)
-
     };
 
     const onFinish = (values: any) => {
@@ -89,11 +81,11 @@ export default function Register(){
         >
             {/*<Header index={"register"}/>*/}
             {contextHolder}
-            {/*<main>*/}
+            <div className={"contentStyle"}>
                 <Card title="注册" bordered={false} style={{
                     width: 500,
                     margin: 'auto',
-                    top: 50,
+                    top: 30,
                     right: 0,
                     left: 0,
                     bottom: 0,
@@ -133,6 +125,27 @@ export default function Register(){
                             <Input.Password placeholder="请输入密码"/>
                         </Form.Item>
 
+                        <Form.Item
+                            label="确认密码"
+                            name="vertifyPassword"
+                            validateTrigger="onBlur"
+                            rules={[
+                                { required: true, message: '请输入密码!' },
+                                ({getFieldValue})=>({
+                                    validator(rule,value){
+                                        if(!value || getFieldValue('password') === value){
+                                            return Promise.resolve()
+                                        }
+                                        return Promise.reject("两次密码输入不一致")
+                                    }
+                                }) //二次校验密码
+                            ]}
+                        >
+                            <Input.Password placeholder="请再次输入密码"/>
+                        </Form.Item>
+
+
+
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                             <Button type="primary" htmlType="submit" loading={loading}>
                                 注册
@@ -140,8 +153,7 @@ export default function Register(){
                         </Form.Item>
                     </Form>
                 </Card>
-            {/*</main>*/}
-            {/*<Footer/>*/}
+            </div>
         </ConfigProvider>
     );
 }

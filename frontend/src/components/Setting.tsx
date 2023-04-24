@@ -11,7 +11,6 @@ export default function Setting() {
                 <div className={"contentStyle"}>
                     <p>this is setting</p>
                 </div>
-            <Footer/>
         </>
     );
 }

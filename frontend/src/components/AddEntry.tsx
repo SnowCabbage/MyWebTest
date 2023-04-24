@@ -6,14 +6,13 @@ import { Button, Checkbox, Form, Input ,message} from 'antd';
 import { useNavigate } from 'react-router-dom';
 import GetUrl from "./Context/UrlSource";
 import cookie from 'react-cookies';
+import axios from "axios";
 
 export default function AddEntry() {
 
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
-    // const redirctHome:()=>{
-    //     navigate('/')
-    // }
+    const [status, setStatus] = useState(false)
 
     const sendMsg=(data) => {
 
@@ -21,29 +20,18 @@ export default function AddEntry() {
             "data": data
         }
         data['url'] = 'http'
-        // console.log(data)
-        fetch(
-            // 'http://lee666.sv1.k9s.run:2271/api/movies'
-            // 'http://127.0.0.1:5000/api/movies'
-            GetUrl("movies")
-            ,{
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json",
-                    "Authorization": "Bearer " + cookie.load("access_token"),
-                },
-                body: JSON.stringify(data)
+        axios.post(GetUrl("movies"),data, {headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + cookie.load("access_token"),
+            }})
+            .then(response=>{
+                if('error' in response.data) fail('上传失败')
+                    else success()
+        })
+            .catch(e=>{
+                fail('连接超时')
+                console.log("Error:", e)
             })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log(data)
-                if('error' in data)
-                    // setResult(false)
-                    fail()
-                else success()
-                    // setResult(true)
-            })
-            .catch(e=>console.log('Error:',e))
     };
 
     const success = () => {
@@ -52,28 +40,20 @@ export default function AddEntry() {
             content: '上传成功',
         });
         setTimeout(()=>{
-            // window.location.reload()
-            // return navigate('/')
+            return navigate('/addentry')
         }, 2000)
 
     };
 
-    const fail = () => {
+    const fail = (msg) => {
         messageApi.open({
             type: 'error',
-            content: '上传失败',
+            content: msg,
         });
-        // setTimeout(()=>{
-        //     return navigate('/addentry')
-        // }, 2000)
-
     };
 
     const onFinish = (values: any) => {
         sendMsg(values)
-        // console.log(result)
-        // redirect('/movies')
-        // console.log('Success:', values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -88,9 +68,7 @@ export default function AddEntry() {
                 },
             }}
         >
-            {/*<Header index={'addEntry'}/>*/}
                     {contextHolder}
-            {/*<Header index="addEntry"/>*/}
                     <div className={"contentStyle"}>
                         <Form
                             name="basic"
@@ -172,10 +150,6 @@ export default function AddEntry() {
                                 <Input placeholder="请输入描述"/>
                             </Form.Item>
 
-                            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                                <Checkbox>Remember me</Checkbox>
-                            </Form.Item>
-
                             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                                 <Button type="primary" htmlType="submit">
                                     Submit
@@ -183,7 +157,6 @@ export default function AddEntry() {
                             </Form.Item>
                         </Form>
                     </div>
-            <Footer/>
         </ConfigProvider>
     );
 }

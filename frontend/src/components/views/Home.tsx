@@ -4,14 +4,6 @@ import Header from "../Header";
 import Footer from "../Footer";
 
 export default function Home() {
-
-
-    // const contextData = useContext(UserContext)
-    // const [user, setUser] = useState(contextData.currentUser)
-    // console.log(contextData.currentUser)
-    // setUser(contextData.user)
-    // let currentUser = contextData.user
-    // setUser(currentUser)
     const {currentUser} = useContext(UserContext)
 
     return (
@@ -24,7 +16,6 @@ export default function Home() {
                         {currentUser===null ? "" :currentUser.name}
                     </p>
                 </div>
-            <Footer/>
         </>
     );
 }
