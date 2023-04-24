@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { ConfigProvider, message} from "antd";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -10,6 +10,8 @@ export default function Logout(){
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const {setCurrentUser} = useContext(UserContext)
+    const {currentUser} = useContext(UserContext)
+    const [user, setUser] = useState(currentUser)
 
     useEffect(()=>{
         success()
@@ -21,18 +23,17 @@ export default function Logout(){
     }
 
     const success = () => {
-        cookie.remove("access_token")
-        cookie.remove("user")
         messageApi.open({
             type: 'success',
             content: '退出成功',
         });
+        cookie.remove("access_token")
+        cookie.remove("user")
         setTimeout(()=>{
+            setUser("")
             setCurrentUser(null)
             toHome()
-        }, 1000)
-
-
+        }, 1500)
     }
 
     return (

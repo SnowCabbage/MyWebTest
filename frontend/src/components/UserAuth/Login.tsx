@@ -17,45 +17,20 @@ export default function Login(){
     const {setCurrentUser} = useContext(UserContext)
 
     const sendMsg=(data) => {
-        // fetch(
-        //     // 'http://lee666.sv1.k9s.run:2271/api/login'
-        //     // 'http://127.0.0.1:5000/api/login'
-        //     GetUrl("login")
-        //     ,{
-        //         method: 'POST',
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             // "Authorization": "Basic QWVyaXRoOjEyMzQ1Njc4"
-        //         },
-        //         body: JSON.stringify(data),
-        //         // mode: "no-cors",
-        //     })
-        //     .then(res=>res.json())
-        //     .then(data=>{
-        //         console.log(data)
-        //         // console.log(data['user'])
-        //         if('access_token' in data){
-        //             console.log(data['user'])
-        //             setUser(data['user'])
-        //             cookie.save('access_token',data['access_token'],{path:"/"})
-        //             success(data)
-        //         }
-        //         else fail()
-        //     })
-        //     .catch(e=>console.log('Error:',e))
         axios.post(GetUrl("login"),data, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
             },
-            timeout: 2000
+            timeout: 6000
         })
             .then(response=>{
-                // console.log(data)
                 if('access_token' in response.data){
-                    console.log(response.data['user'])
+                    // console.log(response.data['user'])
                     setUser(response.data['user'])
-                    cookie.save('access_token',response.data['access_token'],{path:"/"})
+                    let inFifteenMinutes = new Date(new Date().getTime() + 24 * 3600 * 1000);//一天
+                    cookie.save('user', response.data['user'],{path:"/", expires: inFifteenMinutes});
+                    cookie.save('access_token',response.data['access_token'],{path:"/", expires: inFifteenMinutes})
                     success()
                 }
                 else fail('密码或用户名错误')

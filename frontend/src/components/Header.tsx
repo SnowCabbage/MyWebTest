@@ -3,8 +3,8 @@ import {ConfigProvider, Menu} from "antd"
 import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
 import {AuthContext} from "./Context/AuthContext";
-import {NavLink, useLocation} from "react-router-dom";
-import { Button, Tooltip, Space } from 'antd';
+import {NavLink} from "react-router-dom";
+import { Button, Tooltip } from 'antd';
 import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 
 const authItems: MenuProps['items'] = [
@@ -57,9 +57,6 @@ const authItems: MenuProps['items'] = [
 const unAuthItems: MenuProps['items'] = [
     {
         label: (
-            // <a href="/" rel="noopener noreferrer">
-            //     主页
-            // </a>
             <NavLink to="/">
                 主页
             </NavLink>
@@ -67,44 +64,20 @@ const unAuthItems: MenuProps['items'] = [
         key: 'home',
         icon: <HomeOutlined/>
     },
-    // {
-    //     label: (
-    //         // <a href="/login" rel="noopener noreferrer">
-    //         //     登录
-    //         // </a>
-    //         <NavLink to="/login">
-    //             登录
-    //         </NavLink>
-    //     ),
-    //     key: 'logIn'
-    // },
 ];
 
 
 export default function Header() {
     const [current, setCurrent] = useState('');
     const isAuth = useContext(AuthContext)
-    const location = useLocation()
-    //取得当前url
-    const initPath = window.location.href.split('/').pop()
+    // const location = useLocation()
+    // //取得当前url
+    // const initPath = window.location.href.split('/').pop()
 
     const onClick: MenuProps['onClick'] = (e) =>{
         setCurrent(e.key)
-        console.log('click',e)
-        console.log(isAuth)
-        console.log(location.state)
-        console.log(initPath)
+        console.log(window.location.href);
     }
-
-    // const onChange = (key: string) => {
-    //     // console.log(key);
-    //     // console.log(location)
-    //     // console.log(initPath)
-    //     if(key !== "home")
-    //         window.history.pushState({},'',key)
-    //     else window.history.pushState({},"","home")
-    //     // redirect("/movies")
-    // };
 
     return (
         <ConfigProvider

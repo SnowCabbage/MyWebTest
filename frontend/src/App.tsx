@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
@@ -19,7 +19,10 @@ function App() {
 
     const [currentUser, setCurrentUser] = useState(null)
 
-  // @ts-ignore
+    useEffect(()=>{
+        setCurrentUser({name: cookie.load('user')})
+    }, [])
+
     return (
         <BrowserRouter>
             <AuthContext.Provider value={!!cookie.load("access_token")}>

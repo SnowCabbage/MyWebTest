@@ -5,6 +5,7 @@ import Footer from "../Footer";
 import {useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
+import axios from "axios";
 
 export default function Register(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -15,21 +16,34 @@ export default function Register(){
         // console.log(data)
         let sendData = {}
         sendData["data"] = data
-        fetch(
-            // 'http://lee666.sv1.k9s.run:2271/api/login'
-            // 'http://127.0.0.1:5000/api/login'
-            GetUrl("users")
-            ,{
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(sendData),
-                // mode: "no-cors",
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log(data)
+        // fetch(
+        //     // 'http://lee666.sv1.k9s.run:2271/api/login'
+        //     // 'http://127.0.0.1:5000/api/login'
+        //     GetUrl("users")
+        //     ,{
+        //         method: 'POST',
+        //         headers: {
+        //             "Content-type": "application/json",
+        //         },
+        //         body: JSON.stringify(sendData),
+        //     })
+        //     .then(res=>res.json())
+        //     .then(data=>{
+        //         console.log(data)
+        //         success()
+        //     })
+        //     .catch(e=>{
+        //         console.log('Error:', e)
+        //         fail('连接超时')
+        //     })
+        axios.post(GetUrl("login"),sendData, {
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + cookie.load("access_token"),
+            },
+            timeout: 6000
+        })
+            .then(response=>{
                 success()
             })
             .catch(e=>{
@@ -108,8 +122,22 @@ export default function Register(){
                         <Form.Item
                             label="账号"
                             name="username"
+                            validateFirst={true}
                             rules={[
                                 {required: true, message: '请输入账号'},
+                                {max: 16, message: '账号名称过长'},
+                                {min: 4, message: '账号名称过短'},
+                                { validator:  (rule, val, callback) => {
+                                        let pattern = new RegExp(/^[\u4E00-\u9FA5A-Za-z0-9_]{4,20}$/);
+                                        if (!pattern.test(val) && val){
+                                            // console.log(val)
+                                            callback('请输入正确账号,仅能由中文、英文、数字包括下划线组成');
+                                        }else {
+                                            callback();
+                                        }
+                                        callback();
+                                    },
+                                }
                             ]}
                         >
                             <Input placeholder="请输入账号"/>
@@ -120,6 +148,8 @@ export default function Register(){
                             name="password"
                             rules={[
                                 { required: true, message: '请输入密码!' },
+                                // {max: 16, message: '账号名称过长'},
+                                {min: 6, message: '密码过短'},
                             ]}
                         >
                             <Input.Password placeholder="请输入密码"/>
