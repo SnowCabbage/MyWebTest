@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import { ConfigProvider, message} from "antd";
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../elements/Header";
+import Footer from "../elements/Footer";
 import {useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
@@ -39,9 +39,9 @@ export default function Logout(){
     return (
         <>
             {contextHolder}
-            <div className={"contentStyle"}>
+            {/*<div className={"contentStyle"}>*/}
 
-            </div>
+            {/*</div>*/}
         </>
     );
 }

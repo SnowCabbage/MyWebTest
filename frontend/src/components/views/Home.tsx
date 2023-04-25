@@ -1,24 +1,48 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import {UserContext} from "../Context/AuthContext";
-import cookie from 'react-cookies';
+import { Carousel } from 'antd';
+import {ContentHeightContext} from "../Context/ElementContext";
 
 export default function Home() {
     const {currentUser} = useContext(UserContext)
-    const {setCurrentUser} = useContext(UserContext)
-    const user = cookie.load("user")
-    //TODO:Having Questions
-    // useEffect(()=>{
-    //     setCurrentUser({name: user})
-    // })
+    const {contentHeight} = useContext(ContentHeightContext)
+    let h = contentHeight
+
+    const contentStyle: React.CSSProperties = {
+        margin: 0,
+        height: h - 116 - 1 + 'px',
+        color: '#fff',
+        lineHeight: h - 116 - 1 + 'px',
+        textAlign: 'center',
+        background: '#364d79',
+        fontSize: '32px',
+    };
 
     return (
         <>
-                <div className='contentStyle'>
-                    <p>
+            <Carousel >
+                <div>
+                    <h3 style={contentStyle}>
                         Hello!
                         {currentUser===null ? "" :currentUser.name}
-                    </p>
+                    </h3>
                 </div>
+                <div>
+                    <h3 style={contentStyle}>
+                        NM
+                    </h3>
+                </div>
+                <div>
+                    <h3 style={contentStyle}>
+                        S
+                    </h3>
+                </div>
+                <div>
+                    <h3 style={contentStyle}>
+                        L
+                    </h3>
+                </div>
+            </Carousel>
         </>
     );
 }

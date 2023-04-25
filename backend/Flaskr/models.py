@@ -24,3 +24,4 @@ class Movie(db.Model):  # 表名将会是 movie
     year = db.Column(db.String(4))  # 电影年份
     desc = db.Column(db.String(100))
     url = db.Column(db.String(30))
+    create_by = db.Column(db.String(30))

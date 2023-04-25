@@ -71,7 +71,7 @@ export default function AddEntry() {
             }}
         >
                     {contextHolder}
-                    <div className={"contentStyle"}>
+                    {/*<div className={"contentStyle"}>*/}
                         <Form
                             form={form}
                             name="basic"
@@ -166,7 +166,7 @@ export default function AddEntry() {
                             {/*    </Button>*/}
                             {/*</Form.Item>*/}
                         </Form>
-                    </div>
+                    {/*</div>*/}
         </ConfigProvider>
     );
 }

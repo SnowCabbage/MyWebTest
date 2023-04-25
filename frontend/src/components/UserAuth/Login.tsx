@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Avatar, Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
-import Header from "../Header";
-import Footer from "../Footer";
+import { Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
 import {useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
@@ -15,6 +13,12 @@ export default function Login(){
     const [user, setUser] = useState("")
     // const [ready, setReady] = useState(0)
     const {setCurrentUser} = useContext(UserContext)
+    const [form] = Form.useForm()
+    const [, forceUpdate] = useState({});
+
+    useEffect(() => {
+        forceUpdate({});
+    }, []);
 
     const sendMsg=(data) => {
         axios.post(GetUrl("login"),data, {
@@ -93,14 +97,12 @@ export default function Login(){
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#4b5cc4',
+                    colorPrimary: '#177cb0',
                 },
             }}
         >
-                {/*<Header index={"login"}/>*/}
                 {contextHolder}
-            {/*<Header index="logIn"/>*/}
-            <div className={"contentStyle"}>
+            {/*<div className={"contentStyle"}>*/}
                     <Card title="登录" bordered={false} style={{
                         width: 500,
                         margin: 'auto',
@@ -109,10 +111,11 @@ export default function Login(){
                         left: 0,
                         bottom: 0,
                         top: 36,
-                        background: '#e0f0e9',
+                        background: '#ffffff',
                     }}>
                         <Form
                             name="basic"
+                            form={form}
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
                             style={{ minWidth: 400,
@@ -150,14 +153,24 @@ export default function Login(){
                                 <Checkbox>Remember me</Checkbox>
                             </Form.Item>
 
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                <Button type="primary" htmlType="submit" loading={loading}>
-                                    登录
-                                </Button>
+                            <Form.Item wrapperCol={{ offset: 8, span: 16 }} shouldUpdate>
+                                {()=>(
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        loading={loading}
+                                        disabled={
+                                            !form.isFieldsTouched(['username', 'password']) ||
+                                            !!form.getFieldsError().filter(({errors}) => errors.length).length
+                                        }
+                                    >
+                                        登录
+                                    </Button>
+                                )}
                             </Form.Item>
                         </Form>
                     </Card>
-            </div>
+            {/*</div>*/}
         </ConfigProvider>
     );
 }

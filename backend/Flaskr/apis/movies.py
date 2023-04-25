@@ -10,7 +10,8 @@ movies = Blueprint('movies', __name__)
 
 
 class MovieListAPI(Resource):
-    method_decorators = [admin_required()]
+    method_decorators = [jwt_required()]
+
     def get(self):
         movie_queried = Movie.query.all()
         res = {}
@@ -51,4 +52,18 @@ class MovieListAPI(Resource):
         return response_object, 201
 
 
+class MovieAPI(Resource):
+    method_decorators = [jwt_required()]
+
+    def get(self, movie_id):
+        movie_queried = Movie.query.get_or_404(movie_id)
+        res = {}
+        data = {}
+        data['text'] = movie_queried.desc
+        res['code'] = 'OK'
+        res['data'] = data
+        return res
+
+
 api.add_resource(MovieListAPI, '/api/movies', endpoint='movies')
+api.add_resource(MovieAPI, '/api/movie/<int:movie_id>', endpoint='movie')

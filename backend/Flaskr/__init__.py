@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from flask_httpauth import HTTPBasicAuth
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 
 DEBUG = True
 ENV = 'development'
@@ -33,16 +34,17 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 jwt.init_app(app)
 db = SQLAlchemy(app)
-# 创建认证对象
-auth = HTTPBasicAuth()
+migrate = Migrate(app, db)
 
 from Flaskr.apis.user import users
 from Flaskr.apis.movies import movies
 from Flaskr.apis.loginAuth import loginAuth
+from Flaskr.apis.informationCheck import informationCheck
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
 app.register_blueprint(loginAuth)
+app.register_blueprint(informationCheck)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback

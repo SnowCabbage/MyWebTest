@@ -10,13 +10,8 @@ import GetUrl from "./Context/UrlSource";
 export default function ListMovies()  {
     const [movies, setMovies] = useState([]);
     const [nums, setNums] = useState(0)
-    const moviesHeight = useRef(null)
     const [loading, setLoading] = useState(true);
     const showTotalConfig: PaginationProps['showTotal'] = (nums) => `总共 ${nums}`;
-
-    const onChange = (checked: boolean) => {
-        setLoading(!checked);
-    };
 
     useEffect(()=>{
         axios.get(GetUrl("movies"),{headers: {
@@ -41,21 +36,21 @@ export default function ListMovies()  {
             <ConfigProvider
                 theme={{
                     token: {
-                        colorPrimary: '#4b5cc4',
+                        colorPrimary: '#177cb0',
                     },
                 }}
             >
                 {/*<Header index={"movies"}/>*/}
-                    <div className={"contentStyle"}>
+                {/*    <div className={"contentStyle"}>*/}
                         {/*<Switch checked={!loading} onChange={onChange} style={{ marginBottom: 16 }} />*/}
                         <Card title="名单" bordered={false} style={{
                             width: 500,
                             margin: 'auto',
-                            // top: 50,
+                            // top: 36,
                             right: 0,
                             left: 0,
-                            bottom: 0,
-                            background: '#519a73',
+                            // bottom: 36,
+                            background: '#ffffff',
                             // position:"static",
                         }}>
                             {loading ? <List
@@ -125,7 +120,7 @@ export default function ListMovies()  {
                             />
                             }
                         </Card>
-                    </div>
+                    {/*</div>*/}
             </ConfigProvider>
         </>
     )

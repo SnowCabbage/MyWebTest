@@ -1,8 +1,8 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ConfigProvider, Menu} from "antd"
 import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
-import {AuthContext} from "./Context/AuthContext";
+import {AuthContext} from "../Context/AuthContext";
 import {NavLink} from "react-router-dom";
 import { Button, Tooltip } from 'antd';
 import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
@@ -42,16 +42,8 @@ const authItems: MenuProps['items'] = [
                 增加条目
             </NavLink>
         ),
-        key: 'addEntry'
+        key: 'addentry'
     },
-    // {
-    //     label: (
-    //         <NavLink to="/logout">
-    //             登出
-    //         </NavLink>
-    //     ),
-    //     key: 'logOut'
-    // }
 ];
 
 const unAuthItems: MenuProps['items'] = [
@@ -74,16 +66,21 @@ export default function Header() {
     // //取得当前url
     // const initPath = window.location.href.split('/').pop()
 
+    useEffect(()=>{
+        // console.log(window.location.pathname.split('/'));
+        let urlArray = window.location.pathname.split('/')
+        setCurrent(urlArray[1])
+    },[])
+
     const onClick: MenuProps['onClick'] = (e) =>{
         setCurrent(e.key)
-        console.log(window.location.href);
     }
 
     return (
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#4b5cc4',
+                    colorPrimary: '#177cb0',
                 },
             }}
         >
@@ -91,7 +88,7 @@ export default function Header() {
                 <Avatar src={"../../dog.jpg"} style={{display:"block"}} alt="A dog" size={60}/>
                 <Menu  style={{
                     display:'block',
-                    background:'#d1d9e0',
+                    background:'#d6ecf0',
                     textAlign:'center',
                     height: 50
                 }}
@@ -112,7 +109,7 @@ export default function Header() {
                     </Tooltip>
                 </NavLink> :
                     <div>
-                        <NavLink to="/login">
+                        <NavLink to="/home/login">
                             <Tooltip title="登录账号">
                                 <Button style={{
                                         top: 25,
@@ -124,7 +121,7 @@ export default function Header() {
                                 </Button>
                             </Tooltip>
                         </NavLink>
-                        <NavLink to="/register">
+                        <NavLink to="/home/register">
                             <Tooltip title="注册账号">
                                 <Button style={{
                                     top: 25,

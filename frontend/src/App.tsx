@@ -3,24 +3,25 @@ import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
 import {AuthContext, UserContext} from "./components/Context/AuthContext";
-import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
-import RequireAuth from "./components/handler/handleRoute";
-import ListMovies from "./components/MovieList";
-import Setting from "./components/Setting";
-import AddEntry from "./components/AddEntry";
-import Login from "./components/UserAuth/Login";
-import Logout from "./components/UserAuth/Logout";
-import Register from "./components/UserAuth/Register";
-import Home from "./components/views/Home";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import {BrowserRouter} from "react-router-dom";
+import {useRef } from 'react'
+
+import Header from "./components/elements/Header";
+import Footer from "./components/elements/Footer";
+import MainContent from "./components/elements/MainContent";
+import {ContentHeightContext} from "./components/Context/ElementContext";
+
 
 function App() {
 
     const [currentUser, setCurrentUser] = useState(null)
+    const [contentHeight, setcontentHeight] = useState(null)
+    const mainHeight = useRef(null)
 
     useEffect(()=>{
         setCurrentUser({name: cookie.load('user')})
+        console.log(mainHeight.current.clientHeight)
+        setcontentHeight(mainHeight.current.clientHeight)
     }, [])
 
     return (
@@ -30,34 +31,16 @@ function App() {
                     currentUser,
                     setCurrentUser
                 }}>
-                    <Header/>
-                    <Routes>
-                        <Route path='/' element={ <Navigate to="/home" /> }/>
-                        <Route path="/home" element={<Home />} />
-                            <Route path="/movies" element={
-                                <RequireAuth>
-                                    <ListMovies/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/setting" element={
-                                <RequireAuth>
-                                    <Setting/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/addentry" element={
-                                <RequireAuth>
-                                    <AddEntry/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/login" element={<Login/>} />
-                            <Route path="/logout" element={
-                                <RequireAuth>
-                                    <Logout/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/register" element={<Register/>} />
-                    </Routes>
-                    <Footer/>
+                    <ContentHeightContext.Provider value={{
+                        contentHeight,
+                        setcontentHeight
+                    }}>
+                        <Header/>
+                        <div className={"contentStyle"} ref={mainHeight}>
+                            <MainContent/>
+                        </div>
+                        <Footer/>
+                    </ContentHeightContext.Provider>
                 </UserContext.Provider>
             </AuthContext.Provider>
         </BrowserRouter>
