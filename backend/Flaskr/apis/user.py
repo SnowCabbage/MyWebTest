@@ -11,9 +11,10 @@ users = Blueprint('users', __name__)
 
 
 class UserListAPI(Resource):
-    # method_decorators = [admin_required()]
+    # method_decorators = [jwt_required()]
 
-    @admin_required()
+    # @admin_required()
+    @jwt_required()
     def get(self):
         data = {}
         users = User.query.all()
@@ -46,7 +47,8 @@ class UserListAPI(Resource):
 
         newUser = User(
             username=username,
-            role='guest'
+            role='guest',
+            profile='default profile'
         )
         newUser.hash_password(password)
         db.session.add(newUser)

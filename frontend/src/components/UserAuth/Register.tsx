@@ -10,16 +10,17 @@ export default function Register(){
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm()
-    const [, forceUpdate] = useState({});
+    // const [, forceUpdate] = useState({});
+    const [isAble, setIsAble] = useState(true)
 
-    useEffect(() => {
-        forceUpdate({});
-    }, []);
+    // useEffect(() => {
+    //     forceUpdate({});
+    // }, []);
 
     const sendMsg=(data) => {
         let sendData = {}
         sendData["data"] = data
-        axios.post(GetUrl("login"),sendData, {
+        axios.post(GetUrl("users"),sendData, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
@@ -43,7 +44,7 @@ export default function Register(){
         });
         setTimeout(()=>{
             // window.location.reload()
-            navigate("/login");
+            navigate("/home/login");
         }, 2000)
 
     };
@@ -57,24 +58,17 @@ export default function Register(){
     };
 
     const onFinish = (values: any) => {
+        console.log(values)
         setLoading(true)
         sendMsg(values)
     };
 
-    useEffect(()=>{
-        console.log(form.getFieldsError().filter(({errors})=>errors.length))
-        console.log(form.isFieldsTouched(true))
-    })
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
-        console.log(form.getFieldsError().filter(({errors})=>errors.length))
+        // console.log(form.getFieldsError().filter(({errors})=>errors.length))
         console.log(form.isFieldsTouched(true))
     };
-
-    const checkUsername = () => {
-
-    }
 
     return (
         <ConfigProvider
@@ -124,10 +118,7 @@ export default function Register(){
                                         if (!pattern.test(val) && val){
                                             return callback('请输入正确账号,仅能由中文、英文、数字或下划线组成');
                                         }
-                                        callback();
-                                    },
-                                },
-                                { validator: (rule, val, callback) => {
+
                                         let sendData = {'username': val}
                                         axios.post(GetUrl("username_check"),sendData, {
                                             headers: {
@@ -138,6 +129,9 @@ export default function Register(){
                                             .then(response=>{
                                                 if (response.data['code'] === 'Error'){
                                                     form.setFields([{name: 'username', errors: ['已存在该用户名']}])
+                                                }else {
+                                                    setIsAble(false)
+                                                    callback()
                                                 }
                                             })
                                             .catch(e=>{
@@ -147,8 +141,10 @@ export default function Register(){
                                                     content: '连接超时',
                                                 });
                                             })
+
+                                        callback();
                                     },
-                                }
+                                },
                             ]}
                         >
                             <Input placeholder="请输入账号"/>
@@ -193,8 +189,9 @@ export default function Register(){
                                     htmlType="submit"
                                     loading={loading}
                                     disabled={
-                                        !form.isFieldsTouched(true) ||
-                                        !!form.getFieldsError().filter(({errors}) => errors.length).length
+                                        !form.isFieldsTouched(['username']) ||
+                                        !!form.getFieldsError().filter(({errors}) => errors.length).length ||
+                                        isAble
                                     }
                                 >
                                     注册

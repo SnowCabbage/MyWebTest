@@ -1,10 +1,11 @@
 // import React from "react";
 import axios from "axios";
 import React, {useEffect, useRef, useState} from "react";
-import '../static/style.css'
+import '../../static/style.css'
 import {Avatar, List, Card, ConfigProvider, Switch, Skeleton, PaginationProps} from 'antd';
 import cookie from 'react-cookies';
-import GetUrl from "./Context/UrlSource";
+import GetUrl from "../Context/UrlSource";
+import {NavLink} from "react-router-dom";
 
 
 export default function ListMovies()  {
@@ -20,7 +21,7 @@ export default function ListMovies()  {
                         }})
             .then(response=>{
                 // setMovies(response['data']['movies'])
-                console.log(response)
+                // console.log(response.data)
                 setLoading(false)
                 setNums(response.data['data']['num'])
                 setMovies(response.data['data']['movies'])
@@ -51,7 +52,6 @@ export default function ListMovies()  {
                             left: 0,
                             // bottom: 36,
                             background: '#ffffff',
-                            // position:"static",
                         }}>
                             {loading ? <List
                                 itemLayout="vertical"
@@ -82,8 +82,7 @@ export default function ListMovies()  {
                                                 <Skeleton loading={loading} active avatar>
                                                     <List.Item.Meta
                                                         avatar={<Avatar src={'../../../../dog.jpg'}/>}
-                                                        title={<a href={item.url} target={"_blank"}
-                                                                  rel="noreferrer">{item.name}</a>}
+                                                        title={<NavLink to={item.url}>{item.name}</NavLink>}
                                                         description={"Release" + item.year}
                                                     />
                                                     <div style={{display: "flex"}}>
@@ -107,9 +106,8 @@ export default function ListMovies()  {
                                         <Skeleton loading={loading} active avatar>
                                             <List.Item.Meta
                                                 avatar={<Avatar src={'../../../../dog.jpg'}/>}
-                                                title={<a href={item.url} target={"_blank"}
-                                                          rel="noreferrer">{item.name}</a>}
-                                                description={"Release" + item.year}
+                                                title={<NavLink to={item.url} rel="noreferrer">{item.name}</NavLink>}
+                                                description={"Last update:" + item.update_date}
                                             />
                                             <div style={{display: "flex"}}>
                                                 简介:{item.desc}

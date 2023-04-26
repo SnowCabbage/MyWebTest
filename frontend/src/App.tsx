@@ -9,19 +9,23 @@ import {useRef } from 'react'
 import Header from "./components/elements/Header";
 import Footer from "./components/elements/Footer";
 import MainContent from "./components/elements/MainContent";
-import {ContentHeightContext} from "./components/Context/ElementContext";
+import {ContentHeightContext, ContentWidthContext} from "./components/Context/ElementContext";
 
 
 function App() {
 
     const [currentUser, setCurrentUser] = useState(null)
-    const [contentHeight, setcontentHeight] = useState(null)
-    const mainHeight = useRef(null)
+    const [contentHeight, setContentHeight] = useState(null)
+    const [contentWidth, setContentWidth] = useState(null)
+    const mainArea = useRef(null)
+    // const mainWidth = useRef(null)
 
     useEffect(()=>{
         setCurrentUser({name: cookie.load('user')})
-        console.log(mainHeight.current.clientHeight)
-        setcontentHeight(mainHeight.current.clientHeight)
+        console.log("main height:",mainArea.current.clientHeight)
+        console.log("main width:", mainArea.current.clientWidth)
+        setContentHeight(mainArea.current.clientHeight)
+        setContentWidth(mainArea.current.clientWidth)
     }, [])
 
     return (
@@ -33,13 +37,18 @@ function App() {
                 }}>
                     <ContentHeightContext.Provider value={{
                         contentHeight,
-                        setcontentHeight
+                        setContentHeight
                     }}>
+                        <ContentWidthContext.Provider value={{
+                            contentWidth,
+                            setContentWidth
+                        }}>
                         <Header/>
-                        <div className={"contentStyle"} ref={mainHeight}>
+                        <div className={"contentStyle"} ref={mainArea}>
                             <MainContent/>
                         </div>
                         <Footer/>
+                        </ContentWidthContext.Provider>
                     </ContentHeightContext.Provider>
                 </UserContext.Provider>
             </AuthContext.Provider>

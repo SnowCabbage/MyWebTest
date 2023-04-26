@@ -17,14 +17,20 @@ def initdb(drop):
         {'title': 'My Neighbor Totoro',
          'year': '1988',
          'desc': 'This is a test',
-         'url': 'https://flappybird.io/'},
+         'url': 'https://flappybird.io/',
+         'content': 'This is a test,and this part is a content',
+         'create_by': 'Aerith'
+         },
     ]
 
     for movie in movies:
         m = Movie(title=movie['title'],
-                  year=movie['year'],
+                  update_date=movie['year'],
                   desc=movie['desc'],
-                  url=movie['url'])
+                  url=movie['/movie/1'],
+                  content=movie['content'],
+                  create_by=movie['create_by']
+                  )
         db.session.add(m)
     db.session.commit()
 
@@ -44,7 +50,7 @@ def initadmin(username, password):
         # user.set_password(password)  # 设置密码
     else:
         click.echo('Creating user...')
-        user = User(username=username, role='Admin')
+        user = User(username=username, role='Admin', profile='default profile')
         user.hash_password(password)
         db.session.add(user)
 

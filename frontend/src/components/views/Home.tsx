@@ -29,17 +29,17 @@ export default function Home() {
                 </div>
                 <div>
                     <h3 style={contentStyle}>
-                        NM
+                        TT
                     </h3>
                 </div>
                 <div>
                     <h3 style={contentStyle}>
-                        S
+                        TT
                     </h3>
                 </div>
                 <div>
                     <h3 style={contentStyle}>
-                        L
+                        TT
                     </h3>
                 </div>
             </Carousel>

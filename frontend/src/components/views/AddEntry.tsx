@@ -1,16 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import {ConfigProvider} from "antd";
 import { Button, Form, Input ,message} from 'antd';
 import { useNavigate } from 'react-router-dom';
-import GetUrl from "./Context/UrlSource";
+import GetUrl from "../Context/UrlSource";
 import cookie from 'react-cookies';
 import axios from "axios";
+import {UserContext} from "../Context/AuthContext";
 
 export default function AddEntry() {
 
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const [form] = Form.useForm();
+    const { TextArea } = Input;
+    const {currentUser} = useContext(UserContext)
 
     const sendMsg=(data) => {
 
@@ -55,7 +58,12 @@ export default function AddEntry() {
     };
 
     const onFinish = (values: any) => {
-        sendMsg(values)
+        let data = values
+        let currentDate = new Date()
+        data['create_by'] = currentUser.name
+        data['update_date'] = currentDate.toLocaleString()
+        // console.log(data)
+        sendMsg(data)
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -89,69 +97,32 @@ export default function AddEntry() {
                             autoComplete="off"
                         >
                             <Form.Item
-                                label="名称"
+                                label="标题"
                                 name="name"
                                 hasFeedback
                                 validateTrigger={['onFinish']}
                                 rules={[
-                                    {required: true, message: '请输入姓名'},
-                                    {max: 8, message: '姓名过长'},
+                                    {required: true, message: '请输入标题'},
+                                    {max: 16, message: '标题过长'},
                                 ]}
                             >
                                 <Input placeholder="请输入电影名字"/>
                             </Form.Item>
 
                             <Form.Item
-                                label="年份"
-                                name="year"
-                                hasFeedback
-                                rules={[
-                                    { required: true, message: '请输入年份!' },
-                                    { validator:  (rule, val, callback) => {
-                                            let pattern = new RegExp(/^\d{4}$/);
-                                            if (!pattern.test(val) && val){
-                                                // console.log(val)
-                                                callback('请输入正确年份');
-                                            }else {
-                                                callback();
-                                            }
-                                            callback();
-                                        },
-                                    }
-                                ]}
-                            >
-                                <Input placeholder="请输入年份"/>
-                            </Form.Item>
-
-                            <Form.Item
                                 label="描述"
                                 name="desc"
                                 hasFeedback
-                                rules={[{ required: true, message: '请输入描述!' }]}
+                                rules={[{ required: true, message: '请输入简单描述!' }]}
                             >
-                                <Input placeholder="请输入描述"/>
+                                <Input placeholder="请输入简单描述"/>
                             </Form.Item>
 
                             <Form.Item
-                                label="地址"
-                                name="url"
-                                hasFeedback
-                                rules={[
-                                    { required: true, message: '请输入地址!' },
-                                    { validator:  (rule, val, callback) => {
-                                            let pattern = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/);
-                                            if (!pattern.test(val) && val){
-                                                // console.log(val)
-                                                callback('请输入正确域名');
-                                            }else {
-                                                callback();
-                                            }
-                                            callback();
-                                        },
-                                    }
-                                ]}
+                                label="内容"
+                                name="content"
                             >
-                                <Input placeholder="请输入描述"/>
+                                <TextArea rows={4} />
                             </Form.Item>
 
                             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -159,12 +130,6 @@ export default function AddEntry() {
                                     提交
                                 </Button>
                             </Form.Item>
-
-                            {/*<Form.Item wrapperCol={{ offset: 8, span: 16 }}>*/}
-                            {/*    <Button type="primary" onClick={resetAll}>*/}
-                            {/*        重置*/}
-                            {/*    </Button>*/}
-                            {/*</Form.Item>*/}
                         </Form>
                     {/*</div>*/}
         </ConfigProvider>

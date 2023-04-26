@@ -6,7 +6,6 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
-from flask_httpauth import HTTPBasicAuth
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 
@@ -27,8 +26,7 @@ api = Api(app)
 
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
-app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE',
-                                                                                                        'data.db'))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:kissyou@127.0.0.1:3306/test'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=30)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
@@ -48,4 +46,8 @@ app.register_blueprint(informationCheck)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 

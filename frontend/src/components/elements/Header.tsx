@@ -3,7 +3,7 @@ import {ConfigProvider, Menu} from "antd"
 import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
 import {AuthContext} from "../Context/AuthContext";
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import { Button, Tooltip } from 'antd';
 import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 
@@ -62,15 +62,16 @@ const unAuthItems: MenuProps['items'] = [
 export default function Header() {
     const [current, setCurrent] = useState('');
     const isAuth = useContext(AuthContext)
-    // const location = useLocation()
+    // const [currentUrl] = useState(window.location.pathname.split('/')[1])
+    const location = useLocation()
     // //取得当前url
     // const initPath = window.location.href.split('/').pop()
 
     useEffect(()=>{
-        // console.log(window.location.pathname.split('/'));
-        let urlArray = window.location.pathname.split('/')
-        setCurrent(urlArray[1])
-    },[])
+        let currentUrl = window.location.pathname.split('/')[1]
+        // console.log(currentUrl)
+        setCurrent(currentUrl)
+    },[location])
 
     const onClick: MenuProps['onClick'] = (e) =>{
         setCurrent(e.key)

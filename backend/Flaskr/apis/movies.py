@@ -22,9 +22,12 @@ class MovieListAPI(Resource):
             num += 1
             movies.append({'id': m.id,
                            'name': m.title,
-                           'year': m.year,
+                           'update_date': m.update_date,
                            'desc': m.desc,
-                           'url': m.url})
+                           'url': m.url,
+                           'content': m.content,
+                           'create_by': m.create_by,
+                           })
         data['num'] = num
         data['movies'] = movies
         res['code'] = 'OK'
@@ -35,18 +38,24 @@ class MovieListAPI(Resource):
         response_object = {'code': 'OK'}
         # print(request)
         post_data = request.get_json()
-        # logging.info(post_data)
-        # print(post_data)
+        # Get the last id
+        id_the_last = Movie.query.order_by(Movie.id.desc()).first().id
+        # print(movie_test)
         name = post_data['data']['name']
-        year = post_data['data']['year']
+        update_date = post_data['data']['update_date']
         desc = post_data['data']['desc']
-        url = post_data['data']['url']
+        url = f'/movies/{id_the_last + 1}'
+        content = post_data['data']['content']
+        create_by = post_data['data']['create_by']
         response_object['data'] = post_data['data']
 
         m = Movie(title=name,
-                  year=year,
+                  update_date=update_date,
                   desc=desc,
-                  url=url)
+                  url=url,
+                  content=content,
+                  create_by=create_by,
+                  )
         db.session.add(m)
         db.session.commit()
         return response_object, 201
@@ -56,10 +65,14 @@ class MovieAPI(Resource):
     method_decorators = [jwt_required()]
 
     def get(self, movie_id):
-        movie_queried = Movie.query.get_or_404(movie_id)
+        movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}
         data = {}
-        data['text'] = movie_queried.desc
+        data['desc'] = movie_queried.desc
+        data['title'] = movie_queried.title
+        data['update_date'] = movie_queried.update_date
+        data['create_by'] = movie_queried.create_by
+        data['content'] = movie_queried.content
         res['code'] = 'OK'
         res['data'] = data
         return res
