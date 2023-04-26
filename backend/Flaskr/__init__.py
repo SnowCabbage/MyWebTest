@@ -47,7 +47,13 @@ app.register_blueprint(informationCheck)
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
+# 没找到通配符的方法，暂时这样写
+@app.errorhandler(404)
+def hello(error):
+    return render_template("index.html")

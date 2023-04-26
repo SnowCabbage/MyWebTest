@@ -105,7 +105,7 @@ export default function ListMovies()  {
                                     <List.Item>
                                         <Skeleton loading={loading} active avatar>
                                             <List.Item.Meta
-                                                avatar={<Avatar src={'../../../../dog.jpg'}/>}
+                                                avatar={<Avatar src={require('../../static/dog.jpg')}/>}
                                                 title={<NavLink to={item.url} rel="noreferrer">{item.name}</NavLink>}
                                                 description={"Last update:" + item.update_date}
                                             />

@@ -86,7 +86,7 @@ export default function Header() {
             }}
         >
             <div className={"header"}>
-                <Avatar src={"../../dog.jpg"} style={{display:"block"}} alt="A dog" size={60}/>
+                <Avatar src={require('../../static/dog.jpg')} style={{display:"block"}} alt="A dog" size={60}/>
                 <Menu  style={{
                     display:'block',
                     background:'#d6ecf0',
