@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import { ConfigProvider, message} from "antd";
-import Header from "../elements/Header";
-import Footer from "../elements/Footer";
-import {useLocation, useNavigate} from 'react-router-dom';
+import { message} from "antd";
+import { useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
 
@@ -27,8 +25,8 @@ export default function Logout(){
             type: 'success',
             content: '退出成功',
         });
-        cookie.remove("access_token")
-        cookie.remove("user")
+        cookie.remove("access_token", { path: '/' })
+        cookie.remove("user", { path: '/' })
         setTimeout(()=>{
             setUser("")
             setCurrentUser(null)

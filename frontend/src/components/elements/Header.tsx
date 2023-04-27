@@ -10,9 +10,6 @@ import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 const authItems: MenuProps['items'] = [
     {
         label: (
-            // <a href="/home" rel="noopener noreferrer">
-            //     主页
-            // </a>
             <NavLink to="/">
                 主页
             </NavLink>
@@ -115,22 +112,10 @@ export default function Header() {
                                 <Button style={{
                                         top: 25,
                                         display: 'inline-block',
-                                        right:120,
+                                        right:20,
                                         position: 'absolute',
                                     }} type="primary" icon={<UserOutlined />}>
                                     登录
-                                </Button>
-                            </Tooltip>
-                        </NavLink>
-                        <NavLink to="/home/register">
-                            <Tooltip title="注册账号">
-                                <Button style={{
-                                    top: 25,
-                                    display: 'inline-block',
-                                    right:20,
-                                    position: 'absolute',
-                                }} type="primary" icon={<UserOutlined spin/>}>
-                                    注册
                                 </Button>
                             </Tooltip>
                         </NavLink>

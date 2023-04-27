@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
-import {useLocation, useNavigate} from 'react-router-dom';
+import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
@@ -155,6 +155,7 @@ export default function Login(){
 
                             <Form.Item wrapperCol={{ offset: 8, span: 16 }} shouldUpdate>
                                 {()=>(
+                                    <div>
                                     <Button
                                         type="primary"
                                         htmlType="submit"
@@ -166,6 +167,13 @@ export default function Login(){
                                     >
                                         登录
                                     </Button>
+                                        <NavLink to="/home/register" style={{
+                                            color:'#003371',
+                                            display: 'inline-block',
+                                            position: 'absolute',
+                                            top: 6
+                                        }}>立即注册</NavLink>
+                                    </div>
                                 )}
                             </Form.Item>
                         </Form>

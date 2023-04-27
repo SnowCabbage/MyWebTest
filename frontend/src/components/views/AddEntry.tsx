@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {ConfigProvider} from "antd";
+import {ConfigProvider, Card} from "antd";
 import { Button, Form, Input ,message} from 'antd';
 import { useNavigate } from 'react-router-dom';
 import GetUrl from "../Context/UrlSource";
@@ -79,17 +79,25 @@ export default function AddEntry() {
             }}
         >
                     {contextHolder}
-                    {/*<div className={"contentStyle"}>*/}
+            <Card title="名单" bordered={false} style={{
+                width: 500,
+                margin: 'auto',
+                // top: 36,
+                right: 0,
+                left: 0,
+                // bottom: 36,
+                background: '#ffffff',
+            }}>
                         <Form
                             form={form}
                             name="basic"
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: 400,
+                            style={{ minWidth: 500,
                                 maxWidth: 600,
                                 display:"inline-block",
-                                top: 50,
-                                position: "relative"
+                                position: "relative",
+                                right: 88
                             }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
@@ -106,7 +114,7 @@ export default function AddEntry() {
                                     {max: 16, message: '标题过长'},
                                 ]}
                             >
-                                <Input placeholder="请输入电影名字"/>
+                                <Input placeholder="请输入文章标题"/>
                             </Form.Item>
 
                             <Form.Item
@@ -122,7 +130,7 @@ export default function AddEntry() {
                                 label="内容"
                                 name="content"
                             >
-                                <TextArea rows={4} />
+                                <TextArea rows={6} />
                             </Form.Item>
 
                             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -131,7 +139,7 @@ export default function AddEntry() {
                                 </Button>
                             </Form.Item>
                         </Form>
-                    {/*</div>*/}
+            </Card>
         </ConfigProvider>
     );
 }

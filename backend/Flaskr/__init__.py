@@ -18,7 +18,7 @@ if WIN:  # 如果是 Windows 系统，使用三个斜线
 else:  # 否则使用四个斜线
     prefix = 'sqlite:////'
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend_static', static_url_path='/frontend_static')
 app.secret_key = 'dev'
 jwt = JWTManager()
 cors = CORS(app, resources={r"/*": {"origins": "*"}})

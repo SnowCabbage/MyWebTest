@@ -1,8 +1,7 @@
-// import React from "react";
 import axios from "axios";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../../static/style.css'
-import {Avatar, List, Card, ConfigProvider, Switch, Skeleton, PaginationProps} from 'antd';
+import {Avatar, List, Card, ConfigProvider, Skeleton, PaginationProps} from 'antd';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {NavLink} from "react-router-dom";

@@ -6,5 +6,5 @@ export default function GetUrl(type){
     let url = 'http://lee666.sv1.k9s.run:2271/api/'
     let urlb = '/api/'
 
-    return urlb + type
+    return url0 + type
 }
