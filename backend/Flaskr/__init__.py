@@ -1,7 +1,6 @@
 import datetime
 import os
 import sys
-from waitress import serve
 
 from flask import Flask, render_template
 from flask_cors import CORS
@@ -27,7 +26,7 @@ api = Api(app)
 
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:kissyou@127.0.0.1:3306/test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:kissyou@127.0.0.1:3306/test'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=30)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 

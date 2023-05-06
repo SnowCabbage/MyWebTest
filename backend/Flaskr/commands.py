@@ -27,7 +27,7 @@ def initdb(drop):
         m = Movie(title=movie['title'],
                   update_date=movie['year'],
                   desc=movie['desc'],
-                  url=movie['/movie/1'],
+                  url=movie['url'],
                   content=movie['content'],
                   create_by=movie['create_by']
                   )
