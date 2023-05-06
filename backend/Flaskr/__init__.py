@@ -1,7 +1,6 @@
 import datetime
 import os
 import sys
-from waitress import serve
 
 from flask import Flask, render_template
 from flask_cors import CORS
