@@ -18,14 +18,16 @@ function App() {
     const [contentHeight, setContentHeight] = useState(null)
     const [contentWidth, setContentWidth] = useState(null)
     const mainArea = useRef(null)
+    const [currentCookie, setCurrentCookie] = useState(cookie.load('user')? cookie.load('user') : 'default')
     // const mainWidth = useRef(null)
 
     useEffect(()=>{
         setCurrentUser({name: cookie.load('user')})
-        console.log("main height:",mainArea.current.clientHeight)
-        console.log("main width:", mainArea.current.clientWidth)
+        // console.log("main height:",mainArea.current.clientHeight)
+        // console.log("main width:", mainArea.current.clientWidth)
         setContentHeight(mainArea.current.clientHeight)
         setContentWidth(mainArea.current.clientWidth)
+
     }, [])
 
     return (

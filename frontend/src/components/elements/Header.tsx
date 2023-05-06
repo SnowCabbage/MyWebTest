@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {ConfigProvider, Menu} from "antd"
 import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
-import {AuthContext} from "../Context/AuthContext";
+import {AuthContext, UserContext} from "../Context/AuthContext";
 import {NavLink, useLocation} from "react-router-dom";
 import { Button, Tooltip } from 'antd';
 import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
@@ -59,8 +59,8 @@ const unAuthItems: MenuProps['items'] = [
 export default function Header() {
     const [current, setCurrent] = useState('');
     const isAuth = useContext(AuthContext)
-    // const [currentUrl] = useState(window.location.pathname.split('/')[1])
     const location = useLocation()
+    const {currentUser} = useContext(UserContext)
     // //取得当前url
     // const initPath = window.location.href.split('/').pop()
 
@@ -83,7 +83,16 @@ export default function Header() {
             }}
         >
             <div className={"header"}>
-                <Avatar src={require('../../static/dog.jpg')} style={{display:"block"}} alt="A dog" size={60}/>
+                <Avatar src={require('../../static/dog.jpg')} alt="A dog" size={60}/>
+
+                <div style={{
+                    display: 'inline-block',
+                    top: 15,
+                    position: 'absolute',
+                }}>
+                    <h2>{currentUser===null ? "" :currentUser.name}</h2>
+                </div>
+
                 <Menu  style={{
                     display:'block',
                     background:'#d6ecf0',

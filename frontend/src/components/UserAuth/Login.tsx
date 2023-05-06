@@ -5,6 +5,7 @@ import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
 import axios from "axios";
+import {ContentHeightContext, ContentWidthContext} from "../Context/ElementContext";
 
 export default function Login(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -15,6 +16,11 @@ export default function Login(){
     const {setCurrentUser} = useContext(UserContext)
     const [form] = Form.useForm()
     const [, forceUpdate] = useState({});
+    const {contentWidth} = useContext(ContentWidthContext)
+
+    // 及其简陋的屏幕适配
+    const cardWidth = contentWidth * 0.36
+    const formWidth = contentWidth * 0.24
 
     useEffect(() => {
         forceUpdate({});
@@ -47,7 +53,7 @@ export default function Login(){
 
     useEffect(()=>{
         setCurrentUser({name: user})
-    },[user])
+    },[setCurrentUser, user])
 
     const toHome = ()=>{
         navigate(state?.path || "/home", {replace:true,state:{username: user}});
@@ -104,7 +110,7 @@ export default function Login(){
                 {contextHolder}
             {/*<div className={"contentStyle"}>*/}
                     <Card title="登录" bordered={false} style={{
-                        width: 500,
+                        width: cardWidth,
                         margin: 'auto',
                         // top: 50,
                         right: 0,
@@ -118,7 +124,7 @@ export default function Login(){
                             form={form}
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: 400,
+                            style={{ minWidth: formWidth,
                                 maxWidth: 600,
                                 display:"inline-block",
                                 position: "relative",
@@ -168,10 +174,11 @@ export default function Login(){
                                         登录
                                     </Button>
                                         <NavLink to="/home/register" style={{
-                                            color:'#003371',
+                                            color:'#0eb840',
                                             display: 'inline-block',
                                             position: 'absolute',
-                                            top: 6
+                                            top: 6,
+                                            fontSize: 14
                                         }}>立即注册</NavLink>
                                     </div>
                                 )}

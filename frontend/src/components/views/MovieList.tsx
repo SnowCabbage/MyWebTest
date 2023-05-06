@@ -25,7 +25,7 @@ export default function ListMovies()  {
                 setNums(response.data['data']['num'])
                 setMovies(response.data['data']['movies'])
         })
-            .catch(e=>console.log('Error:', e))
+            .catch(e=>console.log('Error:', e.message))
 
         // console.log(moviesHeight.current.clientHeight)
     },[])

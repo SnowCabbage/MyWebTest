@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {Avatar, Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
-import {useLocation, useNavigate} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from "react";
+import { Button, ConfigProvider, Form, Input, message, Card} from "antd";
+import { useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import axios from "axios";
+import {ContentWidthContext} from "../Context/ElementContext";
 
 export default function Register(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -12,6 +13,11 @@ export default function Register(){
     const [form] = Form.useForm()
     // const [, forceUpdate] = useState({});
     const [isAble, setIsAble] = useState(true)
+    const {contentWidth} = useContext(ContentWidthContext)
+
+    // 及其简陋的屏幕适配
+    const cardWidth = contentWidth * 0.5
+    const formWidth = contentWidth * 0.4
 
     // useEffect(() => {
     //     forceUpdate({});
@@ -58,7 +64,7 @@ export default function Register(){
     };
 
     const onFinish = (values: any) => {
-        console.log(values)
+        // console.log(values)
         setLoading(true)
         sendMsg(values)
     };
@@ -67,7 +73,6 @@ export default function Register(){
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
         // console.log(form.getFieldsError().filter(({errors})=>errors.length))
-        console.log(form.isFieldsTouched(true))
     };
 
     return (
@@ -79,9 +84,8 @@ export default function Register(){
             }}
         >
             {contextHolder}
-            {/*<div className={"contentStyle"}>*/}
                 <Card title="注册" bordered={false} style={{
-                    width: 500,
+                    width: cardWidth,
                     margin: 'auto',
                     top: 30,
                     right: 0,
@@ -94,7 +98,7 @@ export default function Register(){
                         form={form}
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
-                        style={{ minWidth: 400,
+                        style={{ minWidth: formWidth,
                             maxWidth: 600,
                             display:"inline-block",
                             position: "relative",
@@ -200,7 +204,6 @@ export default function Register(){
                         </Form.Item>
                     </Form>
                 </Card>
-            {/*</div>*/}
         </ConfigProvider>
     );
 }

@@ -11,7 +11,7 @@ from flask_jwt_extended import verify_jwt_in_request
 @jwt.expired_token_loader
 def my_expired_token_callback(jwt_header, jwt_payload):
     """返回 flask Response 格式"""
-    return jsonify(code="401", err="token 已过期"), 401
+    return jsonify(code="401", err="token expired"), 401
 
 
 def admin_required():

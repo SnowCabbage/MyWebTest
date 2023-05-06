@@ -1,7 +1,9 @@
 from itsdangerous import SignatureExpired, BadSignature
 
-from Flaskr import db, app
+# from Flaskr import db, app
 from passlib.apps import custom_app_context as pwd_context
+
+from Flaskr import db
 
 
 class User(db.Model):

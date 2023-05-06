@@ -55,5 +55,24 @@ class UserListAPI(Resource):
         db.session.commit()
         return response_object
 
+class UserApi(Resource):
+    def get(self):
+        pass
+
+    def post(self):
+        response_object = {}
+        post_data = request.get_json()
+        new_username = post_data['data']['new_username']
+        user = post_data['data']['user']
+
+        changeUser = User.query.filter_by(username=user).first()
+        changeUser.username = new_username
+
+        db.session.commit()
+        response_object['code'] = 'OK'
+        response_object['data'] = {}
+        return response_object
+
 
 api.add_resource(UserListAPI, '/api/users', endpoint='users')
+api.add_resource(UserApi, '/api/setting', endpoint='setting')
