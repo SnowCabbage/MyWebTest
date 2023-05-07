@@ -4,8 +4,8 @@ import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
-import axios from "axios";
-import {ContentHeightContext, ContentWidthContext} from "../Context/ElementContext";
+import { ContentWidthContext} from "../Context/ElementContext";
+import requests from "../handler/handleRequest";
 
 export default function Login(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -27,12 +27,11 @@ export default function Login(){
     }, []);
 
     const sendMsg=(data) => {
-        axios.post(GetUrl("login"),data, {
+        requests.post(GetUrl("login"),data, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
             },
-            timeout: 6000
         })
             .then(response=>{
                 if('access_token' in response.data){
@@ -46,7 +45,7 @@ export default function Login(){
                 else fail('密码或用户名错误')
             })
             .catch(e=>{
-                fail('请求超时')
+                fail(e.msg)
                 console.log("Error:", e)
             })
     };
