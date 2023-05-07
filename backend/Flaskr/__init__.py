@@ -14,8 +14,10 @@ jwt = JWTManager()
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
-app.config.from_pyfile('./config/default_config.py')
-# app.config.from_pyfile('./config/production_config.py')
+
+# app.config.from_pyfile('./config/default_config.py')
+app.config.from_pyfile('./config/production_config.py')
+
 
 jwt.init_app(app)
 db = SQLAlchemy(app)
