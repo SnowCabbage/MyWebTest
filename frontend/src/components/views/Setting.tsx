@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {ContentWidthContext} from "../Context/ElementContext";
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
+import requests from "../handler/handleRequest";
 
 export default function Setting() {
     const [messageApi, contextHolder] = message.useMessage();
@@ -24,19 +25,17 @@ export default function Setting() {
     const sendMsg=(data) => {
         let sendData = {}
         sendData["data"] = data
-        axios.post(GetUrl("setting"),sendData, {
+        requests.post(GetUrl("setting"),sendData, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
             },
-            timeout: 6000
         })
             .then(response=>{
                 success(data.new_username)
             })
             .catch(e=>{
-                console.log('Error:', e)
-                fail('连接超时')
+                fail(e.msg)
             })
     };
 

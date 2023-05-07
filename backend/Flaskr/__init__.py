@@ -9,26 +9,15 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 
-DEBUG = True
-ENV = 'development'
-
-WIN = sys.platform.startswith('win')
-if WIN:  # 如果是 Windows 系统，使用三个斜线
-    prefix = 'sqlite:///'
-else:  # 否则使用四个斜线
-    prefix = 'sqlite:////'
-
 app = Flask(__name__, static_folder='frontend_static', static_url_path='/frontend_static')
-app.secret_key = 'dev'
 jwt = JWTManager()
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
-app.config['JSON_AS_ASCII'] = False
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:kissyou@127.0.0.1:3306/test'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=30)
-app.config['PROPAGATE_EXCEPTIONS'] = True
+
+# app.config.from_pyfile('./config/default_config.py')
+app.config.from_pyfile('./config/production_config.py')
+
 
 jwt.init_app(app)
 db = SQLAlchemy(app)

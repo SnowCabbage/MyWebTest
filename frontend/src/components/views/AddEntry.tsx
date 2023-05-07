@@ -1,16 +1,15 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {ConfigProvider, Card} from "antd";
 import { Button, Form, Input ,message} from 'antd';
-import { useNavigate } from 'react-router-dom';
 import GetUrl from "../Context/UrlSource";
 import cookie from 'react-cookies';
-import axios from "axios";
 import {UserContext} from "../Context/AuthContext";
+import requests from "../handler/handleRequest";
 
 export default function AddEntry() {
 
     const [messageApi, contextHolder] = message.useMessage();
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
     const { TextArea } = Input;
     const {currentUser} = useContext(UserContext)
@@ -21,24 +20,24 @@ export default function AddEntry() {
             "data": data
         }
         data['data']['url'] = 'https://' + data['data']['url']
-        axios.post(GetUrl("movies"),data, {
+        requests.post(GetUrl("movies"),data, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
             },
-            timeout: 6000
         })
             .then(response=>{
                 if('error' in response.data) fail('上传失败')
                     else success()
         })
             .catch(e=>{
-                fail('连接超时')
+                fail(e.msg)
                 console.log("Error:", e)
             })
     };
 
     const success = () => {
+        setLoading(false)
         messageApi.open({
             type: 'success',
             content: '上传成功',
@@ -51,6 +50,7 @@ export default function AddEntry() {
     }
 
     const fail = (msg) => {
+        setLoading(false)
         messageApi.open({
             type: 'error',
             content: msg,
@@ -58,10 +58,12 @@ export default function AddEntry() {
     };
 
     const onFinish = (values: any) => {
+        setLoading(true)
         let data = values
         let currentDate = new Date()
         data['create_by'] = currentUser.name
         data['update_date'] = currentDate.toLocaleString()
+        if (!('content' in data)) data['content'] = 'To be update'
         // console.log(data)
         sendMsg(data)
     };
@@ -107,7 +109,6 @@ export default function AddEntry() {
                             <Form.Item
                                 label="标题"
                                 name="name"
-                                hasFeedback
                                 validateTrigger={['onFinish']}
                                 rules={[
                                     {required: true, message: '请输入标题'},
@@ -120,7 +121,6 @@ export default function AddEntry() {
                             <Form.Item
                                 label="描述"
                                 name="desc"
-                                hasFeedback
                                 rules={[{ required: true, message: '请输入简单描述!' }]}
                             >
                                 <Input placeholder="请输入简单描述"/>
@@ -133,8 +133,14 @@ export default function AddEntry() {
                                 <TextArea rows={6} />
                             </Form.Item>
 
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                <Button type="primary" htmlType="submit">
+                            <Form.Item
+                                wrapperCol={{ offset: 8, span: 16 }}
+                            >
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={loading}
+                                >
                                     提交
                                 </Button>
                             </Form.Item>
