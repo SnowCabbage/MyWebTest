@@ -43,6 +43,8 @@ export default function ArticleView() {
             <h1>{contentInfo.title}</h1><br/>
             <p>Created by {contentInfo.create_by}</p>
             <p>{contentInfo.desc}</p>
+            <br/><br/><br/>
+            <p>{contentInfo.content}</p>
         </>
     );
 }

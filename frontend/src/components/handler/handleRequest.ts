@@ -8,7 +8,7 @@ const requests = axios.create({
 
 //响应拦截器
 requests.interceptors.response.use((res) => {
-    return Promise.resolve(res.data);
+    return res;
 }, (error) => {
     //console.log(error);
     //超时处理 error.config是一个对象，包含上方create中设置的三个参数
@@ -17,7 +17,7 @@ requests.interceptors.response.use((res) => {
 
     //如果有返回值直接返回错误信息
     if('response' in error){
-        return Promise.reject({type: "error", msg: error.response.data});
+        return Promise.reject({type: "error", msg: error.response.data.message});
     }
 
     // __retryCount用来记录当前是第几次发送请求
