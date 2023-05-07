@@ -64,7 +64,7 @@ export default function AddEntry() {
         data['create_by'] = currentUser.name
         data['update_date'] = currentDate.toLocaleString()
         if (data['content'] == null) data['content'] = 'To be update'
-        console.log(data)
+        // console.log(data)
         sendMsg(data)
     };
 
