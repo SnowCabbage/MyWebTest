@@ -3,7 +3,6 @@ from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
 from Flaskr import api, db
-from Flaskr.decorators.authUnit import admin_required
 # from Flaskr.decorators.authUnit import login_required
 from Flaskr.models import User
 

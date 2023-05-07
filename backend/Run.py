@@ -16,4 +16,4 @@ if __name__ == '__main__':
     # background_process.daemon = True
     # background_process.start()
     # print("This is output")
-    serve(app, host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1', port=5000)
