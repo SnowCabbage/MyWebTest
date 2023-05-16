@@ -23,7 +23,7 @@ export default function ArticleView() {
     let w = contentWidth
 
     useEffect(()=>{
-        axios.get(GetUrl("movie/" + params.id), {
+        axios.get(GetUrl("movies/" + params.id), {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
