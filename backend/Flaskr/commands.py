@@ -17,7 +17,7 @@ def initdb(drop):
         {'title': 'My Neighbor Totoro',
          'year': '1988',
          'desc': 'This is a test',
-         'url': 'movies/1',
+         'url': '/movies/1',
          'content': 'This is a test,and this part is a content',
          'create_by': 'Aerith'
          },
