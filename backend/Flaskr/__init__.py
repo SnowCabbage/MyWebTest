@@ -27,11 +27,13 @@ from Flaskr.apis.user import users
 from Flaskr.apis.movies import movies
 from Flaskr.apis.loginAuth import loginAuth
 from Flaskr.apis.informationCheck import informationCheck
+from Flaskr.apis.comments import comments
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
 app.register_blueprint(loginAuth)
 app.register_blueprint(informationCheck)
+app.register_blueprint(comments)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback

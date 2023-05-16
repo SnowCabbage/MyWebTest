@@ -17,7 +17,7 @@ def initdb(drop):
         {'title': 'My Neighbor Totoro',
          'year': '1988',
          'desc': 'This is a test',
-         'url': 'https://flappybird.io/',
+         'url': 'movies/1',
          'content': 'This is a test,and this part is a content',
          'create_by': 'Aerith'
          },
@@ -35,6 +35,7 @@ def initdb(drop):
     db.session.commit()
 
     click.echo('Initialized database.')
+
 
 @app.cli.command()
 @click.option('--username', prompt=True, help='The username used to login.')

@@ -58,12 +58,13 @@ class MovieListAPI(Resource):
                   )
         db.session.add(m)
         db.session.commit()
-        return response_object, 201
+        return response_object, 200
 
 
 class MovieAPI(Resource):
-    method_decorators = [jwt_required()]
+    # method_decorators = [jwt_required()]
 
+    @jwt_required()
     def get(self, movie_id):
         movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}
@@ -77,6 +78,20 @@ class MovieAPI(Resource):
         res['data'] = data
         return res
 
+    @admin_required()
+    def delete(self, movie_id):
+        movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
+        res = {}
+
+        db.session.delete(movie_queried)
+        db.session.commit()
+
+        res['code'] = 'OK'
+        res['data'] = 'Delete successfully'
+
+        return res
+
+
 
 api.add_resource(MovieListAPI, '/api/movies', endpoint='movies')
-api.add_resource(MovieAPI, '/api/movie/<int:movie_id>', endpoint='movie')
+api.add_resource(MovieAPI, '/api/movies/<int:movie_id>', endpoint='movie')

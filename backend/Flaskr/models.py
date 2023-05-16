@@ -29,3 +29,11 @@ class Movie(db.Model):  # 表名将会是 movie
     url = db.Column(db.String(30))
     create_by = db.Column(db.String(30))
     # test = db.Column(db.String(10))
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.TEXT())
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    author = db.relationship('User', backref=db.backref('comment'))
+    update_time = db.Column(db.String(30))
