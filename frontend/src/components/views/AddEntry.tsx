@@ -82,7 +82,8 @@ export default function AddEntry() {
         >
                     {contextHolder}
             <Card title="名单" bordered={false} style={{
-                width: 500,
+                width: '60vw',
+                maxWidth: 500,
                 margin: 'auto',
                 // top: 36,
                 right: 0,
@@ -95,11 +96,11 @@ export default function AddEntry() {
                             name="basic"
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: 500,
-                                maxWidth: 600,
+                            style={{ width: '50vw',
+                                maxWidth: 520,
                                 display:"inline-block",
                                 position: "relative",
-                                right: 88
+                                right: '5vw'
                             }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}

@@ -19,8 +19,8 @@ export default function Login(){
     const {contentWidth} = useContext(ContentWidthContext)
 
     // 及其简陋的屏幕适配
-    const cardWidth = contentWidth * 0.36
-    const formWidth = contentWidth * 0.24
+    // const cardWidth = contentWidth * 0.36
+    // const formWidth = contentWidth * 0.24
 
     useEffect(() => {
         forceUpdate({});
@@ -109,7 +109,8 @@ export default function Login(){
                 {contextHolder}
             {/*<div className={"contentStyle"}>*/}
                     <Card title="登录" bordered={false} style={{
-                        width: cardWidth,
+                        width: '50vw',
+                        maxWidth: 420,
                         margin: 'auto',
                         // top: 50,
                         right: 0,
@@ -123,11 +124,11 @@ export default function Login(){
                             form={form}
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: formWidth,
-                                maxWidth: 600,
+                            style={{ width: '42vw',
+                                maxWidth: 425,
                                 display:"inline-block",
                                 position: "relative",
-                                right:54
+                                right:'4vw'
                             }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
@@ -169,14 +170,18 @@ export default function Login(){
                                             !form.isFieldsTouched(['username', 'password']) ||
                                             !!form.getFieldsError().filter(({errors}) => errors.length).length
                                         }
+                                        style={{
+                                            right:'2.5vw'
+                                        }}
                                     >
                                         登录
                                     </Button>
                                         <NavLink to="/home/register" style={{
                                             color:'#0eb840',
                                             display: 'inline-block',
-                                            position: 'absolute',
-                                            top: 6,
+                                            // position: 'absolute',
+                                            top: '1vh',
+                                            right: '5vw',
                                             fontSize: 14
                                         }}>立即注册</NavLink>
                                     </div>

@@ -44,7 +44,8 @@ export default function ListMovies()  {
                 {/*    <div className={"contentStyle"}>*/}
                         {/*<Switch checked={!loading} onChange={onChange} style={{ marginBottom: 16 }} />*/}
                         <Card title="名单" bordered={false} style={{
-                            width: 500,
+                            width: '60vw',
+                            maxWidth: 480,
                             margin: 'auto',
                             // top: 36,
                             right: 0,

@@ -90,7 +90,8 @@ export default function Setting() {
         >
             {contextHolder}
             <Card title="修改信息" bordered={false} style={{
-                width: cardWidth,
+                width: '60vw',
+                maxWidth: 480,
                 margin: 'auto',
                 top: 30,
                 right: 0,
@@ -103,11 +104,11 @@ export default function Setting() {
                     form={form}
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
-                    style={{ minWidth: formWidth,
+                    style={{ minWidth: '20vw',
                         maxWidth: 600,
                         display:"inline-block",
                         position: "relative",
-                        right:54
+                        right: '1vw'
                     }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
