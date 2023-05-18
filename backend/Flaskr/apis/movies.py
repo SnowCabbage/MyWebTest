@@ -61,6 +61,11 @@ class MovieListAPI(Resource):
                   )
         db.session.add(m)
         db.session.commit()
+        id_the_new = Movie.query.order_by(Movie.id.desc()).first().id
+        new_movie = Movie.query.get_or_404(id_the_new)
+        new_movie.url = f'/movies/{id_the_new}'
+
+        db.session.commit()
         return response_object, 200
 
 
