@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ConfigProvider, Card} from "antd";
 import { Button, Form, Input ,message} from 'antd';
 import GetUrl from "../Context/UrlSource";
@@ -64,6 +64,8 @@ export default function AddEntry() {
         data['create_by'] = currentUser.name
         data['update_date'] = currentDate.toLocaleString()
         if (data['content'] == null) data['content'] = 'To be update'
+        //debug
+        // console.log(data['content'])
         // console.log(data)
         sendMsg(data)
     };
@@ -71,6 +73,20 @@ export default function AddEntry() {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    //实现tab缩进
+    const add = (e) => {
+        let val = e.target.value
+        // debug
+        // console.log("value:", val)
+        // console.log("key code:", e.keyCode)
+
+        if (e.keyCode === 9){
+            e.preventDefault()
+            val = val + "    "
+            form.setFieldValue("content", val)
+        }
+    }
 
     return (
         <ConfigProvider
@@ -131,7 +147,11 @@ export default function AddEntry() {
                                 label="内容"
                                 name="content"
                             >
-                                <TextArea rows={6} />
+                                <TextArea
+                                    rows={6}
+                                    style={{whiteSpace:'pre-wrap'}}
+                                    onKeyDown={e=>add(e)}
+                                />
                             </Form.Item>
 
                             <Form.Item

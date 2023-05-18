@@ -39,7 +39,10 @@ class MovieListAPI(Resource):
         # print(request)
         post_data = request.get_json()
         # Get the last id
-        id_the_last = Movie.query.order_by(Movie.id.desc()).first().id
+        try:
+            id_the_last = Movie.query.order_by(Movie.id.desc()).first().id
+        except AttributeError:
+            id_the_last = 0
         # print(movie_test)
         name = post_data['data']['name']
         update_date = post_data['data']['update_date']

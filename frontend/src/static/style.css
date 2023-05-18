@@ -36,3 +36,13 @@
     /*height: 100px;*/
     margin: 0 auto;
 }
+
+.mainText{
+    text-align: initial;
+    /*text-indent: 2em;*/
+    white-space: pre-wrap;
+}
+
+.ant-list-item-action{
+    text-align: end;
+}

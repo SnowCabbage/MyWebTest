@@ -2,9 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import {UserContext} from "../Context/AuthContext";
 import { useParams } from "react-router-dom";
 import cookie from 'react-cookies';
-
-import {ContentHeightContext, ContentWidthContext} from "../Context/ElementContext";
-import {Carousel} from "antd";
 import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 
@@ -19,8 +16,7 @@ export default function ArticleView() {
         "create_by": "",
         "content": ""
     })
-    const {contentWidth} = useContext(ContentWidthContext)
-    let w = contentWidth
+    // const {contentWidth} = useContext(ContentWidthContext)
 
     useEffect(()=>{
         axios.get(GetUrl("movies/" + params.id), {
@@ -29,9 +25,6 @@ export default function ArticleView() {
                 "Authorization": "Bearer " + cookie.load("access_token"),
             }})
             .then(response=>{
-                // setMovies(response['data']['movies'])
-                // console.log(params.id)
-                // console.log(response.data['data'])
                 setLoading(false)
                 setContentInfo(response.data['data'])
 
@@ -43,8 +36,11 @@ export default function ArticleView() {
             <h1>{contentInfo.title}</h1><br/>
             <p>Created by {contentInfo.create_by}</p>
             <p>{contentInfo.desc}</p>
-            <br/><br/><br/>
-            <p>{contentInfo.content}</p>
+            <br/><br/>
+            <div className={'mainText'}>
+                <p>{contentInfo.content}</p>
+            </div>
+
         </>
     );
 }
