@@ -36,7 +36,7 @@
   },
   "scripts": {
     "start": "set PORT=8080 & react-scripts start",
-    "prebuild": "del ..\\backend\\Flaskr\\templates\\index.html && rmdir /s ..\\backend\\Flaskr\\frontend_static\\build",
+    "//": "del ..\\backend\\Flaskr\\templates\\index.html && rmdir /s ..\\backend\\Flaskr\\frontend_static\\build",
     "build": "react-scripts build",
     "postbuild": "move build\\index.html ..\\backend\\Flaskr\\templates\\ && move build ..\\backend\\Flaskr\\frontend_static\\",
     "test": "react-scripts test",
