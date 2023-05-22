@@ -24,7 +24,7 @@ export default function Home() {
                 <div>
                     <h3 style={contentStyle}>
                         Hello!
-                        {currentUser===null ? "" :currentUser.name}
+                        {currentUser===null ? "" :currentUser.user}
                     </h3>
                 </div>
                 <div>

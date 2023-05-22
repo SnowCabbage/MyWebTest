@@ -1,7 +1,3 @@
-import datetime
-import os
-import sys
-
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -28,12 +24,16 @@ from Flaskr.apis.movies import movies
 from Flaskr.apis.loginAuth import loginAuth
 from Flaskr.apis.informationCheck import informationCheck
 from Flaskr.apis.comments import comments
+from Flaskr.apis.files.fileUpload import fileUpload
+from Flaskr.apis.files.images import images
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
 app.register_blueprint(loginAuth)
 app.register_blueprint(informationCheck)
 app.register_blueprint(comments)
+app.register_blueprint(fileUpload)
+app.register_blueprint(images)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback

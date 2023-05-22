@@ -61,7 +61,7 @@ export default function AddEntry() {
         setLoading(true)
         let data = values
         let currentDate = new Date()
-        data['create_by'] = currentUser.name
+        data['create_by'] = currentUser.user
         data['update_date'] = currentDate.toLocaleString()
         if (data['content'] == null) data['content'] = 'To be update'
         //debug

@@ -6,6 +6,9 @@ import {AuthContext, UserContext} from "../Context/AuthContext";
 import {NavLink, useLocation} from "react-router-dom";
 import { Button, Tooltip } from 'antd';
 import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
+import GetUrl from "../Context/UrlSource";
+import requests from "../handler/handleRequest";
+import cookie from 'react-cookies';
 
 const authItems: MenuProps['items'] = [
     {
@@ -55,12 +58,26 @@ const unAuthItems: MenuProps['items'] = [
     },
 ];
 
+function ShowAvatar({Auth, avatar_id}){
+    if (Auth){
+        // console.log(Auth)
+        return (
+                <Avatar src={GetUrl("images/" + avatar_id)} alt="头像" size={60}/>
+            )
+    }
+    return (
+        <div style={{height: 60}}></div>
+    )
+}
+
 
 export default function Header() {
     const [current, setCurrent] = useState('');
     const isAuth = useContext(AuthContext)
     const location = useLocation()
+    const [currentAvatar, setCurrentAvatar] = useState('')
     const {currentUser} = useContext(UserContext)
+    const {setCurrentUser} = useContext(UserContext)
     // //取得当前url
     // const initPath = window.location.href.split('/').pop()
 
@@ -69,6 +86,31 @@ export default function Header() {
         // console.log(currentUrl)
         setCurrent(currentUrl)
     },[location])
+
+    useEffect(()=>{
+        // console.log(11111)
+        // console.log(isAuth)
+        if (isAuth){
+            requests.get(GetUrl("user"), {
+                params:{
+                    "user": currentUser.user
+                },
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": "Bearer " + cookie.load("access_token"),
+                },
+            })
+                .then(response=>{
+                    console.log(response.data)
+                    setCurrentAvatar(response.data['data']['profile']['avatar_id'])
+                })
+                .catch(e=>{
+                    fail(e.msg)
+                    console.log("Error:", e)
+                })
+        }
+
+    },[currentUser, isAuth])
 
     const onClick: MenuProps['onClick'] = (e) =>{
         setCurrent(e.key)
@@ -83,14 +125,17 @@ export default function Header() {
             }}
         >
             <div className={"header"}>
-                <Avatar src={require('../../static/dog.jpg')} alt="A dog" size={60}/>
+                <ShowAvatar
+                    Auth={isAuth}
+                    avatar_id={currentAvatar}
+                />
 
                 <div style={{
                     display: 'inline-block',
                     top: 15,
                     position: 'absolute',
                 }}>
-                    <h2>{currentUser===null ? "" :currentUser.name}</h2>
+                    <h2>{currentUser.user===null ? "" :currentUser.user}</h2>
                 </div>
 
                 <Menu  style={{

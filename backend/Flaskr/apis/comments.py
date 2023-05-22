@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, request
 from flask_restful import Resource
 
@@ -32,12 +34,17 @@ class CommentListAPI(Resource):
         example like this: "data":{"content": "", "author": "", "update_time": ""}
         """
         response_data = request.get_json()['data']
-        print(response_data)
+        # print(response_data)
         content = response_data['content']
         author = response_data['author']
         update_time = response_data['update_time']
 
         author_queried = User.query.filter_by(username=author).first()
+        if author_queried is None:
+            return {
+                'code': 'Error',
+                'message': "Invalid user"
+            }
         # print(author_id)
 
         cmt = Comment(

@@ -15,10 +15,6 @@ export default function Register(){
     const [isAble, setIsAble] = useState(true)
     const {contentWidth} = useContext(ContentWidthContext)
 
-    // 及其简陋的屏幕适配
-    const cardWidth = contentWidth * 0.5
-    const formWidth = contentWidth * 0.4
-
     // useEffect(() => {
     //     forceUpdate({});
     // }, []);

@@ -1,5 +1,5 @@
-import {Avatar, Button, Card, ConfigProvider, Form, Input, message} from "antd";
-import React, {useContext, useEffect, useState} from "react";
+import { Button, Card, ConfigProvider, Form, Input, message} from "antd";
+import React, {useContext, useState} from "react";
 import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 import {useNavigate} from "react-router-dom";
@@ -7,20 +7,16 @@ import {ContentWidthContext} from "../Context/ElementContext";
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
+import UploadImage from "../Units/UploadImage";
 
 export default function Setting() {
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm()
-    const {contentWidth} = useContext(ContentWidthContext)
     const {currentUser} = useContext(UserContext)
     const {setCurrentUser} = useContext(UserContext)
     // const [newUser, setNewUser] = useState(null)
-
-    // 及其简陋的屏幕适配
-    const cardWidth = contentWidth * 0.5
-    const formWidth = contentWidth * 0.4
 
     const sendMsg=(data) => {
         let sendData = {}
@@ -32,7 +28,7 @@ export default function Setting() {
             },
         })
             .then(response=>{
-                success(data.new_username)
+                success(response.data.user_profile)
             })
             .catch(e=>{
                 fail(e.msg)
@@ -45,7 +41,7 @@ export default function Setting() {
 
     const success = (updateUser) => {
         let inFifteenMinutes = new Date(new Date().getTime() + 24 * 3600 * 1000);//一天
-        setCurrentUser({name: updateUser})
+        setCurrentUser({name: updateUser})//TODO:Need to fix
         cookie.remove("user", { path: '/' })
         cookie.save('user', updateUser, {path:"/", expires: inFifteenMinutes});
         setLoading(false)
@@ -70,7 +66,7 @@ export default function Setting() {
     const onFinish = (values: any) => {
         // console.log(values)
         setLoading(true)
-        values['user'] = currentUser.name
+        values['user'] = currentUser.user
         console.log(values)
         sendMsg(values)
     };
@@ -79,6 +75,15 @@ export default function Setting() {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    // 更新头像
+    const onUpdate = (value)=>{
+        // debug
+        // console.log(value)
+
+        let user = currentUser.user
+        setCurrentUser({user: user, user_avatar: value})
+    }
 
     return (
         <ConfigProvider
@@ -104,11 +109,12 @@ export default function Setting() {
                     form={form}
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
-                    style={{ minWidth: '20vw',
-                        maxWidth: 600,
+                    style={{ width: '40vw',
+                        maxWidth: 420,
                         display:"inline-block",
                         position: "relative",
-                        right: '1vw'
+                        right: '1vw',
+                        textAlign: 'center'
                     }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -159,7 +165,7 @@ export default function Setting() {
                         <Input placeholder="请输入新账号"/>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }} shouldUpdate>
+                    <Form.Item style={{display: 'inline-block'}} shouldUpdate>
                         {() => (
                             <Button
                                 type="primary"
@@ -171,8 +177,16 @@ export default function Setting() {
                         )}
                     </Form.Item>
                 </Form>
+
+                <div>
+                    <p>修改头像</p>
+                    <UploadImage
+                        update ={onUpdate}
+                    />
+                </div>
+
             </Card>
-            {/*</div>*/}
+
         </ConfigProvider>
     );
 }

@@ -8,6 +8,8 @@ const requests = axios.create({
 
 //响应拦截器
 requests.interceptors.response.use((res) => {
+    if (res.data.code !== 'OK')
+        return Promise.reject({type: "error", msg: res.data.message})
     return res;
 }, (error) => {
     //console.log(error);

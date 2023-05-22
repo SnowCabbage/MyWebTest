@@ -1,6 +1,6 @@
 import click
 from Flaskr import db, app
-from Flaskr.models import Movie, User
+from Flaskr.models import Movie, User, Userprofile
 
 
 @app.cli.command()  # 注册为命令，可以传入 name 参数来自定义命令
@@ -12,7 +12,6 @@ def initdb(drop):
         click.echo('Drop all')
     db.create_all()
 
-    # name = 'Grey Li'
     movies = [
         {'title': 'My Neighbor Totoro',
          'year': '1988',
@@ -41,8 +40,8 @@ def initdb(drop):
 @click.option('--username', prompt=True, help='The username used to login.')
 @click.option('--password', prompt=True, hide_input=True, confirmation_prompt=True, help='The password used to login.')
 def initadmin(username, password):
-    """Create user."""
-    db.create_all()
+    """Create user and set user's profile"""
+    # db.create_all()
 
     user = User.query.first()
     if user is not None:
@@ -51,9 +50,16 @@ def initadmin(username, password):
         # user.set_password(password)  # 设置密码
     else:
         click.echo('Creating user...')
-        user = User(username=username, role='Admin', profile='default profile')
+        user = User(username=username, role='Admin')
         user.hash_password(password)
-        db.session.add(user)
+
+    user_info = Userprofile(
+        image_id='1'
+    )
+    user.userprofile = user_info
+
+    db.session.add(user)
+    db.session.add(user_info)
 
     db.session.commit()
     click.echo('Done.')

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
-import {AuthContext, UserContext} from "./components/Context/AuthContext";
+import {AuthContext, UserAvatarContext, UserContext} from "./components/Context/AuthContext";
 import {BrowserRouter} from "react-router-dom";
 import {useRef } from 'react'
 
@@ -14,20 +14,20 @@ import {ContentHeightContext, ContentWidthContext} from "./components/Context/El
 
 function App() {
 
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState({
+        user: cookie.load('user'),
+        user_avatar: "1"
+    })
     const [contentHeight, setContentHeight] = useState(null)
     const [contentWidth, setContentWidth] = useState(null)
+    // const [currentAvatar, setCurrentAvatar] = useState(null)
     const mainArea = useRef(null)
-    const [currentCookie, setCurrentCookie] = useState(cookie.load('user')? cookie.load('user') : 'default')
-    // const mainWidth = useRef(null)
 
     useEffect(()=>{
-        setCurrentUser({name: cookie.load('user')})
-        // console.log("main height:",mainArea.current.clientHeight)
-        // console.log("main width:", mainArea.current.clientWidth)
+        // console.log(1111)
+        // setCurrentUser({user: cookie.load('user'), user_avatar: "1"})
         setContentHeight(mainArea.current.clientHeight)
         setContentWidth(mainArea.current.clientWidth)
-
     }, [])
 
     return (
@@ -45,11 +45,11 @@ function App() {
                             contentWidth,
                             setContentWidth
                         }}>
-                        <Header/>
-                        <div className={"contentStyle"} ref={mainArea}>
-                            <MainContent/>
-                        </div>
-                        <Footer/>
+                            <Header/>
+                            <div className={"contentStyle"} ref={mainArea}>
+                                <MainContent/>
+                            </div>
+                            <Footer/>
                         </ContentWidthContext.Provider>
                     </ContentHeightContext.Provider>
                 </UserContext.Provider>

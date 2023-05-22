@@ -8,7 +8,7 @@ from Flaskr.models import User
 informationCheck = Blueprint('informationCheck', __name__)
 
 
-class usernameCheckAPI(Resource):
+class UsernameCheckAPI(Resource):
     def post(self):
         response_object = {}
         post_data = request.get_json()
@@ -19,4 +19,4 @@ class usernameCheckAPI(Resource):
         return {'code': 'Error', 'message': 'username exists'}
 
 
-api.add_resource(usernameCheckAPI, '/api/username_check', endpoint='username_check')
+api.add_resource(UsernameCheckAPI, '/api/username_check', endpoint='username_check')

@@ -4,19 +4,18 @@ import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
-import { ContentWidthContext} from "../Context/ElementContext";
 import requests from "../handler/handleRequest";
+import {defaultUserInfo} from "../Context/DefaultInfo";
 
 export default function Login(){
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState(defaultUserInfo)
     // const [ready, setReady] = useState(0)
     const {setCurrentUser} = useContext(UserContext)
     const [form] = Form.useForm()
     const [, forceUpdate] = useState({});
-    const {contentWidth} = useContext(ContentWidthContext)
 
     // 及其简陋的屏幕适配
     // const cardWidth = contentWidth * 0.36
@@ -36,9 +35,9 @@ export default function Login(){
             .then(response=>{
                 if('access_token' in response.data){
                     // console.log(response.data['user'])
-                    setUser(response.data['user'])
-                    let inFifteenMinutes = new Date(new Date().getTime() + 24 * 3600 * 1000);//一天
-                    cookie.save('user', response.data['user'],{path:"/", expires: inFifteenMinutes});
+                    setUser(response.data['user_profile'])
+                    let inFifteenMinutes = new Date(new Date().getTime() + 0.25 * 3600 * 1000);//一天
+                    cookie.save('user', response.data['user_profile']['user'],{path:"/", expires: inFifteenMinutes});
                     cookie.save('access_token',response.data['access_token'],{path:"/", expires: inFifteenMinutes})
                     success()
                 }
@@ -51,7 +50,7 @@ export default function Login(){
     };
 
     useEffect(()=>{
-        setCurrentUser({name: user})
+        setCurrentUser(user)
     },[setCurrentUser, user])
 
     const toHome = ()=>{

@@ -3,6 +3,7 @@ import { message} from "antd";
 import { useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
+import {defaultUserInfo} from "../Context/DefaultInfo";
 
 export default function Logout(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -29,7 +30,7 @@ export default function Logout(){
         cookie.remove("user", { path: '/' })
         setTimeout(()=>{
             setUser("")
-            setCurrentUser(null)
+            setCurrentUser(defaultUserInfo)
             toHome()
         }, 1500)
     }
