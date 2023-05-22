@@ -13,7 +13,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36
 def handleAvatar(file_path):
     with open(file_path, 'rb') as f:
         response = requests.post(DRAWING_BED_API, files={"file": f}, headers=headers)
-        print(response.text)
+        # print(response.text)
 
 
 if __name__ == '__main__':

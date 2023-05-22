@@ -61,8 +61,14 @@ class UserListAPI(Resource):
 
 
 class UserApi(Resource):
+    method_decorators = [jwt_required()]
+
     def get(self):
         user_rev = request.args.get('user')
+
+        # debug
+        # print(user_rev)
+
         user = User.query.filter_by(username=user_rev).first()
         return {
             "code": "OK",
@@ -81,6 +87,9 @@ class UserApi(Resource):
         post_data = request.get_json()
         new_username = post_data['data']['new_username']
         user = post_data['data']['user']
+
+        # debug
+        # print(user, new_username)
 
         changeUser = User.query.filter_by(username=user).first()
         changeUser.username = new_username
@@ -122,6 +131,14 @@ class UserAvatarApi(Resource):
         payload_data = {'user': user}
         response = requests.post('http://127.0.0.1:5000/api/fileImageUpload', files=payload_file, data=payload_data)
         response = json.loads(response.content)
+
+        if response['code'] == 'Error':
+            return {
+                    'code': 'Error',
+                    'message': "Format Error",
+                    'image_id': ""
+                }
+
         image_id = response['image_id']
 
         # debug
