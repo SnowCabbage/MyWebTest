@@ -3,5 +3,6 @@ __pycache__
 node_modules
 *.db
 migrations
+！1.jpg
 *.jpg
 *.png
