@@ -28,7 +28,10 @@ export default function Setting() {
             },
         })
             .then(response=>{
-                success(response.data.user_profile)
+                //debug
+                // console.log(response.data)
+
+                success(response.data['data']['user_profile'])
             })
             .catch(e=>{
                 fail(e.msg)
@@ -40,10 +43,14 @@ export default function Setting() {
     // },[newUser, setCurrentUser])
 
     const success = (updateUser) => {
-        let inFifteenMinutes = new Date(new Date().getTime() + 24 * 3600 * 1000);//一天
-        setCurrentUser({name: updateUser})//TODO:Need to fix
+        let inFifteenMinutes = new Date(new Date().getTime() + 0.25 * 3600 * 1000);//一天
+
+        //debug
+        // console.log(updateUser)
+
+        setCurrentUser(updateUser)
         cookie.remove("user", { path: '/' })
-        cookie.save('user', updateUser, {path:"/", expires: inFifteenMinutes});
+        cookie.save('user', updateUser.user, {path:"/", expires: inFifteenMinutes});
         setLoading(false)
         messageApi.open({
             type: 'success',
@@ -67,7 +74,7 @@ export default function Setting() {
         // console.log(values)
         setLoading(true)
         values['user'] = currentUser.user
-        console.log(values)
+        // console.log(values)
         sendMsg(values)
     };
 

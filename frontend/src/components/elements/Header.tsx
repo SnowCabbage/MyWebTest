@@ -77,7 +77,7 @@ export default function Header() {
     const location = useLocation()
     const [currentAvatar, setCurrentAvatar] = useState('')
     const {currentUser} = useContext(UserContext)
-    const {setCurrentUser} = useContext(UserContext)
+    // const {setCurrentUser} = useContext(UserContext)
     // //取得当前url
     // const initPath = window.location.href.split('/').pop()
 
@@ -88,9 +88,8 @@ export default function Header() {
     },[location])
 
     useEffect(()=>{
-        // console.log(11111)
-        // console.log(isAuth)
         if (isAuth){
+            // console.log(currentUser.user)
             requests.get(GetUrl("user"), {
                 params:{
                     "user": currentUser.user
