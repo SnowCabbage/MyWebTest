@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, request
 from flask_jwt_extended import create_access_token
 from flask_restful import Resource
@@ -12,6 +14,15 @@ class UsernameCheckAPI(Resource):
     def post(self):
         response_object = {}
         post_data = request.get_json()
+
+        #debug
+        # print("post_data:", post_data)
+        # print(type(post_data))
+
+        if type(post_data) != dict:
+            post_data = json.loads(post_data)
+
+
         username = post_data.get('username', None)
         user = User.query.filter_by(username=username).first()
         if user is None:

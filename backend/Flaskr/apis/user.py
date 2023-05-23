@@ -35,20 +35,27 @@ class UserListAPI(Resource):
     def post(self):
         response_object = {}
         post_data = request.get_json()
-        # logging.info(post_data)
-        # print(post_data)
         username = post_data['data']['username']
         password = post_data['data']['password']
         if username == '' or password == '':
             response_object['code'] = 'ERROR'
             response_object['message'] = 'Invalid username or password'
             return response_object, 400
+
+        check_response = requests.post('http://127.0.0.1:8080/api/username_check',
+                                       json=json.dumps({'username': username}))
+        check_response = json.loads(check_response.content)
+        if check_response['code'] == 'Error':
+            return {
+                'code': 'Error',
+                'message': 'Account exist!'
+            }
+
         response_object['code'] = 'OK'
-        # response_object['data'] = post_data['data']
+
         user_info = Userprofile(
             image_id='1'
         )
-
         newUser = User(
             username=username,
             role='guest',
@@ -70,6 +77,11 @@ class UserApi(Resource):
         # print(user_rev)
 
         user = User.query.filter_by(username=user_rev).first()
+        if user is None:
+            return {
+                "code": "Error",
+                "message": "Invalid account"
+            }
         return {
             "code": "OK",
             "message": "success",
@@ -129,7 +141,7 @@ class UserAvatarApi(Resource):
             }
 
         payload_data = {'user': user}
-        response = requests.post('http://127.0.0.1:5000/api/fileImageUpload', files=payload_file, data=payload_data)
+        response = requests.post('http://127.0.0.1:8080/api/fileImageUpload', files=payload_file, data=payload_data)
         response = json.loads(response.content)
 
         if response['code'] == 'Error':
