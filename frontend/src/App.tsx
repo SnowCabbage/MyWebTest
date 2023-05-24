@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
-import {AuthContext, UserAvatarContext, UserContext} from "./components/Context/AuthContext";
+import {AuthContext, UserContext} from "./components/Context/AuthContext";
 import {BrowserRouter} from "react-router-dom";
 import {useRef } from 'react'
 

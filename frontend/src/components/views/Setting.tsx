@@ -8,6 +8,7 @@ import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
 import UploadImage from "../Units/UploadImage";
+import {mainThemeColor} from "../Context/DefaultInfo";
 
 export default function Setting() {
     const [messageApi, contextHolder] = message.useMessage();
@@ -96,13 +97,13 @@ export default function Setting() {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#177cb0',
+                    colorPrimary: mainThemeColor,
                 },
             }}
         >
             {contextHolder}
             <Card title="修改信息" bordered={false} style={{
-                width: '60vw',
+                width: '80vw',
                 maxWidth: 480,
                 margin: 'auto',
                 top: 30,
@@ -114,13 +115,11 @@ export default function Setting() {
                 <Form
                     name="basic"
                     form={form}
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    style={{ width: '40vw',
+                    style={{
+                        width: '40vw',
                         maxWidth: 420,
                         display:"inline-block",
                         position: "relative",
-                        right: '1vw',
                         textAlign: 'center'
                     }}
                     onFinish={onFinish}
@@ -178,6 +177,10 @@ export default function Setting() {
                                 type="primary"
                                 htmlType="submit"
                                 loading={loading}
+                                style={{
+                                    height: 36,
+                                    width: 100
+                                }}
                             >
                                 更新
                             </Button>
@@ -186,7 +189,8 @@ export default function Setting() {
                 </Form>
 
                 <div>
-                    <p>修改头像</p>
+                    <div style={{float: 'left'}} >修改头像(暂时只支持jpg):</div><br/>
+
                     <UploadImage
                         update ={onUpdate}
                     />

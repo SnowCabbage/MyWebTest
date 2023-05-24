@@ -5,6 +5,7 @@ import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import axios from "axios";
 import {ContentWidthContext} from "../Context/ElementContext";
+import {mainThemeColor} from "../Context/DefaultInfo";
 
 export default function Register(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -13,7 +14,6 @@ export default function Register(){
     const [form] = Form.useForm()
     // const [, forceUpdate] = useState({});
     const [isAble, setIsAble] = useState(true)
-    const {contentWidth} = useContext(ContentWidthContext)
 
     // useEffect(() => {
     //     forceUpdate({});
@@ -75,7 +75,7 @@ export default function Register(){
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#177cb0',
+                    colorPrimary: mainThemeColor,
                 },
             }}
         >
@@ -93,13 +93,13 @@ export default function Register(){
                     <Form
                         name="basic"
                         form={form}
-                        labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 16 }}
-                        style={{ width: '42vw',
-                            maxWidth: 420,
+                        style={{
+                            // width: '42vw',
+                            // maxWidth: 420,
+                            width: '100%',
                             display:"inline-block",
                             position: "relative",
-                            right:'4vw'
+                            // right:'4vw'
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
@@ -108,6 +108,8 @@ export default function Register(){
                         <Form.Item
                             label="账号"
                             name="username"
+                            labelCol={{ span: 7 }}
+                            wrapperCol={{ span: 17 }}
                             validateFirst={true}
                             validateTrigger={'onBlur'}
                             rules={[
@@ -154,6 +156,8 @@ export default function Register(){
                         <Form.Item
                             label="密码"
                             name="password"
+                            labelCol={{ span: 7 }}
+                            wrapperCol={{ span: 17 }}
                             rules={[
                                 { required: true, message: '请输入密码!' },
                                 {min: 6, message: '密码过短'},
@@ -166,6 +170,8 @@ export default function Register(){
                             label="确认密码"
                             name="vertifyPassword"
                             validateTrigger="onBlur"
+                            labelCol={{ span: 7 }}
+                            wrapperCol={{ span: 17 }}
                             rules={[
                                 { required: true, message: '请输入密码!' },
                                 ({getFieldValue})=>({
@@ -183,7 +189,7 @@ export default function Register(){
 
 
 
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }} shouldUpdate>
+                        <Form.Item shouldUpdate>
                             {() => (
                                 <Button
                                     type="primary"
@@ -194,6 +200,10 @@ export default function Register(){
                                         !!form.getFieldsError().filter(({errors}) => errors.length).length ||
                                         isAble
                                     }
+                                    style={{
+                                        height: 40,
+                                        width: '100%'
+                                    }}
                                 >
                                     注册
                                 </Button>

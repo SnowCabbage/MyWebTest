@@ -6,6 +6,7 @@ import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {NavLink} from "react-router-dom";
 import requests from "../handler/handleRequest";
+import {mainThemeColor} from "../Context/DefaultInfo";
 
 
 export default function ListMovies()  {
@@ -81,11 +82,10 @@ export default function ListMovies()  {
         // @ts-ignore
     return(
         <>
-            {/*<Header index={"movies"}/>*/}
             <ConfigProvider
                 theme={{
                     token: {
-                        colorPrimary: '#177cb0',
+                        colorPrimary: mainThemeColor,
                     },
                 }}
             >
@@ -148,14 +148,14 @@ export default function ListMovies()  {
                             }}
                                 itemLayout="vertical"
                                 dataSource={movies}
-                                renderItem={(item, index) => (
+                                renderItem={(item) => (
                                     <List.Item
                                         key={item.id}
-                                        actions={[<a onClick={Operate(item.id)}>删除</a>, <a key="list-loadmore-more">more</a>]}
+                                        actions={[<a onClick={Operate(item.id)}>删除</a>]}
                                     >
                                         <Skeleton loading={loading} active avatar>
                                             <List.Item.Meta
-                                                avatar={<Avatar src={require('../../static/dog.jpg')}/>}
+                                                avatar={<Avatar src={GetUrl('images/' + item.avatar_id)}/>}
                                                 title={<NavLink to={item.url} rel="noreferrer">{item.name}</NavLink>}
                                                 description={"Last update:" + item.update_date}
                                             />

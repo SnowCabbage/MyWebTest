@@ -32,7 +32,7 @@ export default function Logout(){
             setUser("")
             setCurrentUser(defaultUserInfo)
             toHome()
-        }, 1500)
+        }, 800)
     }
 
     return (

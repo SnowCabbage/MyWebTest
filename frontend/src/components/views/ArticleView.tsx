@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import {UserContext} from "../Context/AuthContext";
-import { useParams } from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import cookie from 'react-cookies';
 import axios from "axios";
 import GetUrl from "../Context/UrlSource";
-import {Button, Form, Input, message} from "antd";
+import {Avatar, Button, ConfigProvider, Form, Input, List, message, Skeleton} from "antd";
 import requests from "../handler/handleRequest";
+import {mainThemeColor} from "../Context/DefaultInfo";
 
 export default function ArticleView() {
     const {currentUser} = useContext(UserContext)
@@ -20,10 +21,13 @@ export default function ArticleView() {
         "create_by": "",
         "content": ""
     })
+    const [nums, setNums] = useState(0)
+    const [comments, setComments] = useState([]);
+    const [commentLoading, setCommentLoading] = useState(true)
     // const {contentWidth} = useContext(ContentWidthContext)
 
     useEffect(()=>{
-        axios.get(GetUrl("movies/" + params.id), {
+        requests.get(GetUrl("movies/" + params.id), {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
@@ -31,10 +35,27 @@ export default function ArticleView() {
             .then(response=>{
                 setLoading(false)
                 setContentInfo(response.data['data'])
-
             })
             .catch(e=>console.log('Error:', e))
     },[])
+
+    useEffect(()=>{
+        requests.get(GetUrl("comments"),{headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + cookie.load("access_token"),
+            }})
+            .then(response=>{
+                // setMovies(response['data']['movies'])
+                // console.log(response.data)
+                setCommentLoading(false)
+                setNums(response.data['data']['num'])
+                setComments(response.data['data']['comments'])
+
+                //debug
+                // console.log(response.data['data']['movies'])
+            })
+            .catch(e=>console.log('Error:', e.message))
+    },[loading])
 
     const onFinish = (values: any) => {
         setLoading(true)
@@ -42,6 +63,7 @@ export default function ArticleView() {
         let currentDate = new Date()
         data['author'] = currentUser.user
         data['update_time'] = currentDate.toLocaleString()
+        data['avatar_id'] = currentUser.user_avatar
         // if (data['content'] == null) data['content'] = 'To be update'
         //debug
         // console.log(data['content'])
@@ -97,7 +119,13 @@ export default function ArticleView() {
     };
 
     return (
-        <>
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: mainThemeColor,
+                },
+            }}
+        >
             <h1>{contentInfo.title}</h1>
             <p>Created by {contentInfo.create_by}</p>
             <p>{contentInfo.desc}</p>
@@ -106,20 +134,16 @@ export default function ArticleView() {
             </div>
             <div style={{
                 paddingTop: '20vh',
-                width: '80vw',
-                maxWidth: 720,
             }}>
                 <Form
                     form={form}
                     name="basic"
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    // style={{ width: '80vw',
-                    //     maxWidth: 720,
-                    //     display:"inline-block",
-                    //     position: "relative",
-                    //     right: '5vw'
-                    // }}
+                    style={{
+                        width: '80vw',
+                        maxWidth: 720,
+                        display:"inline-block",
+                        position: "relative"
+                    }}
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -130,7 +154,7 @@ export default function ArticleView() {
                         name="content"
                     >
                         <TextArea
-                            rows={10}
+                            rows={6}
                             style={{whiteSpace:'pre-wrap'}}
                             onKeyDown={e=>add(e)}
                             required
@@ -151,7 +175,77 @@ export default function ArticleView() {
                 </Form>
             </div>
 
-            <div></div>
-        </>
+            <div>
+                {
+                    commentLoading ? <List
+                    itemLayout="vertical"
+                    pagination={{
+                        // onChange: (page) => {
+                        //     console.log(page);
+                        // },
+                        pageSize: 6,
+                    }}
+                    dataSource={[
+                        {
+                            "desc": "This is a test",
+                            "id": 1,
+                            "name": "My Neighbor Totoro",
+                            "url": "https://flappybird.io/",
+                            "year": "1988"
+                        },
+                        {
+                            "desc": "Ran is a girl",
+                            "id": 2,
+                            "name": "Ran",
+                            "url": "https://flappybird.io/",
+                            "year": "1997"
+                        },
+                        {
+                            "desc": "666",
+                            "id": 3,
+                            "name": "666",
+                            "url": "666",
+                            "year": "666"
+                        }]}
+                    renderItem={(item, index) => (
+                        <List.Item>
+                            <Skeleton loading={commentLoading} active avatar>
+                                <List.Item.Meta
+                                    avatar={<Avatar src={'../../../../dog.jpg'}/>}
+                                />
+                                    <div className={'comment-text'} style={{display: "flex"}}>
+                                        {item.desc}
+                                    </div>
+
+                                    <div className={'comment-author'} style={{display: "flex", flexDirection: "row-reverse"}}>
+                                        by me
+                                    </div>
+                            </Skeleton>
+                        </List.Item>
+                    )}
+                /> : <List
+                        itemLayout="vertical"
+                        pagination={{
+                            pageSize: 6,
+                        }}
+                        dataSource={comments}
+                        renderItem={(item) => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src={GetUrl('images/' + item.avatar_id)}/>}
+                                />
+                                <div className={'comment-text'} style={{display: "flex"}}>
+                                    {item.content}
+                                </div>
+
+                                <div className={'comment-author'} style={{display: "flex", flexDirection: "row-reverse"}}>
+                                    by {item.author}
+                                </div>
+                            </List.Item>
+                        )}
+                    />
+                }
+            </div>
+        </ConfigProvider>
     );
 }

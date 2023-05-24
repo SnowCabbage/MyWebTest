@@ -14,7 +14,7 @@
 .contentStyle{
     width: 100%;
     flex: 1;
-     background: #e9f1f6;
+     background: #f0f0f4;
     /*font-size: 40px;*/
     text-align: center;
     padding-bottom: 80px;
@@ -24,14 +24,14 @@
 .header {
     width: 100%;
     height: 110px;
-    background: #e9f1f6;
+    background: #f0f0f4;
 }
 
 .footerStyle{
     width: 100%;
-    background: #e9f1f6;
+    background: #f0f0f4;
     text-align: center;
-    color: #e9f1f6;
+    color: #f0f0f4;
     /*flex: 0;*/
     /*height: 100px;*/
     margin: 0 auto;
@@ -39,7 +39,6 @@
 
 .mainText{
     text-align: initial;
-    /*text-indent: 2em;*/
     white-space: pre-wrap;
 }
 

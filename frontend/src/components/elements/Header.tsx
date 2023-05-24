@@ -4,11 +4,22 @@ import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
 import {AuthContext, UserContext} from "../Context/AuthContext";
 import {NavLink, useLocation} from "react-router-dom";
-import { Button, Tooltip } from 'antd';
-import { SearchOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
+import { Button, Tooltip, Typography } from 'antd';
+import {
+    PoweroffOutlined,
+    UserOutlined,
+    HomeOutlined,
+    BarsOutlined,
+    SettingOutlined,
+    PlusOutlined
+} from '@ant-design/icons';
 import GetUrl from "../Context/UrlSource";
 import requests from "../handler/handleRequest";
 import cookie from 'react-cookies';
+import {mainThemeColor} from "../Context/DefaultInfo";
+
+
+const { Text} = Typography;
 
 const authItems: MenuProps['items'] = [
     {
@@ -27,6 +38,7 @@ const authItems: MenuProps['items'] = [
             </NavLink>
         ),
         key: 'movies',
+        icon: <BarsOutlined/>
     },
     {
         label: (
@@ -34,7 +46,8 @@ const authItems: MenuProps['items'] = [
                 设置
             </NavLink>
         ),
-        key: 'setting'
+        key: 'setting',
+        icon: <SettingOutlined />
     },
     {
         label: (
@@ -42,7 +55,8 @@ const authItems: MenuProps['items'] = [
                 增加条目
             </NavLink>
         ),
-        key: 'addentry'
+        key: 'addentry',
+        icon: <PlusOutlined />
     },
 ];
 
@@ -119,7 +133,7 @@ export default function Header() {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#177cb0',
+                    colorPrimary: mainThemeColor,
                 },
             }}
         >
@@ -134,12 +148,17 @@ export default function Header() {
                     top: 15,
                     position: 'absolute',
                 }}>
-                    <h2>{currentUser.user===null ? "" :currentUser.user}</h2>
+                    <Text italic strong style={{
+                        fontSize: 30,
+                        color: '#db5a6b'
+                    }}>
+                        {currentUser.user===null ? "" :currentUser.user}
+                    </Text>
                 </div>
 
                 <Menu  style={{
                     display:'block',
-                    background:'#d6ecf0',
+                    background:'#f0f0f4',
                     textAlign:'center',
                     height: 50
                 }}
@@ -154,7 +173,7 @@ export default function Header() {
                             display: 'inline-block',
                             right: 0,
                             position: 'absolute',
-                        }} type="primary" icon={<SearchOutlined spin/>}>
+                        }} type="primary" icon={<PoweroffOutlined />}>
                             退出登录
                         </Button>
                     </Tooltip>

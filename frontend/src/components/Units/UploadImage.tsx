@@ -58,7 +58,7 @@ export default function UploadImage({update}){
     return (
         <App>
             <Upload {...props}>
-                <Button icon={<UploadOutlined />}>选择图像</Button>
+                <Button icon={<UploadOutlined />} >选择图像</Button>
             </Upload>
             <Button
                 type="primary"

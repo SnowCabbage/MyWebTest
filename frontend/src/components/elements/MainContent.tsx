@@ -8,7 +8,6 @@ import Setting from "../views/Setting";
 import AddEntry from "../views/AddEntry";
 import Logout from "../UserAuth/Logout";
 import React from "react";
-import {useRef, useEffect } from 'react'
 import ArticleView from "../views/ArticleView";
 
 export default function MainContent() {

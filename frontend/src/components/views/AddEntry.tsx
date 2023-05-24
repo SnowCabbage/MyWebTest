@@ -5,6 +5,7 @@ import GetUrl from "../Context/UrlSource";
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
+import {mainThemeColor} from "../Context/DefaultInfo";
 
 export default function AddEntry() {
 
@@ -63,6 +64,7 @@ export default function AddEntry() {
         let currentDate = new Date()
         data['create_by'] = currentUser.user
         data['update_date'] = currentDate.toLocaleString()
+        data['avatar_id'] = currentUser.user_avatar
         if (data['content'] == null) data['content'] = 'To be update'
         //debug
         // console.log(data['content'])
@@ -92,7 +94,7 @@ export default function AddEntry() {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#4b5cc4',
+                    colorPrimary: mainThemeColor,
                 },
             }}
         >
@@ -101,22 +103,18 @@ export default function AddEntry() {
                 width: '60vw',
                 maxWidth: 500,
                 margin: 'auto',
-                // top: 36,
                 right: 0,
                 left: 0,
-                // bottom: 36,
                 background: '#ffffff',
             }}>
                         <Form
                             form={form}
                             name="basic"
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
-                            style={{ width: '50vw',
-                                maxWidth: 520,
+                            style={{
+                                width: '50vw',
+                                maxWidth: 420,
                                 display:"inline-block",
                                 position: "relative",
-                                right: '5vw'
                             }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
@@ -125,6 +123,7 @@ export default function AddEntry() {
                         >
                             <Form.Item
                                 label="标题"
+                                labelCol={{ span: 3 }}
                                 name="name"
                                 validateTrigger={['onFinish']}
                                 rules={[
@@ -137,6 +136,7 @@ export default function AddEntry() {
 
                             <Form.Item
                                 label="描述"
+                                labelCol={{ span: 3 }}
                                 name="desc"
                                 rules={[{ required: true, message: '请输入简单描述!' }]}
                             >
@@ -145,6 +145,7 @@ export default function AddEntry() {
 
                             <Form.Item
                                 label="内容"
+                                labelCol={{ span: 3 }}
                                 name="content"
                             >
                                 <TextArea
@@ -155,12 +156,15 @@ export default function AddEntry() {
                             </Form.Item>
 
                             <Form.Item
-                                wrapperCol={{ offset: 8, span: 16 }}
                             >
                                 <Button
                                     type="primary"
                                     htmlType="submit"
                                     loading={loading}
+                                    style={{
+                                        width: 100,
+                                        height: 36
+                                    }}
                                 >
                                     提交
                                 </Button>

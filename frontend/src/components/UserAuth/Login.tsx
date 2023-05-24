@@ -5,7 +5,8 @@ import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
-import {defaultUserInfo} from "../Context/DefaultInfo";
+import {defaultUserInfo, mainThemeColor} from "../Context/DefaultInfo";
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function Login(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -69,7 +70,7 @@ export default function Login(){
         setTimeout(()=>{
             // window.location.reload()
             toHome()
-        }, 2000)
+        }, 800)
 
     };
 
@@ -101,17 +102,16 @@ export default function Login(){
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#177cb0',
+                    colorPrimary: mainThemeColor,
                 },
             }}
         >
                 {contextHolder}
             {/*<div className={"contentStyle"}>*/}
                     <Card title="登录" bordered={false} style={{
-                        width: '50vw',
+                        width: '70vw',
                         maxWidth: 420,
                         margin: 'auto',
-                        // top: 50,
                         right: 0,
                         left: 0,
                         bottom: 0,
@@ -121,13 +121,14 @@ export default function Login(){
                         <Form
                             name="basic"
                             form={form}
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
-                            style={{ width: '42vw',
-                                maxWidth: 425,
+                            // labelCol={{ span: 8 }}
+                            // wrapperCol={{ span: 16 }}
+                            style={{
+                                width: '42vw',
+                                maxWidth: 360,
                                 display:"inline-block",
                                 position: "relative",
-                                right:'4vw'
+                                // right:'4vw'
                             }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
@@ -135,30 +136,38 @@ export default function Login(){
                             autoComplete="off"
                         >
                             <Form.Item
-                                label="账号"
+                                // label="账号"
                                 name="username"
                                 rules={[
                                     {required: true, message: '请输入账号'},
                                 ]}
                             >
-                                <Input placeholder="请输入账号"/>
+                                <Input
+                                    prefix={<UserOutlined/>}
+                                    style={{height: 50, borderRadius: 16}}
+                                    placeholder="请输入账号"
+                                />
                             </Form.Item>
 
                             <Form.Item
-                                label="密码"
+                                // label="密码"
                                 name="password"
                                 rules={[
                                     { required: true, message: '请输入密码!' },
                                 ]}
                             >
-                                <Input.Password placeholder="请输入密码"/>
+                                <Input.Password
+                                    prefix={<LockOutlined/>}
+                                    style={{height: 50, borderRadius: 16}}
+                                    placeholder="请输入密码"
+                                />
                             </Form.Item>
 
-                            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                                <Checkbox>Remember me</Checkbox>
-                            </Form.Item>
+                            {/*<Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>*/}
+                            {/*    <Checkbox>Remember me</Checkbox>*/}
+                            {/*</Form.Item>*/}
 
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }} shouldUpdate>
+                            <Form.Item shouldUpdate>
                                 {()=>(
                                     <div>
                                     <Button
@@ -170,18 +179,19 @@ export default function Login(){
                                             !!form.getFieldsError().filter(({errors}) => errors.length).length
                                         }
                                         style={{
-                                            right:'2.5vw'
+                                            width: '100%',
+                                            height: 40,
+                                            borderRadius: 16
                                         }}
                                     >
                                         登录
                                     </Button>
                                         <NavLink to="/home/register" style={{
-                                            color:'#0eb840',
-                                            display: 'inline-block',
+                                            color: mainThemeColor,
                                             // position: 'absolute',
-                                            top: '1vh',
-                                            right: '5vw',
-                                            fontSize: 14
+                                            fontSize: 14,
+                                            display: 'flex',
+                                            flexDirection: 'row-reverse'
                                         }}>立即注册</NavLink>
                                     </div>
                                 )}
