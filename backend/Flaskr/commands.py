@@ -18,7 +18,8 @@ def initdb(drop):
          'desc': 'This is a test',
          'url': '/movies/1',
          'content': 'This is a test,and this part is a content',
-         'create_by': 'Aerith'
+         'create_by': 'admin',
+         'avatar_id': "1"
          },
     ]
 
@@ -28,7 +29,8 @@ def initdb(drop):
                   desc=movie['desc'],
                   url=movie['url'],
                   content=movie['content'],
-                  create_by=movie['create_by']
+                  create_by=movie['create_by'],
+                  avatar_id=movie['avatar_id']
                   )
         db.session.add(m)
     db.session.commit()

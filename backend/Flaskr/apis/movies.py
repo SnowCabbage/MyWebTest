@@ -27,6 +27,7 @@ class MovieListAPI(Resource):
                            'url': m.url,
                            'content': m.content,
                            'create_by': m.create_by,
+                           'avatar_id': m.avatar_id,
                            })
         data['num'] = num
         data['movies'] = movies
@@ -50,6 +51,7 @@ class MovieListAPI(Resource):
         url = f'/movies/{id_the_last + 1}'
         content = post_data['data']['content']
         create_by = post_data['data']['create_by']
+        avatar_id = post_data['data']['avatar_id']
         response_object['data'] = post_data['data']
 
         m = Movie(title=name,
@@ -58,6 +60,7 @@ class MovieListAPI(Resource):
                   url=url,
                   content=content,
                   create_by=create_by,
+                  avatar_id=avatar_id
                   )
         db.session.add(m)
         db.session.commit()
@@ -98,7 +101,6 @@ class MovieAPI(Resource):
         res['data'] = 'Delete successfully'
 
         return res
-
 
 
 api.add_resource(MovieListAPI, '/api/movies', endpoint='movies')

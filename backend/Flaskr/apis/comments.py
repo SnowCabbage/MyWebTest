@@ -22,6 +22,7 @@ class CommentListAPI(Resource):
                              'content': cmt.content,
                              'update_time': cmt.update_time,
                              'author': cmt.author.username,
+                             'avatar_id': cmt.avatar_id
                              })
         data['num'] = num
         data['comments'] = comments
@@ -38,6 +39,7 @@ class CommentListAPI(Resource):
         content = response_data['content']
         author = response_data['author']
         update_time = response_data['update_time']
+        avatar_id = response_data['avatar_id']
 
         author_queried = User.query.filter_by(username=author).first()
         if author_queried is None:
@@ -48,7 +50,7 @@ class CommentListAPI(Resource):
         # print(author_id)
 
         cmt = Comment(
-            content=content, author=author_queried, update_time=update_time
+            content=content, author=author_queried, update_time=update_time, avatar_id=avatar_id
             # author_id=author_id
         )
 

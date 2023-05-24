@@ -36,7 +36,7 @@ class Movie(db.Model):  # 表名将会是 movie
     content = db.Column(db.TEXT())
     url = db.Column(db.String(30))
     create_by = db.Column(db.String(30))
-    # test = db.Column(db.String(10))
+    avatar_id = db.Column(db.String(30))
 
 
 class Comment(db.Model):
@@ -45,3 +45,4 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', backref=db.backref('comment'))
     update_time = db.Column(db.String(30))
+    avatar_id = db.Column(db.String(30))
