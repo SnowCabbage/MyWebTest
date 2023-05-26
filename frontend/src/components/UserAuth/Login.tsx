@@ -7,6 +7,7 @@ import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
 import {defaultUserInfo, mainThemeColor} from "../Context/DefaultInfo";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import BackIcon from "../Units/BackIcon";
 
 export default function Login(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -37,9 +38,9 @@ export default function Login(){
                 if('access_token' in response.data){
                     // console.log(response.data['user'])
                     setUser(response.data['user_profile'])
-                    let inFifteenMinutes = new Date(new Date().getTime() + 0.25 * 3600 * 1000);//一天
-                    cookie.save('user', response.data['user_profile']['user'],{path:"/", expires: inFifteenMinutes});
-                    cookie.save('access_token',response.data['access_token'],{path:"/", expires: inFifteenMinutes})
+                    let expiredTime = new Date(new Date().getTime() + 2 * 3600 * 1000);//2h
+                    cookie.save('user', response.data['user_profile']['user'],{path:"/", expires: expiredTime});
+                    cookie.save('access_token',response.data['access_token'],{path:"/", expires: expiredTime})
                     success()
                 }
                 else fail('密码或用户名错误')
@@ -108,14 +109,19 @@ export default function Login(){
         >
                 {contextHolder}
             {/*<div className={"contentStyle"}>*/}
-                    <Card title="登录" bordered={false} style={{
+                    <Card title="登录"
+                          bordered={false}
+                          extra={
+                              <BackIcon path={'/home'}/>
+                          }
+                          style={{
                         width: '70vw',
                         maxWidth: 420,
                         margin: 'auto',
                         right: 0,
                         left: 0,
                         bottom: 0,
-                        top: 36,
+                        top: 30,
                         background: '#ffffff',
                     }}>
                         <Form

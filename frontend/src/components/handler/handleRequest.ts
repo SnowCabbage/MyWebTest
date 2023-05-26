@@ -1,4 +1,27 @@
 import axios from 'axios';
+import {Modal} from "antd";
+import {redirect} from "react-router";
+import cookie from 'react-cookies';
+import {useNavigate} from "react-router-dom";
+
+
+const warning = () => {
+
+    Modal.warning({
+        title: '登录已过期',
+        content: '请重新登录',
+        okText: '确定',
+        onOk()  {
+            cookie.remove("access_token", { path: '/' })
+            cookie.remove("user", { path: '/' })
+
+            //非常简陋
+            window.history.go(-1)
+        }
+    });
+};
+
+
 //创建一个axios实例
 const requests = axios.create({
     timeout: 5 * 1000, //请求超时时间（5秒后还未接收到数据，就需要再次发送请求）
@@ -15,10 +38,16 @@ requests.interceptors.response.use((res) => {
     //console.log(error);
     //超时处理 error.config是一个对象，包含上方create中设置的三个参数
     let config = error.config;
+
+    //debug
+    // console.log(error)
+
     if (!config || !config.retry) return Promise.reject(error);
 
     //如果有返回值直接返回错误信息
     if('response' in error){
+        let message = error.response.data.message
+        if (message === 'token expired') warning()
         return Promise.reject({type: "error", msg: error.response.data.message});
     }
 

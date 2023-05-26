@@ -12,6 +12,7 @@ export default function ArticleView() {
     const {currentUser} = useContext(UserContext)
     const params = useParams();
     const [form] = Form.useForm();
+    const [refreshComments, setRefreshComments] = useState(0)
     const [loading, setLoading] = useState(true)
     const { TextArea } = Input;
     const [contentInfo, setContentInfo] = useState({
@@ -40,7 +41,7 @@ export default function ArticleView() {
     },[])
 
     useEffect(()=>{
-        requests.get(GetUrl("comments"),{headers: {
+        requests.get(GetUrl("comments/" + params.id),{headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
             }})
@@ -55,7 +56,7 @@ export default function ArticleView() {
                 // console.log(response.data['data']['movies'])
             })
             .catch(e=>console.log('Error:', e.message))
-    },[loading])
+    },[refreshComments])
 
     const onFinish = (values: any) => {
         setLoading(true)
@@ -64,6 +65,7 @@ export default function ArticleView() {
         data['author'] = currentUser.user
         data['update_time'] = currentDate.toLocaleString()
         data['avatar_id'] = currentUser.user_avatar
+        data['movie_id'] = params.id
         // if (data['content'] == null) data['content'] = 'To be update'
         //debug
         // console.log(data['content'])
@@ -91,6 +93,8 @@ export default function ArticleView() {
     const success = () => {
         setLoading(false)
         message.success('评论成功');
+        let refresh = refreshComments + 1
+        setRefreshComments(refresh)
         resetAll()
     };
 
@@ -102,7 +106,7 @@ export default function ArticleView() {
         data = {
             "data": data,
         }
-        requests.post(GetUrl("comments"),data, {
+        requests.post(GetUrl("comments/" + params.id),data, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": "Bearer " + cookie.load("access_token"),
@@ -180,9 +184,6 @@ export default function ArticleView() {
                     commentLoading ? <List
                     itemLayout="vertical"
                     pagination={{
-                        // onChange: (page) => {
-                        //     console.log(page);
-                        // },
                         pageSize: 6,
                     }}
                     dataSource={[

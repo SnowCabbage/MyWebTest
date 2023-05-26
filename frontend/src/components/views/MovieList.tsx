@@ -18,7 +18,7 @@ export default function ListMovies()  {
     const showTotalConfig: PaginationProps['showTotal'] = (nums) => `总共 ${nums}`;
 
     useEffect(()=>{
-        axios.get(GetUrl("movies"),{headers: {
+        requests.get(GetUrl("movies"),{headers: {
                             "Content-type": "application/json",
                             "Authorization": "Bearer " + cookie.load("access_token"),
                         }})
@@ -32,7 +32,7 @@ export default function ListMovies()  {
                 //debug
                 // console.log(response.data['data']['movies'])
         })
-            .catch(e=>console.log('Error:', e.message))
+            .catch(e=>console.log('Error:', e))
 
         // console.log(moviesHeight.current.clientHeight)
     },[update])

@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
+import { Route, Routes, Navigate} from "react-router-dom";
 import Home from "../views/Home";
 import Register from "../UserAuth/Register";
 import Login from "../UserAuth/Login";
@@ -9,43 +9,113 @@ import AddEntry from "../views/AddEntry";
 import Logout from "../UserAuth/Logout";
 import React from "react";
 import ArticleView from "../views/ArticleView";
+import NoMatch from "../views/NoMatch";
+import Header from "./Header";
+import Footer from "./Footer";
 
 export default function MainContent() {
-    // const mainHeight=useRef(null)
-    //
-    // useEffect(() => {
-    //     console.log(mainHeight.current)
-    // }, []);
-
     return (
             <Routes>
-                <Route path='/' element={ <Navigate to="/home" /> }/>
-                <Route path="/home" element={<Home />} />
-                <Route path="/home/register" element={<Register/>} />
-                <Route path="/home/login" element={<Login/>} />
+                <Route path='/' element={
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <Navigate to="/home" />
+                        </div>
+                        <Footer/>
+                    </>
+
+                }
+                />
+                <Route path="/home" element={
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <Home />
+                        </div>
+                        <Footer/>
+                    </>
+                }
+                />
+                <Route path="/home/register" element={
+                    <>
+                        <div className={"contentStyle"}>
+                            <Register/>
+                        </div>
+                        <Footer/>
+                    </>
+
+                }
+                />
+                <Route path="/home/login" element={
+                    <>
+                        <div className={"contentStyle"}>
+                            <Login/>
+                        </div>
+                        <Footer/>
+                    </>
+                }
+                />
                 <Route path="/movies" element={
-                    <RequireAuth>
-                        <ListMovies/>
-                    </RequireAuth>
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <RequireAuth>
+                                <ListMovies/>
+                            </RequireAuth>
+                        </div>
+                        <Footer/>
+                    </>
                 } />
-                    <Route path="/movies/:id" element={<ArticleView/>}/>
+                    <Route path="/movies/:id" element={
+                        <>
+                            <Header/>
+                            <div className={"contentStyle"}>
+                                <RequireAuth>
+                                    <ArticleView/>
+                                </RequireAuth>
+                            </div>
+                            <Footer/>
+                        </>
+                    }
+                    />
                 <Route path="/setting" element={
-                    <RequireAuth>
-                        <Setting/>
-                    </RequireAuth>
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <RequireAuth>
+                                <Setting/>
+                            </RequireAuth>
+                        </div>
+                        <Footer/>
+                    </>
                 } />
                 <Route path="/addentry" element={
-                    <RequireAuth>
-                        <AddEntry/>
-                    </RequireAuth>
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <RequireAuth>
+                                <AddEntry/>
+                            </RequireAuth>
+                        </div>
+                        <Footer/>
+                    </>
                 } />
 
                 <Route path="/logout" element={
-                    <RequireAuth>
-                        <Logout/>
-                    </RequireAuth>
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <RequireAuth>
+                                <Logout/>
+                            </RequireAuth>
+                        </div>
+                        <Footer/>
+                    </>
                 } />
-
+                <Route path='*' element={
+                    <NoMatch/>
+                } />
             </Routes>
     );
 }

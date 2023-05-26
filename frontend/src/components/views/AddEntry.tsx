@@ -58,7 +58,7 @@ export default function AddEntry() {
         });
     };
 
-    const onFinish = (values: any) => {
+    const onFinish = (values) => {
         setLoading(true)
         let data = values
         let currentDate = new Date()
@@ -116,7 +116,6 @@ export default function AddEntry() {
                                 display:"inline-block",
                                 position: "relative",
                             }}
-                            initialValues={{ remember: true }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                             autoComplete="off"
@@ -125,7 +124,6 @@ export default function AddEntry() {
                                 label="标题"
                                 labelCol={{ span: 3 }}
                                 name="name"
-                                validateTrigger={['onFinish']}
                                 rules={[
                                     {required: true, message: '请输入标题'},
                                     {max: 16, message: '标题过长'},

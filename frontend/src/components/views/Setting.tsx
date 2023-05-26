@@ -44,14 +44,14 @@ export default function Setting() {
     // },[newUser, setCurrentUser])
 
     const success = (updateUser) => {
-        let inFifteenMinutes = new Date(new Date().getTime() + 0.25 * 3600 * 1000);//一天
+        let expiredTime = new Date(new Date().getTime() + 2 * 3600 * 1000);//2h
 
         //debug
         // console.log(updateUser)
 
         setCurrentUser(updateUser)
         cookie.remove("user", { path: '/' })
-        cookie.save('user', updateUser.user, {path:"/", expires: inFifteenMinutes});
+        cookie.save('user', updateUser.user, {path:"/", expires: expiredTime});
         setLoading(false)
         messageApi.open({
             type: 'success',

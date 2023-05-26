@@ -118,7 +118,6 @@ export default function Header() {
                     setCurrentAvatar(response.data['data']['profile']['avatar_id'])
                 })
                 .catch(e=>{
-                    fail(e.msg)
                     console.log("Error:", e)
                 })
         }

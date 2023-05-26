@@ -6,6 +6,7 @@ import GetUrl from "../Context/UrlSource";
 import axios from "axios";
 import {ContentWidthContext} from "../Context/ElementContext";
 import {mainThemeColor} from "../Context/DefaultInfo";
+import BackIcon from "../Units/BackIcon";
 
 export default function Register(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -80,15 +81,21 @@ export default function Register(){
             }}
         >
             {contextHolder}
-                <Card title="注册" bordered={false} style={{
-                    width: '60vw',
-                    maxWidth: 420,
-                    margin: 'auto',
-                    top: 30,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    background: '#ffffff',
+                <Card title="注册"
+                      bordered={false}
+                      extra={
+                        <BackIcon path={'/home/login'}/>
+                      }
+                      style={{
+                            width: '60vw',
+                            maxWidth: 420,
+                            margin: 'auto',
+                            top: 30,
+                            right: 0,
+                            left: 0,
+                            bottom: 0,
+                            background: '#ffffff',
+                            textAlign: 'initial'
                 }}>
                     <Form
                         name="basic"

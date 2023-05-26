@@ -1,48 +1,37 @@
 import React, {useContext} from "react";
 import {UserContext} from "../Context/AuthContext";
-import { Carousel } from 'antd';
+import { Card } from 'antd';
 import {ContentHeightContext} from "../Context/ElementContext";
+import {useNavigate} from "react-router-dom";
 
 export default function Home() {
     const {currentUser} = useContext(UserContext)
-    const {contentHeight} = useContext(ContentHeightContext)
-    let h = contentHeight
+    const { Meta } = Card;
 
-    const contentStyle: React.CSSProperties = {
-        margin: 0,
-        height: h - 116 - 1 + 'px',
-        color: '#fff',
-        lineHeight: h - 116 - 1 + 'px',
-        textAlign: 'center',
-        background: '#364d79',
-        fontSize: '32px',
-    };
+    const clickCard = (url)=>{
+        const w=window.open('');
+        w.location.href="http://www.baidu.com"
+    }
 
     return (
         <>
-            <Carousel >
-                <div>
-                    <h3 style={contentStyle}>
-                        Hello!
-                        {currentUser===null ? "" :currentUser.user}
-                    </h3>
-                </div>
-                <div>
-                    <h3 style={contentStyle}>
-                        TT
-                    </h3>
-                </div>
-                <div>
-                    <h3 style={contentStyle}>
-                        TT
-                    </h3>
-                </div>
-                <div>
-                    <h3 style={contentStyle}>
-                        TT
-                    </h3>
-                </div>
-            </Carousel>
+            <div>
+                <h3>
+                    <Card
+                        hoverable
+                        style={{
+                            width: '60vw',
+                            maxWidth: 240,
+                            margin: 'auto'
+                        }}
+                        cover={<img alt="example" src="https://i.pinimg.com/564x/a3/82/d9/a382d9e6dadd15df8ff262a687e7a25f.jpg" />}
+                        onClick={()=>clickCard('http://baidu.com')}
+                    >
+                        <Meta title={currentUser===null ? "" :currentUser.user} />
+                    </Card>
+                </h3>
+            </div>
+
         </>
     );
 }
