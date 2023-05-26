@@ -130,6 +130,7 @@ class UserApi(Resource):
 
 class UserAvatarApi(Resource):
     method_decorators = [limiter.limit("20/minute")]
+
     def post(self):
         file = request.files
         response_data = request.form
@@ -157,10 +158,10 @@ class UserAvatarApi(Resource):
 
         if response['code'] == 'Error':
             return {
-                    'code': 'Error',
-                    'message': "Format Error",
-                    'image_id': ""
-                }
+                'code': 'Error',
+                'message': "Format Error",
+                'image_id': ""
+            }
 
         image_id = response['image_id']
 

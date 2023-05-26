@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, jsonify
+from flask import Flask, render_template, make_response, jsonify, request
 from flask_cors import CORS
 from flask_limiter.util import get_remote_address
 from flask_sqlalchemy import SQLAlchemy
@@ -26,10 +26,17 @@ def default_error_responder(request_limit: RequestLimit):
     )
 
 
+def get_real_ip():
+    if 'X-Real-IP' in request.headers:
+        return request.headers['X-Real-IP']
+    else:
+        return '127.0.0.1'
+
+
 jwt.init_app(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-limiter = Limiter(get_remote_address,
+limiter = Limiter(key_func=get_real_ip,
                   app=app,
                   storage_uri="redis://localhost:6379",
                   on_breach=default_error_responder
@@ -63,4 +70,6 @@ def index():
 # 没找到通配符的方法，暂时这样写
 @app.errorhandler(404)
 def hello(error):
+    # debug
+    # print(get_real_ip())
     return render_template("index.html")

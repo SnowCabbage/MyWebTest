@@ -75,17 +75,12 @@ class MovieListAPI(Resource):
 class MovieAPI(Resource):
     method_decorators = [limiter.limit("20/minute")]
 
-
     @jwt_required()
     def get(self, movie_id):
         movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}
-        data = {}
-        data['desc'] = movie_queried.desc
-        data['title'] = movie_queried.title
-        data['update_date'] = movie_queried.update_date
-        data['create_by'] = movie_queried.create_by
-        data['content'] = movie_queried.content
+        data = {'desc': movie_queried.desc, 'title': movie_queried.title, 'update_date': movie_queried.update_date,
+                'create_by': movie_queried.create_by, 'content': movie_queried.content}
         res['code'] = 'OK'
         res['data'] = data
         return res

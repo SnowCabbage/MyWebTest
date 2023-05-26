@@ -27,7 +27,7 @@ def admin_required():
                 return {
                     "code": "No permission",
                     "data": {},
-                        }, 200
+                }, 200
 
         return decorator
 

@@ -15,13 +15,12 @@ class UsernameCheckAPI(Resource):
         response_object = {}
         post_data = request.get_json()
 
-        #debug
+        # debug
         # print("post_data:", post_data)
         # print(type(post_data))
 
         if type(post_data) != dict:
             post_data = json.loads(post_data)
-
 
         username = post_data.get('username', None)
         user = User.query.filter_by(username=username).first()

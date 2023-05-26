@@ -1,7 +1,3 @@
-import os
-import time
-from os.path import exists
-
 from flask import Blueprint, send_file
 from flask_restful import Resource
 
