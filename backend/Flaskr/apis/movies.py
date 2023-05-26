@@ -2,15 +2,15 @@ from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
-from Flaskr import api, db
+from Flaskr import api, db, limiter
 from Flaskr.decorators.authUnit import admin_required
-from Flaskr.models import Movie
+from Flaskr.models import Movie, Comment
 
 movies = Blueprint('movies', __name__)
 
 
 class MovieListAPI(Resource):
-    method_decorators = [jwt_required()]
+    method_decorators = [jwt_required(), limiter.limit("20/minute")]
 
     def get(self):
         movie_queried = Movie.query.all()
@@ -73,7 +73,8 @@ class MovieListAPI(Resource):
 
 
 class MovieAPI(Resource):
-    # method_decorators = [jwt_required()]
+    method_decorators = [limiter.limit("20/minute")]
+
 
     @jwt_required()
     def get(self, movie_id):
@@ -93,6 +94,11 @@ class MovieAPI(Resource):
     def delete(self, movie_id):
         movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}
+
+        comments_queried = Comment.query.filter_by(movie=movie_queried)
+        for cmt in comments_queried:
+            db.session.delete(cmt)
+        # db.session.commit()
 
         db.session.delete(movie_queried)
         db.session.commit()

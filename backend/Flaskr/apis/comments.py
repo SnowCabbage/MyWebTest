@@ -3,15 +3,17 @@ import json
 from flask import Blueprint, request
 from flask_restful import Resource
 
-from Flaskr import db, api
-from Flaskr.models import Comment, User
+from Flaskr import db, api, limiter
+from Flaskr.models import Comment, User, Movie
 
 comments = Blueprint("comments", __name__)
 
 
 class CommentListAPI(Resource):
-    def get(self):
-        comments_queried = Comment.query.all()
+    method_decorators = [limiter.limit("20/minute")]
+
+    def get(self, movie_id):
+        comments_queried = Comment.query.filter_by(movie_id=movie_id)
         res = {}
         data = {}
         comments = []
@@ -30,7 +32,7 @@ class CommentListAPI(Resource):
         res['data'] = data
         return res
 
-    def post(self):
+    def post(self, movie_id):
         """
         example like this: "data":{"content": "", "author": "", "update_time": ""}
         """
@@ -42,15 +44,21 @@ class CommentListAPI(Resource):
         avatar_id = response_data['avatar_id']
 
         author_queried = User.query.filter_by(username=author).first()
+        movie_queried = Movie.query.filter_by(id=movie_id).first()
         if author_queried is None:
             return {
                 'code': 'Error',
                 'message': "Invalid user"
             }
+        if movie_queried is None:
+            return {
+                'code': 'Error',
+                'message': "Invalid movie id"
+            }
         # print(author_id)
 
         cmt = Comment(
-            content=content, author=author_queried, update_time=update_time, avatar_id=avatar_id
+            content=content, author=author_queried, update_time=update_time, avatar_id=avatar_id, movie=movie_queried
             # author_id=author_id
         )
 
@@ -62,4 +70,4 @@ class CommentListAPI(Resource):
         return res
 
 
-api.add_resource(CommentListAPI, '/api/comments', endpoint='comments')
+api.add_resource(CommentListAPI, '/api/comments/<int:movie_id>', endpoint='comments')

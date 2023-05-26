@@ -5,12 +5,14 @@ from os.path import exists
 from flask import Blueprint, request
 from flask_restful import Resource
 
-from Flaskr import api
+from Flaskr import api, limiter
 
 fileUpload = Blueprint('fileUpload', __name__)
 
 
 class FileImageUploadAPI(Resource):
+    method_decorators = [limiter.limit("20/minute")]
+
     def post(self):
         global nowTime
         file = request.files

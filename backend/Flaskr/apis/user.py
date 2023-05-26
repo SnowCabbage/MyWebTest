@@ -5,19 +5,26 @@ from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
-from Flaskr import api, db
+from Flaskr import api, db, limiter
 from Flaskr.models import User, Userprofile
+from Flaskr.support.userAgentCheck import check_user_agent
 
 users = Blueprint('users', __name__)
 
 
 class UserListAPI(Resource):
-    # method_decorators = [jwt_required()]
+    method_decorators = [limiter.limit("20/minute")]
 
     # @admin_required()
     @jwt_required()
     def get(self):
         data = {}
+        # print(request.headers.get('User-Agent'))
+        if not check_user_agent(request):
+            return {
+                'code': 'Error',
+                'message': 'Invalid access'
+            }
         users = User.query.all()
         # print(users)
         data['users'] = {}
@@ -51,6 +58,9 @@ class UserListAPI(Resource):
                 'message': 'Account exist!'
             }
 
+        # user_ip = request.remote_addr
+        # print(user_ip)
+
         response_object['code'] = 'OK'
 
         user_info = Userprofile(
@@ -68,7 +78,7 @@ class UserListAPI(Resource):
 
 
 class UserApi(Resource):
-    method_decorators = [jwt_required()]
+    method_decorators = [jwt_required(), limiter.limit("20/minute")]
 
     def get(self):
         user_rev = request.args.get('user')
@@ -119,6 +129,7 @@ class UserApi(Resource):
 
 
 class UserAvatarApi(Resource):
+    method_decorators = [limiter.limit("20/minute")]
     def post(self):
         file = request.files
         response_data = request.form

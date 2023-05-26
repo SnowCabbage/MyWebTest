@@ -1,6 +1,3 @@
-from itsdangerous import SignatureExpired, BadSignature
-
-# from Flaskr import db, app
 from passlib.apps import custom_app_context as pwd_context
 
 from Flaskr import db
@@ -46,3 +43,5 @@ class Comment(db.Model):
     author = db.relationship('User', backref=db.backref('comment'))
     update_time = db.Column(db.String(30))
     avatar_id = db.Column(db.String(30))
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
+    movie = db.relationship('Movie', backref=db.backref('movie'))

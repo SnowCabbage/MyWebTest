@@ -2,13 +2,15 @@ from flask import Blueprint, request
 from flask_jwt_extended import create_access_token
 from flask_restful import Resource
 
-from Flaskr import api
-from Flaskr.models import User, Userprofile
+from Flaskr import api, limiter
+from Flaskr.models import User
 
 loginAuth = Blueprint('loginAuth', __name__)
 
 
 class AuthAPI(Resource):
+    method_decorators = [limiter.limit("20/minute")]
+
     def post(self):
         post_data = request.get_json()
         # print(post_data)
