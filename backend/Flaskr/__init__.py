@@ -1,6 +1,5 @@
 from flask import Flask, render_template, make_response, jsonify, request
 from flask_cors import CORS
-from flask_limiter.util import get_remote_address
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
@@ -38,17 +37,18 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 limiter = Limiter(key_func=get_real_ip,
                   app=app,
-                  storage_uri="redis://localhost:6379",
+                  # storage_uri="redis://localhost:6379",
                   on_breach=default_error_responder
                   )
 
-from Flaskr.apis.user import users
-from Flaskr.apis.movies import movies
-from Flaskr.apis.loginAuth import loginAuth
-from Flaskr.apis.informationCheck import informationCheck
-from Flaskr.apis.comments import comments
+from Flaskr.apis.user.user import users
+from Flaskr.apis.article.movies import movies
+from Flaskr.apis.user.loginAuth import loginAuth
+from Flaskr.apis.user.informationCheck import informationCheck
+from Flaskr.apis.article.comments import comments
 from Flaskr.apis.files.fileUpload import fileUpload
 from Flaskr.apis.files.images import images
+from Flaskr.apis.article.homeCover import home_cover
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
@@ -57,6 +57,7 @@ app.register_blueprint(informationCheck)
 app.register_blueprint(comments)
 app.register_blueprint(fileUpload)
 app.register_blueprint(images)
+app.register_blueprint(home_cover)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback

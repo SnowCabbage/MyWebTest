@@ -32,7 +32,7 @@ class UserListAPI(Resource):
         num = 0
         for user in users:
             num += 1
-            data['users']['user'].append({'username': user.username, 'passwd': user.password_hash})
+            data['users']['user'].append({'username': user.username})
             # print(user.username, user.password_hash)
         data['users']['num'] = num
         data['code'] = 'OK'

@@ -58,7 +58,6 @@ class FileImageUploadAPI(Resource):
                     'image_id': ""
                 }
 
-            basePath = os.path.dirname(__file__)  # 当前文件所在路径
             nowTime = str(int(time.time()))  # 获取当前时间戳改文件名
 
             RESULTS_DIR = 'Data/Upload/images'
