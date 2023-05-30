@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import { Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
+import {Button, ConfigProvider, Form, Input, message, Card, FormInstance} from "antd";
 import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
@@ -14,18 +14,8 @@ export default function Login(){
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(defaultUserInfo)
-    // const [ready, setReady] = useState(0)
     const {setCurrentUser} = useContext(UserContext)
     const [form] = Form.useForm()
-    const [, forceUpdate] = useState({});
-
-    // 及其简陋的屏幕适配
-    // const cardWidth = contentWidth * 0.36
-    // const formWidth = contentWidth * 0.24
-
-    useEffect(() => {
-        forceUpdate({});
-    }, []);
 
     const sendMsg=(data) => {
         requests.post(GetUrl("login"),data, {
@@ -99,6 +89,13 @@ export default function Login(){
         console.log('Failed:', errorInfo);
     };
 
+    // const check = ():boolean =>{
+    //     console.log('password:'+!form.isFieldTouched('password'))
+    //     console.log('username:'+!form.isFieldTouched('username'))
+    //     console.log(!form.isFieldTouched('password') || !form.isFieldTouched('username'))
+    //     return true
+    // }
+
     return (
         <ConfigProvider
             theme={{
@@ -108,27 +105,22 @@ export default function Login(){
             }}
         >
                 {contextHolder}
-            {/*<div className={"contentStyle"}>*/}
                     <Card title="登录"
                           bordered={false}
                           extra={
                               <BackIcon path={'/home'}/>
                           }
+                          className={'my-wrapper'}
                           style={{
-                        width: '70vw',
-                        maxWidth: 420,
-                        margin: 'auto',
-                        right: 0,
-                        left: 0,
-                        bottom: 0,
-                        top: 30,
-                        background: '#ffffff',
+                              width: '70vw',
+                              maxWidth: 420,
+                              margin: 'auto',
+                              marginTop: 30,
+                              background: '#ffffff',
                     }}>
                         <Form
                             name="basic"
                             form={form}
-                            // labelCol={{ span: 8 }}
-                            // wrapperCol={{ span: 16 }}
                             style={{
                                 width: '42vw',
                                 maxWidth: 360,
@@ -169,42 +161,48 @@ export default function Login(){
                                 />
                             </Form.Item>
 
-                            {/*<Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>*/}
-                            {/*    <Checkbox>Remember me</Checkbox>*/}
-                            {/*</Form.Item>*/}
-
                             <Form.Item shouldUpdate>
                                 {()=>(
-                                    <div>
+                                    <div style={{
+                                        display: "flex",
+                                        justifyContent: 'space-around'
+                                    }}>
                                     <Button
                                         type="primary"
                                         htmlType="submit"
                                         loading={loading}
+                                        // disabled={check()}
                                         disabled={
-                                            !form.isFieldsTouched(['username', 'password']) ||
+                                            (!form.isFieldTouched('password') || !form.isFieldTouched('username')) ||
                                             !!form.getFieldsError().filter(({errors}) => errors.length).length
                                         }
                                         style={{
-                                            width: '100%',
+                                            width: '45%',
                                             height: 40,
                                             borderRadius: 16
                                         }}
                                     >
                                         登录
                                     </Button>
-                                        <NavLink to="/home/register" style={{
-                                            color: mainThemeColor,
-                                            // position: 'absolute',
-                                            fontSize: 14,
-                                            display: 'flex',
-                                            flexDirection: 'row-reverse'
-                                        }}>立即注册</NavLink>
+
+                                        {/*<SubmitButton form={form} buttonType={'primary'} buttonHtmlType={'submit'}/>*/}
+                                        <Button
+                                            type="default"
+                                            htmlType="button"
+                                            style={{
+                                                width: '45%',
+                                                height: 40,
+                                                borderRadius: 16
+                                            }}
+                                        >
+                                            注册
+                                        </Button>
                                     </div>
+
                                 )}
                             </Form.Item>
                         </Form>
                     </Card>
-            {/*</div>*/}
         </ConfigProvider>
     );
 }

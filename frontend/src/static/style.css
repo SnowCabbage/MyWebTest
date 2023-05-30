@@ -14,7 +14,7 @@
 .contentStyle{
     width: 100%;
     flex: 1;
-     background: #f0f0f4;
+     background: #f6f6fa;
     /*font-size: 40px;*/
     text-align: center;
     padding-bottom: 80px;
@@ -24,23 +24,17 @@
 .header {
     width: 100%;
     height: 110px;
-    background: #f0f0f4;
+    background: #f6f6fa;
 }
 
 .footerStyle{
     width: 100%;
-    background: #f0f0f4;
+    background: #fafafc;
     text-align: center;
     color: #f0f0f4;
     /*flex: 0;*/
     /*height: 100px;*/
     margin: 0 auto;
-}
-
-.mainText{
-    text-align: initial;
-    white-space: pre-wrap;
-    margin-left: 5vw;
 }
 
 .ant-list-item-action{
@@ -56,7 +50,7 @@
     /*滚动条里面小方块*/
     border-radius: 10px;
     box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
-    background: #83627e;
+    background: #556ab7;
 }
 ::-webkit-scrollbar-track {
     /*滚动条里面轨道*/
@@ -65,11 +59,11 @@
     background: #ededed;
 }
 
-.ant-card-head-title {
-    text-align: end;
-    font-size: 24px;
+.my-wrapper .ant-card-head-title {
+        text-align: end;
+        font-size: 24px;
 }
 
-.ant-card-head-wrapper {
+.my-wrapper .ant-card-head-wrapper {
     flex-direction: row-reverse;
 }

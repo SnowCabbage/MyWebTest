@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {ConfigProvider, Card} from "antd";
 import { Button, Form, Input ,message} from 'antd';
 import GetUrl from "../Context/UrlSource";
@@ -6,6 +6,15 @@ import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
 import {mainThemeColor} from "../Context/DefaultInfo";
+import Editor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
+import ReactMarkdown from "react-markdown";
+import '../../styleCss/markdownStyle.css'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+
+import remarkGfm from 'remark-gfm';// 划线、表、任务列表和直接url等的语法扩展
+import rehypeRaw from 'rehype-raw'// 解析标签，支持html语法
 
 export default function AddEntry() {
 
@@ -14,6 +23,8 @@ export default function AddEntry() {
     const [form] = Form.useForm();
     const { TextArea } = Input;
     const {currentUser} = useContext(UserContext)
+    const mdEditor = useRef(null);
+    const [value, setValue] = useState("xxx");
 
     const sendMsg=(data) => {
 
@@ -59,6 +70,9 @@ export default function AddEntry() {
     };
 
     const onFinish = (values) => {
+        //debug
+        // console.log(values)
+
         setLoading(true)
         let data = values
         let currentDate = new Date()
@@ -90,6 +104,13 @@ export default function AddEntry() {
         }
     }
 
+    const handleEditorChange = (text) => {
+        // const newValue = text.replace(/\d/g, "");
+        // console.log(text);
+        setValue(text);
+        // console.log(text);
+    };
+
     return (
         <ConfigProvider
             theme={{
@@ -99,9 +120,9 @@ export default function AddEntry() {
             }}
         >
                     {contextHolder}
-            <Card title="名单" bordered={false} style={{
-                width: '60vw',
-                maxWidth: 500,
+            <Card title="增加条目" bordered={false} style={{
+                width: '80vw',
+                maxWidth: 900,
                 margin: 'auto',
                 right: 0,
                 left: 0,
@@ -111,8 +132,8 @@ export default function AddEntry() {
                             form={form}
                             name="basic"
                             style={{
-                                width: '50vw',
-                                maxWidth: 420,
+                                width: '75vw',
+                                maxWidth: 800,
                                 display:"inline-block",
                                 position: "relative",
                             }}
@@ -129,7 +150,13 @@ export default function AddEntry() {
                                     {max: 16, message: '标题过长'},
                                 ]}
                             >
-                                <Input placeholder="请输入文章标题"/>
+                                <Input placeholder="请输入文章标题"
+                                       style={{
+                                           width: '40vw',
+                                           maxWidth: 420,
+                                           display: 'flex'
+                                       }}
+                                />
                             </Form.Item>
 
                             <Form.Item
@@ -138,21 +165,59 @@ export default function AddEntry() {
                                 name="desc"
                                 rules={[{ required: true, message: '请输入简单描述!' }]}
                             >
-                                <Input placeholder="请输入简单描述"/>
-                            </Form.Item>
-
-                            <Form.Item
-                                label="内容"
-                                labelCol={{ span: 3 }}
-                                name="content"
-                            >
-                                <TextArea
-                                    rows={6}
-                                    style={{whiteSpace:'pre-wrap'}}
-                                    onKeyDown={e=>add(e)}
+                                <Input placeholder="请输入简单描述"
+                                       style={{
+                                           width: '40vw',
+                                           maxWidth: 420,
+                                           display: 'flex'
+                                       }}
                                 />
                             </Form.Item>
 
+                            <Form.Item
+                                label="正文"
+                                labelCol={{ span: 3 }}
+                                name="content"
+                                getValueFromEvent={(value)=> value.text}
+                            >
+                            <Editor
+                                ref={mdEditor}
+                                value={value}
+                                style={{
+                                    height: "500px",
+                                    textAlign: 'initial'
+                                }}
+                                onChange={(value)=>handleEditorChange(value.text)}
+                                className={'my-editor'}
+                                renderHTML={text => <ReactMarkdown
+                                                                children={text}
+                                                                className={'markdown-body'}
+                                                                remarkPlugins={[[remarkGfm, {singleTilde: false}]]}
+                                                                rehypePlugins={[rehypeRaw]}
+                                                                components={{
+                                                                    img(props){
+                                                                        return <img {...props} style={{height: 320, width: 320, marginLeft: "50%"}}  alt={'img'}/>
+                                                                    },
+                                                                    code({node, inline, className, children, ...props}) {
+                                                                        const match = /language-(\w+)/.exec(className || '')
+                                                                        return !inline && match ? (
+                                                                            <SyntaxHighlighter
+                                                                                {...props}
+                                                                                children={String(children).replace(/\n$/, '')}
+                                                                                style={dark}
+                                                                                language={match[1]}
+                                                                                PreTag="div"
+                                                                            />
+                                                                        ) : (
+                                                                            <code {...props} className={className}>
+                                                                                {children}
+                                                                            </code>
+                                                                        )
+                                                                    }
+                                                                }}
+                                                            />}
+                            />
+                            </Form.Item>
                             <Form.Item
                             >
                                 <Button

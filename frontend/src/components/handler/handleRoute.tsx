@@ -1,12 +1,5 @@
-import {
-    Link,
-    Routes,
-    Route,
-    useNavigate,
-    Navigate,
-    useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import cookie from 'react-cookies';
-import * as trace_events from "trace_events";
 
 export default function RequireAuth({ children }){
 

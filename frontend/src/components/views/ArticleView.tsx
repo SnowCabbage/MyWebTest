@@ -1,12 +1,21 @@
 import React, {useContext, useEffect, useState} from "react";
 import {UserContext} from "../Context/AuthContext";
-import {NavLink, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import cookie from 'react-cookies';
-import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 import {Avatar, Button, ConfigProvider, Form, Input, List, message, Skeleton} from "antd";
 import requests from "../handler/handleRequest";
 import {mainThemeColor} from "../Context/DefaultInfo";
+import '../../styleCss/commentsStyle.css'
+import '../../styleCss/markdownStyle.css'
+import 'github-markdown-css';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import {CustomizeCommentsEmpty} from '../config/CustomizeRenderEmpty'
+import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import {dark} from "react-syntax-highlighter/dist/esm/styles/prism";
+
 
 export default function ArticleView() {
     const {currentUser} = useContext(UserContext)
@@ -25,6 +34,7 @@ export default function ArticleView() {
     const [nums, setNums] = useState(0)
     const [comments, setComments] = useState([]);
     const [commentLoading, setCommentLoading] = useState(true)
+
     // const {contentWidth} = useContext(ContentWidthContext)
 
     useEffect(()=>{
@@ -133,9 +143,33 @@ export default function ArticleView() {
             <h1>{contentInfo.title}</h1>
             <p>Created by {contentInfo.create_by}</p>
             <p>{contentInfo.desc}</p>
-            <div className={'mainText'}>
-                <p>{contentInfo.content}</p>
-            </div>
+            <ReactMarkdown
+                children={contentInfo.content}
+                remarkPlugins={[[remarkGfm, {singleTilde: false}]]}
+                rehypePlugins={[rehypeRaw]}
+                className="markdown-body"
+                components={{
+                    img(props){
+                        return <img {...props} style={{height: 320, width: 320, marginLeft: "50%"}}  alt={'img'}/>
+                    },
+                    code({node, inline, className, children, ...props}) {
+                        const match = /language-(\w+)/.exec(className || '')
+                        return !inline && match ? (
+                            <SyntaxHighlighter
+                                {...props}
+                                children={String(children).replace(/\n$/, '')}
+                                style={dark}
+                                language={match[1]}
+                                PreTag="div"
+                            />
+                        ) : (
+                            <code {...props} className={className}>
+                                {children}
+                            </code>
+                        )
+                    }
+                }}
+            />
             <div style={{
                 paddingTop: '20vh',
             }}>
@@ -158,7 +192,7 @@ export default function ArticleView() {
                         name="content"
                     >
                         <TextArea
-                            rows={6}
+                            rows={2}
                             style={{whiteSpace:'pre-wrap'}}
                             onKeyDown={e=>add(e)}
                             required
@@ -166,7 +200,6 @@ export default function ArticleView() {
                     </Form.Item>
 
                     <Form.Item
-                        // wrapperCol={{ offset: 8, span: 16 }}
                     >
                         <Button
                             type="primary"
@@ -179,7 +212,9 @@ export default function ArticleView() {
                 </Form>
             </div>
 
-            <div>
+            <ConfigProvider renderEmpty={CustomizeCommentsEmpty}>
+
+            <div className={'comments'}>
                 {
                     commentLoading ? <List
                     itemLayout="vertical"
@@ -228,25 +263,27 @@ export default function ArticleView() {
                         itemLayout="vertical"
                         pagination={{
                             pageSize: 6,
+                            align: 'center'
                         }}
+                        className={'my-wrapper'}
                         dataSource={comments}
                         renderItem={(item) => (
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Avatar src={GetUrl('images/' + item.avatar_id)}/>}
+                                    title={item.author}
                                 />
                                 <div className={'comment-text'} style={{display: "flex"}}>
                                     {item.content}
                                 </div>
 
-                                <div className={'comment-author'} style={{display: "flex", flexDirection: "row-reverse"}}>
-                                    by {item.author}
-                                </div>
+
                             </List.Item>
                         )}
                     />
                 }
             </div>
+                </ConfigProvider>
         </ConfigProvider>
     );
 }

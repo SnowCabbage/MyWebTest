@@ -1,0 +1,37 @@
+.back-unit{
+    background: #ecf2ff;
+    border-radius: 50px;
+    transition: .3s;
+    position: relative;
+    opacity: 0.6;
+}
+
+
+.back-unit:hover{
+    background-color: #ecf2ff;
+    opacity: 1;
+    /*border: 1px solid rgb(60 108 252 / 100%);*/
+    transition: .3s;
+}
+
+
+.back-unit::after{
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    cursor: pointer;
+    box-shadow: 0 0 0 12px rgb(60 108 252 / 100%);
+    transition: .5s;
+}
+
+.back-unit:active::after{
+    box-shadow: none;
+    opacity: 0.8;
+    transition: 0s;
+}
+
+.my-editor .markdown-body {
+    all: initial;
+}

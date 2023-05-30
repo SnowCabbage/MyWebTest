@@ -1,0 +1,29 @@
+.markdown-body{
+    text-align: initial;
+    /*white-space: pre-wrap;*/
+    margin-left: 5vw;
+    background-color: #f6f6fa!important;
+    padding-right: 10vw;
+    padding-left: 10vw;
+}
+
+.markdown-body .highlight pre, .markdown-body pre {
+    background-color: #e2e2ea !important;
+}
+
+.markdown-body table {
+    margin: auto;
+}
+
+.markdown-body table th {
+    background-color: #f5f7fa
+}
+
+.markdown-body p {
+    white-space: pre-wrap;
+}
+
+.markdown-body blockquote{
+    background: aliceblue;
+    border-radius: 8px;
+}

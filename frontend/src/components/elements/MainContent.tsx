@@ -12,6 +12,9 @@ import ArticleView from "../views/ArticleView";
 import NoMatch from "../views/NoMatch";
 import Header from "./Header";
 import Footer from "./Footer";
+import Test from "../views/Test"
+import UploadImage from "../views/UploadImage";
+import UpdateHomeCover from "../views/UpdateHomeCover";
 
 export default function MainContent() {
     return (
@@ -110,6 +113,22 @@ export default function MainContent() {
                                 <Logout/>
                             </RequireAuth>
                         </div>
+                        <Footer/>
+                    </>
+                } />
+                <Route path="/test" element={
+                    <>
+                        <Header/>
+                        {/*<div className={"contentStyle"}>*/}
+                            <Test/>
+                        {/*</div>*/}
+                        <Footer/>
+                    </>
+                } />
+                <Route path="/upload_cover" element={
+                    <>
+                        <Header/>
+                        <UpdateHomeCover/>
                         <Footer/>
                     </>
                 } />

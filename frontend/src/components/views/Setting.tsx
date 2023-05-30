@@ -3,12 +3,12 @@ import React, {useContext, useState} from "react";
 import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 import {useNavigate} from "react-router-dom";
-import {ContentWidthContext} from "../Context/ElementContext";
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
-import UploadImage from "../Units/UploadImage";
+import ImageUploadUnit from "../Units/ImageUploadUnit";
 import {mainThemeColor} from "../Context/DefaultInfo";
+import { App } from 'antd';
 
 export default function Setting() {
     const [messageApi, contextHolder] = message.useMessage();
@@ -53,10 +53,7 @@ export default function Setting() {
         cookie.remove("user", { path: '/' })
         cookie.save('user', updateUser.user, {path:"/", expires: expiredTime});
         setLoading(false)
-        messageApi.open({
-            type: 'success',
-            content: '更新成功',
-        });
+        message.success('更新成功');
         setTimeout(()=>{
             navigate("/home");
         }, 2000)
@@ -65,10 +62,7 @@ export default function Setting() {
 
     const fail = (msg) => {
         setLoading(false)
-        messageApi.open({
-            type: 'error',
-            content: msg,
-        });
+        message.error(msg);
     };
 
     const onFinish = (values: any) => {
@@ -94,6 +88,7 @@ export default function Setting() {
     }
 
     return (
+        <App>
         <ConfigProvider
             theme={{
                 token: {
@@ -101,8 +96,7 @@ export default function Setting() {
                 },
             }}
         >
-            {contextHolder}
-            <Card title="修改信息" bordered={false} style={{
+            <Card title="个人设置" bordered={false} style={{
                 width: '80vw',
                 maxWidth: 480,
                 margin: 'auto',
@@ -191,13 +185,16 @@ export default function Setting() {
                 <div>
                     <div style={{float: 'left'}} >修改头像(暂时只支持jpg):</div><br/>
 
-                    <UploadImage
+                    <ImageUploadUnit
                         update ={onUpdate}
+                        urlName={'avatar'}
+                        mode={'user'}
                     />
                 </div>
 
             </Card>
 
         </ConfigProvider>
+        </App>
     );
 }

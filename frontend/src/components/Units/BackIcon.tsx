@@ -1,5 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import '../../styleCss/unitsStyle.css'
 
 
 
@@ -10,16 +11,15 @@ export default function BackIcon({path}){
         navigate(path)
     }
     return (
-        <div style={{
-            background: '#ecf2ff',
-            borderRadius: 50
-        }}>
+        <div
+            className={'back-unit'}
+            onClick={()=>back(path)}
+        >
             <svg xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 24 24"
                  width="32"
                  height="32"
-                 onClick={()=>back(path)}
-                 cursor='pointer' //鼠标放上去变成小手
+                 // cursor='pointer' //鼠标放上去变成小手
                  style={{
                      display: 'block'
                  }}

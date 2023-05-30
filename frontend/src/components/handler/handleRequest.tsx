@@ -1,25 +1,5 @@
 import axios from 'axios';
-import {Modal} from "antd";
-import {redirect} from "react-router";
-import cookie from 'react-cookies';
-import {useNavigate} from "react-router-dom";
-
-
-const warning = () => {
-
-    Modal.warning({
-        title: '登录已过期',
-        content: '请重新登录',
-        okText: '确定',
-        onOk()  {
-            cookie.remove("access_token", { path: '/' })
-            cookie.remove("user", { path: '/' })
-
-            //非常简陋
-            window.history.go(-1)
-        }
-    });
-};
+import handleTokenExpired from "./handleTokenExpired";
 
 
 //创建一个axios实例
@@ -28,6 +8,7 @@ const requests = axios.create({
     retry: 1, //设置全局重试请求次数（最多重试几次请求）
     retryDelay: 500, //设置全局请求间隔
 });
+
 
 //响应拦截器
 requests.interceptors.response.use((res) => {
@@ -47,7 +28,11 @@ requests.interceptors.response.use((res) => {
     //如果有返回值直接返回错误信息
     if('response' in error){
         let message = error.response.data.message
-        if (message === 'token expired') warning()
+        if (message === 'token expired') {
+            // console.log('111')
+            handleTokenExpired()
+
+        }
         return Promise.reject({type: "error", msg: error.response.data.message});
     }
 

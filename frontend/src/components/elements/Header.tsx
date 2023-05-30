@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {ConfigProvider, Menu} from "antd"
+import {ConfigProvider, Dropdown, Menu} from "antd"
 import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
 import {AuthContext, UserContext} from "../Context/AuthContext";
@@ -11,7 +11,7 @@ import {
     HomeOutlined,
     BarsOutlined,
     SettingOutlined,
-    PlusOutlined
+    PlusOutlined, SmileOutlined, DownOutlined, SettingFilled
 } from '@ant-design/icons';
 import GetUrl from "../Context/UrlSource";
 import requests from "../handler/handleRequest";
@@ -40,15 +40,15 @@ const authItems: MenuProps['items'] = [
         key: 'movies',
         icon: <BarsOutlined/>
     },
-    {
-        label: (
-            <NavLink to="/setting">
-                设置
-            </NavLink>
-        ),
-        key: 'setting',
-        icon: <SettingOutlined />
-    },
+    // {
+    //     label: (
+    //         <NavLink to="/setting">
+    //             设置
+    //         </NavLink>
+    //     ),
+    //     key: 'setting',
+    //     icon: <SettingOutlined />
+    // },
     {
         label: (
             <NavLink to="/addentry">
@@ -72,11 +72,47 @@ const unAuthItems: MenuProps['items'] = [
     },
 ];
 
+const settingItems: MenuProps['items'] = [
+    {
+        key: '1',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.baidu.com">
+                个人信息
+            </a>
+        ),
+        icon: <SmileOutlined />
+    },
+    {
+        key: '2',
+        label: (
+            <NavLink to="/setting">
+                设置
+            </NavLink>
+        ),
+        icon: <SettingFilled />,
+    },
+    {
+        key: '3',
+        danger: true,
+        label: (
+            <NavLink to="/logout">
+                退出当前账号
+            </NavLink>
+        ),
+    },
+];
+
 function ShowAvatar({Auth, avatar_id}){
     if (Auth){
         // console.log(Auth)
         return (
-                <Avatar src={GetUrl("images/" + avatar_id)} alt="头像" size={60}/>
+            <Dropdown menu={{ items:settingItems }}>
+                <Avatar src={GetUrl("images/" + avatar_id)} alt="头像" size={60}
+                        style={{
+                            cursor: 'pointer'
+                        }}
+                />
+            </Dropdown>
             )
     }
     return (
@@ -114,7 +150,7 @@ export default function Header() {
                 },
             })
                 .then(response=>{
-                    console.log(response.data)
+                    // console.log(response.data)
                     setCurrentAvatar(response.data['data']['profile']['avatar_id'])
                 })
                 .catch(e=>{
@@ -157,7 +193,7 @@ export default function Header() {
 
                 <Menu  style={{
                     display:'block',
-                    background:'#f0f0f4',
+                    background:'#f6f6fa',
                     textAlign:'center',
                     height: 50
                 }}
@@ -165,18 +201,7 @@ export default function Header() {
                        selectedKeys={[current]}
                        mode="horizontal"
                        items={isAuth? authItems : unAuthItems} />
-                {isAuth ? <NavLink to="/logout">
-                    <Tooltip title="退出当前账号">
-                        <Button style={{
-                            top: 25,
-                            display: 'inline-block',
-                            right: 0,
-                            position: 'absolute',
-                        }} type="primary" icon={<PoweroffOutlined />}>
-                            退出登录
-                        </Button>
-                    </Tooltip>
-                </NavLink> :
+                {isAuth ? <></> :
                     <div>
                         <NavLink to="/home/login">
                             <Tooltip title="登录账号">

@@ -1,15 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
 import {AuthContext, UserContext} from "./components/Context/AuthContext";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useRef } from 'react'
-
-import Header from "./components/elements/Header";
-import Footer from "./components/elements/Footer";
+import {BrowserRouter} from "react-router-dom";
 import MainContent from "./components/elements/MainContent";
-import {ContentHeightContext, ContentWidthContext} from "./components/Context/ElementContext";
+import { HomeCoverContext} from "./components/Context/ElementContext";
 
 
 function App() {
@@ -18,8 +14,20 @@ function App() {
         user: cookie.load('user'),
         user_avatar: "1"
     })
-    const [contentHeight, setContentHeight] = useState(null)
-    const [contentWidth, setContentWidth] = useState(null)
+    const [currentHomeCover, setCurrentHomeCover] = useState([
+        {
+            cover_name: '1',
+            cover_id: ""
+        },
+        {
+            cover_name: '2',
+            cover_id: ""
+        },
+        {
+            cover_name: '3',
+            cover_id: ""
+        }
+    ])
     // const [currentAvatar, setCurrentAvatar] = useState(null)
 
     return (
@@ -29,17 +37,12 @@ function App() {
                     currentUser,
                     setCurrentUser
                 }}>
-                    <ContentHeightContext.Provider value={{
-                        contentHeight,
-                        setContentHeight
+                    <HomeCoverContext.Provider value={{
+                        currentHomeCover,
+                        setCurrentHomeCover
                     }}>
-                        <ContentWidthContext.Provider value={{
-                            contentWidth,
-                            setContentWidth
-                        }}>
-                                <MainContent/>
-                        </ContentWidthContext.Provider>
-                    </ContentHeightContext.Provider>
+                        <MainContent/>
+                    </HomeCoverContext.Provider>
                 </UserContext.Provider>
             </AuthContext.Provider>
         </BrowserRouter>

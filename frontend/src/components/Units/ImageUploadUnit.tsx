@@ -7,7 +7,14 @@ import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
 import { App } from 'antd';
 
-export default function UploadImage({update}){
+export interface Props {
+    update?:any
+    urlName:string
+    mode:string
+    cover_id?:string
+}
+
+export default function ImageUploadUnit(prop:Props){
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [uploading, setUploading] = useState(false);
     const {currentUser} = useContext(UserContext)
@@ -17,15 +24,17 @@ export default function UploadImage({update}){
         let idx = 1
         fileList.forEach((file) => {
             formData.append('file' + idx, file as RcFile);
-            formData.append('user', currentUser.user);
+            if (prop.mode === 'user')
+                formData.append(prop.mode, currentUser.user);
+            else formData.append(prop.mode, prop.cover_id);
             idx += 1;
         });
         setUploading(true);
 
-        requests.post(GetUrl("avatar"), formData)
+        requests.post(GetUrl(prop.urlName), formData)
             .then(response=>{
                 setFileList([]);
-                update(response.data.image_id)
+                prop.update(response.data.image_id)
                 message.success('修改成功');
             })
             .catch(e=>{

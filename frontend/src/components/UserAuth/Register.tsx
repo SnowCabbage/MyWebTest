@@ -86,6 +86,7 @@ export default function Register(){
                       extra={
                         <BackIcon path={'/home/login'}/>
                       }
+                      className={'my-wrapper'}
                       style={{
                             width: '60vw',
                             maxWidth: 420,
@@ -203,7 +204,7 @@ export default function Register(){
                                     htmlType="submit"
                                     loading={loading}
                                     disabled={
-                                        !form.isFieldsTouched(['username']) ||
+                                        !form.isFieldsTouched(true) ||
                                         !!form.getFieldsError().filter(({errors}) => errors.length).length ||
                                         isAble
                                     }
