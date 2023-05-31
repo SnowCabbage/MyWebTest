@@ -1,11 +1,13 @@
 from functools import wraps
 
-from flask import jsonify
+from flask import jsonify, request
 
 from Flaskr import jwt
 
 from flask_jwt_extended import get_jwt
 from flask_jwt_extended import verify_jwt_in_request
+
+from Flaskr.support.userAgentCheck import check_user_agent
 
 
 @jwt.expired_token_loader
@@ -28,6 +30,21 @@ def admin_required():
                     "code": "No permission",
                     "data": {},
                 }, 200
+
+        return decorator
+
+    return wrapper
+
+def user_agent_required():
+    def wrapper(fn):
+        @wraps(fn)
+        def decorator(*args, **kwargs):
+            if not check_user_agent(request):
+                return {
+                    'code': 'Error',
+                    'message': 'Invalid access'
+                }
+            return fn(*args, **kwargs)
 
         return decorator
 
