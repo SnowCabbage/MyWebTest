@@ -72,7 +72,7 @@ class CommentListAPI(Resource):
         # print(author_id)
 
         cmt = Comment(
-            content=content, author=author_queried, update_time=update_time, avatar_id=avatar_id, movie=movie_queried
+            content=content, author=author_queried, update_time=update_time, movie=movie_queried
             # author_id=author_id
         )
 
