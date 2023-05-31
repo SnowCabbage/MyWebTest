@@ -12,6 +12,10 @@ class AuthAPI(Resource):
     method_decorators = [limiter.limit("20/minute")]
 
     def post(self):
+        """
+        login
+        :return:
+        """
         post_data = request.get_json()
         # print(post_data)
         username = post_data.get('username', None)

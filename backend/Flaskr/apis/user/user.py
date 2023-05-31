@@ -1,14 +1,14 @@
 import json
 
 import requests
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
 from Flaskr import api, db, limiter
 from Flaskr.decorators.authUnit import user_agent_required
+from Flaskr.decorators.loggerUnit import print_logger
 from Flaskr.models import User, Userprofile
-from Flaskr.support.userAgentCheck import check_user_agent
 
 users = Blueprint('users', __name__)
 
@@ -18,14 +18,13 @@ class UserListAPI(Resource):
 
     # @admin_required()
     @jwt_required()
+    @print_logger()
     def get(self):
+        """
+        get a list of users
+        :return:
+        """
         data = {}
-        # print(request.headers.get('User-Agent'))
-        # if not check_user_agent(request):
-        #     return {
-        #         'code': 'Error',
-        #         'message': 'Invalid access'
-        #     }
         users = User.query.all()
         # print(users)
         data['users'] = {}
@@ -40,11 +39,24 @@ class UserListAPI(Resource):
         # data['user'] = user.username
         return data
 
+    @print_logger()
     def post(self):
+        """
+        registers a user
+        :return:
+        """
         response_object = {}
         post_data = request.get_json()
-        username = post_data['data']['username']
-        password = post_data['data']['password']
+        try:
+            username = post_data['data']['username']
+            password = post_data['data']['password']
+        except KeyError as e:
+            current_app.logger.error("get the invalid request data")
+            return {
+                'code': 'Error',
+                'message': "Invalid request data"
+            }
+
         if username == '' or password == '':
             response_object['code'] = 'ERROR'
             response_object['message'] = 'Invalid username or password'
@@ -78,6 +90,7 @@ class UserListAPI(Resource):
 class UserApi(Resource):
     method_decorators = [jwt_required(), limiter.limit("20/minute"), user_agent_required()]
 
+    @print_logger()
     def get(self):
         user_rev = request.args.get('user')
 
@@ -102,11 +115,23 @@ class UserApi(Resource):
             }
         }
 
+    @print_logger()
     def post(self):
+        """
+        update the user's profile
+        :return:
+        """
         response_object = {}
         post_data = request.get_json()
-        new_username = post_data['data']['new_username']
-        user = post_data['data']['user']
+        try:
+            new_username = post_data['data']['new_username']
+            user = post_data['data']['user']
+        except KeyError as e:
+            current_app.logger.error("get the invalid request data")
+            return {
+                'code': 'Error',
+                'message': "Invalid request data"
+            }
 
         # debug
         # print(user, new_username)
@@ -136,7 +161,12 @@ class UserApi(Resource):
 class UserAvatarApi(Resource):
     method_decorators = [limiter.limit("20/minute")]
 
+    @print_logger()
     def post(self):
+        """
+        update the user's avatar
+        :return:
+        """
         file = request.files
         response_data = request.form
 

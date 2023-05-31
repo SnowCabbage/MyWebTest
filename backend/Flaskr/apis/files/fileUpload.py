@@ -6,13 +6,18 @@ from flask import Blueprint, request
 from flask_restful import Resource
 
 from Flaskr import api, limiter
+from Flaskr.decorators.loggerUnit import print_logger
 
 fileUpload = Blueprint('fileUpload', __name__)
 
 
 class FileImageUploadAPI(Resource):
+    """
+    upload a image
+    """
     method_decorators = [limiter.limit("20/minute")]
 
+    @print_logger()
     def post(self):
         global nowTime
         file = request.files
@@ -64,9 +69,6 @@ class FileImageUploadAPI(Resource):
             exists(RESULTS_DIR) or os.makedirs(RESULTS_DIR)
 
             file.save(f'{RESULTS_DIR}/' + f'{nowTime}' + suffix)  # 保存文件
-
-            # http 路径
-            # url = RESULTS_DIR + '/' + str(nowTime) + suffix
 
         return {
             'code': 'OK',

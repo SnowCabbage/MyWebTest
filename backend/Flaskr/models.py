@@ -50,3 +50,4 @@ class Comment(db.Model):
 class HomeCover(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cover_id = db.Column(db.String(50))
+    cover_name = db.Column(db.String(50))

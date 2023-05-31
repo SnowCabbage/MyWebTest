@@ -1,3 +1,5 @@
+# 图床上传，暂时废弃
+
 import requests
 
 DRAWING_BED_API = 'https://api.uomg.com/api/image.ali'

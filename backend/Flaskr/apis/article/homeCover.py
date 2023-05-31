@@ -1,7 +1,7 @@
 import json
 
 import requests
-from flask import Blueprint, send_file, request
+from flask import Blueprint, send_file, request, current_app
 from flask_restful import Resource
 
 from Flaskr import api, limiter, db
@@ -14,6 +14,10 @@ class HomeCoverApi(Resource):
     method_decorators = [limiter.limit("20/minute")]
 
     def get(self):
+        """
+        get home cover
+        :return:
+        """
         data = {}
         covers = HomeCover.query.all()
         # print(users)
@@ -28,17 +32,27 @@ class HomeCoverApi(Resource):
         return data
 
     def post(self):
+        """
+        change home cover
+        :return:
+        """
         file = request.files
         response_data = request.form
 
         # debug
         # print(file)
         # print(response_data)
-
-        file_name = file.get('file1').filename
-        content = file.get('file1').read()
-        payload_file = {'file1': (file_name, content)}
-        home_cover_id = response_data.get('cover')
+        try:
+            file_name = file.get('file1').filename
+            content = file.get('file1').read()
+            payload_file = {'file1': (file_name, content)}
+            home_cover_id = response_data.get('cover')
+        except KeyError as e:
+            current_app.logger.error("get the invalid request data")
+            return {
+                'code': 'Error',
+                'message': "Invalid request data"
+            }
 
         update_home_cover = HomeCover.query.filter_by(id=home_cover_id).first()
 

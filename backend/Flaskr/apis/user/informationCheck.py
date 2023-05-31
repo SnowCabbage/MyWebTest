@@ -11,6 +11,9 @@ informationCheck = Blueprint('informationCheck', __name__)
 
 
 class UsernameCheckAPI(Resource):
+    """
+    check the username if exists in the database
+    """
     def post(self):
         response_object = {}
         post_data = request.get_json()

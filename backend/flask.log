@@ -1,0 +1,95 @@
+[2023-05-31 10:45:13,745][user.py:22][INFO] - simple page info...
+[2023-05-31 10:49:03,038][user.py:22][INFO] - simple page info...127.0.0.1
+[2023-05-31 10:49:04,041][user.py:22][INFO] - simple page info...127.0.0.1
+[2023-05-31 10:51:42,556][user.py:22][INFO] - simple page info...127.0.0.1
+[2023-05-31 10:51:57,212][user.py:22][INFO] - simple page info...
+[2023-05-31 10:52:25,424] 127.0.0.1 requested http://127.0.0.1:8080/api/users
+INFO in user: simple page info...
+[2023-05-31 10:53:51,454] 127.0.0.1 requested http://127.0.0.1:8080/api/movies
+INFO in movies: simple page info...
+[2023-05-31 10:55:22,790] 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+--- INFO in movies: simple page info...
+[2023-05-31 10:55:56,002] 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+--- INFO  simple page info...
+[2023-05-31 10:59:44,937] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:03:15,516] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:03:21,237] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:07:57,959] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:07:58,604] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:13:09,536] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 11:13:10,503] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 11:16:36,217] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 11:16:54,168] WARNING: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  token expired
+[2023-05-31 11:18:06,448] WARNING: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  The token expired one attempt to access
+[2023-05-31 11:18:09,769] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 11:24:00,169] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-05-31 11:24:17,660] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=QQAQQ
+---  
+[2023-05-31 11:24:18,356] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:24:19,386] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/21
+---  The Non-administrator attempt to operate
+[2023-05-31 11:24:25,276] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/21
+---  The Non-administrator attempt to operate
+[2023-05-31 11:24:55,254] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-05-31 11:24:56,924] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:24:57,740] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/21
+---  
+[2023-05-31 11:24:57,802] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:24:58,087] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/22
+---  
+[2023-05-31 11:24:58,109] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:24:58,385] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/23
+---  
+[2023-05-31 11:24:58,403] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:24:58,684] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/24
+---  
+[2023-05-31 11:24:58,709] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:24:59,081] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/25
+---  
+[2023-05-31 11:24:59,102] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:25:09,862] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:25:11,107] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 11:25:12,323] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/26
+---  
+[2023-05-31 11:25:13,692] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 12:10:15,039] WARNING: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  The token expired one attempt to access
+[2023-05-31 12:10:33,579] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 12:10:41,468] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 12:10:51,603] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 12:10:51,656] ERROR: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  get the invalid request data
+[2023-05-31 12:12:46,611] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-05-31 12:12:46,635] ERROR: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  get the invalid request data
+[2023-05-31 12:12:51,110] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/users
+---  
+[2023-05-31 12:12:51,110] ERROR: 127.0.0.1 POST http://127.0.0.1:8080/api/users
+---  get the invalid request data

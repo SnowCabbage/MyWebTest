@@ -7,6 +7,9 @@ images = Blueprint('images', __name__)
 
 
 class ImagesAPI(Resource):
+    """
+    get the images
+    """
     def get(self, image_id):
         filename = f'../Data/Upload/images/{image_id}.jpg'
         return send_file(filename)

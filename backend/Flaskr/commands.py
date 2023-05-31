@@ -1,6 +1,6 @@
 import click
 from Flaskr import db, app
-from Flaskr.models import Movie, User, Userprofile
+from Flaskr.models import Movie, User, Userprofile, HomeCover
 
 
 @app.cli.command()  # 注册为命令，可以传入 name 参数来自定义命令
@@ -33,6 +33,13 @@ def initdb(drop):
                   avatar_id=movie['avatar_id']
                   )
         db.session.add(m)
+
+    for i in range(1, 3):
+        cover = HomeCover(
+            cover_id=i,
+            cover_name='1'
+        )
+        db.session.add(cover)
     db.session.commit()
 
     click.echo('Initialized database.')

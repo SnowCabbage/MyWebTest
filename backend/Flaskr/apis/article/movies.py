@@ -1,9 +1,10 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
 from Flaskr import api, db, limiter
 from Flaskr.decorators.authUnit import admin_required
+from Flaskr.decorators.loggerUnit import print_logger
 from Flaskr.models import Movie, Comment
 
 movies = Blueprint('movies', __name__)
@@ -12,7 +13,12 @@ movies = Blueprint('movies', __name__)
 class MovieListAPI(Resource):
     method_decorators = [jwt_required(), limiter.limit("20/minute")]
 
+    @print_logger()
     def get(self):
+        """
+        get a list of articles
+        :return:
+        """
         movie_queried = Movie.query.all()
         res = {}
         data = {}
@@ -35,7 +41,12 @@ class MovieListAPI(Resource):
         res['data'] = data
         return res
 
+    @print_logger()
     def post(self):
+        """
+        add a article
+        :return:
+        """
         response_object = {'code': 'OK'}
         # print(request)
         post_data = request.get_json()
@@ -45,15 +56,23 @@ class MovieListAPI(Resource):
         except AttributeError:
             id_the_last = 0
         # print(movie_test)
-        name = post_data['data']['name']
-        update_date = post_data['data']['update_date']
-        desc = post_data['data']['desc']
-        url = f'/movies/{id_the_last + 1}'
-        content = post_data['data']['content']
-        create_by = post_data['data']['create_by']
-        avatar_id = post_data['data']['avatar_id']
-        response_object['data'] = post_data['data']
 
+        try:
+            name = post_data['data']['name']
+            update_date = post_data['data']['update_date']
+            desc = post_data['data']['desc']
+            url = f'/movies/{id_the_last + 1}'
+            content = post_data['data']['content']
+            create_by = post_data['data']['create_by']
+            avatar_id = post_data['data']['avatar_id']
+        except KeyError as e:
+            current_app.logger.error("get the invalid request data")
+            return {
+                'code': 'Error',
+                'message': "Invalid request data"
+            }
+
+        response_object['data'] = post_data['data']
         m = Movie(title=name,
                   update_date=update_date,
                   desc=desc,
@@ -76,7 +95,13 @@ class MovieAPI(Resource):
     method_decorators = [limiter.limit("20/minute")]
 
     @jwt_required()
+    @print_logger()
     def get(self, movie_id):
+        """
+        access a specific article
+        :param movie_id:
+        :return:
+        """
         movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}
         data = {'desc': movie_queried.desc, 'title': movie_queried.title, 'update_date': movie_queried.update_date,
@@ -86,6 +111,7 @@ class MovieAPI(Resource):
         return res
 
     @admin_required()
+    @print_logger()
     def delete(self, movie_id):
         movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}

@@ -1,9 +1,10 @@
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from flask_restful import Resource
 
 from Flaskr import db, api, limiter
+from Flaskr.decorators.loggerUnit import print_logger
 from Flaskr.models import Comment, User, Movie
 
 comments = Blueprint("comments", __name__)
@@ -13,6 +14,11 @@ class CommentListAPI(Resource):
     method_decorators = [limiter.limit("20/minute")]
 
     def get(self, movie_id):
+        """
+        Get a list of comments
+        :param movie_id:
+        :return:
+        """
         comments_queried = Comment.query.filter_by(movie_id=movie_id)
         res = {}
         data = {}
@@ -32,16 +38,23 @@ class CommentListAPI(Resource):
         res['data'] = data
         return res
 
+    @print_logger()
     def post(self, movie_id):
         """
-        example like this: "data":{"content": "", "author": "", "update_time": ""}
+        example like this: "data":{"content": "", "author": "", "update_time": "", "avatar_id": ""}
         """
-        response_data = request.get_json()['data']
-        # print(response_data)
-        content = response_data['content']
-        author = response_data['author']
-        update_time = response_data['update_time']
-        avatar_id = response_data['avatar_id']
+        try:
+            response_data = request.get_json()['data']
+            content = response_data['content']
+            author = response_data['author']
+            update_time = response_data['update_time']
+            avatar_id = response_data['avatar_id']
+        except KeyError as e:
+            current_app.logger.error("get the invalid request data")
+            return {
+                'code': 'Error',
+                'message': "Invalid request data"
+            }
 
         author_queried = User.query.filter_by(username=author).first()
         movie_queried = Movie.query.filter_by(id=movie_id).first()

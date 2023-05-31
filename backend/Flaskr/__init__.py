@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask, render_template, make_response, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -6,32 +8,18 @@ from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_limiter import Limiter, RequestLimit
 
+from Flaskr.support.defaultSetting import get_real_ip, default_error_responder
+from Flaskr.support.logHandler import file_handler
+
 app = Flask(__name__, static_folder='frontend_static', static_url_path='/frontend_static')
 jwt = JWTManager()
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
 app.config.from_pyfile('./config/default_config.py')
-
-
 # app.config.from_pyfile('./config/production_config.py')
 
-# set the default response
-def default_error_responder(request_limit: RequestLimit):
-    return make_response(
-        # render_template("my_ratelimit_template.tmpl", request_limit=request_limit)
-        jsonify(code="Error", message='ratelimit exceeded'),
-        429
-    )
-
-
-def get_real_ip():
-    if 'X-Real-IP' in request.headers:
-        return request.headers['X-Real-IP']
-    else:
-        return '127.0.0.1'
-
-
+app.logger.addHandler(file_handler)
 jwt.init_app(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
