@@ -26,7 +26,7 @@ class HomeCoverApi(Resource):
         num = 0
         for cover in covers:
             num += 1
-            data['covers']['cover'].append({'cover_id': cover.cover_id, 'cover_name': 'test cover'})
+            data['covers']['cover'].append({'cover_id': cover.cover_id, 'cover_name': cover.cover_name})
         data['covers']['num'] = num
         data['code'] = 'OK'
         return data
