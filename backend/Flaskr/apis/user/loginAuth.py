@@ -30,7 +30,6 @@ class AuthAPI(Resource):
             return {"code": "Error", "message": "Invalid account"}, 200
 
         addr = update_address(user, request_addr)
-        print(addr)
 
         access_token = create_access_token(username, additional_claims={"role": user.role, "user": user.username})
         return {
