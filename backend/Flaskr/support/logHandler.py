@@ -20,9 +20,9 @@ class RequestFormatter(logging.Formatter):
         return super().format(record)
 
 
-# 以天为单位，保存两天日志，最多备份三个文件
+# 以天为单位，保存一天天日志，最多备份三个文件
 file_handler = TimedRotatingFileHandler(
-    "flask.log", when="D", interval=2, backupCount=3,
+    "flask.log", when="D", interval=1, backupCount=3,
     encoding="UTF-8", delay=False)
 formatter = RequestFormatter(
     '[%(asctime)s] %(levelname)s: %(remote_addr)s %(method)s %(url)s\n'

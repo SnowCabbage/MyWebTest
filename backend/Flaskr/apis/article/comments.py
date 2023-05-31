@@ -30,7 +30,8 @@ class CommentListAPI(Resource):
                              'content': cmt.content,
                              'update_time': cmt.update_time,
                              'author': cmt.author.username,
-                             'avatar_id': cmt.avatar_id
+                             'avatar_id': cmt.author.userprofile.image_id,
+                             'address': cmt.author.userprofile.address,
                              })
         data['num'] = num
         data['comments'] = comments
@@ -53,7 +54,7 @@ class CommentListAPI(Resource):
             current_app.logger.error("get the invalid request data")
             return {
                 'code': 'Error',
-                'message': "Invalid request data"
+                'message': "Invalid request"
             }
 
         author_queried = User.query.filter_by(username=author).first()

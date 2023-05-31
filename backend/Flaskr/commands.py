@@ -63,7 +63,9 @@ def initadmin(username, password):
         user.hash_password(password)
 
     user_info = Userprofile(
-        image_id='1'
+        image_id='1',
+        sex=0,
+        address='None'
     )
     user.userprofile = user_info
 

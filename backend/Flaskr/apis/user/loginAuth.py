@@ -4,6 +4,8 @@ from flask_restful import Resource
 
 from Flaskr import api, limiter
 from Flaskr.models import User
+from Flaskr.support.defaultSetting import get_real_ip
+from Flaskr.support.updateAddress import update_address
 
 loginAuth = Blueprint('loginAuth', __name__)
 
@@ -23,17 +25,23 @@ class AuthAPI(Resource):
         user = User.query.filter_by(username=username).first()
         # print(username)
         # print(user)
+        request_addr = get_real_ip()
         if not user or not user.verify_password(password):
             return {"code": "Error", "message": "Invalid account"}, 200
 
+        addr = update_address(user, request_addr)
+        print(addr)
+
         access_token = create_access_token(username, additional_claims={"role": user.role, "user": user.username})
-        return {"code": "OK",
-                "access_token": access_token,
-                "user_profile": {
-                    "user": username,
-                    "user_avatar": user.userprofile.image_id
-                }
-                }
+        return {
+            "code": "OK",
+            "access_token": access_token,
+            "user_profile": {
+                "user": username,
+                "user_avatar": user.userprofile.image_id,
+                "address": addr
+            }
+        }
 
 
 api.add_resource(AuthAPI, '/api/login', endpoint='loginAuth')

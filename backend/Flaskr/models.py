@@ -8,6 +8,8 @@ class Userprofile(db.Model):
     # user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     # user = db.relationship('User', backref=db.backref('userprofile'))
     image_id = db.Column(db.String(20))
+    sex = db.Column(db.Integer)  # 0 for male, 1 for female
+    address = db.Column(db.String(50))
 
 
 class User(db.Model):
@@ -42,7 +44,6 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', backref=db.backref('comment'))
     update_time = db.Column(db.String(30))
-    avatar_id = db.Column(db.String(50))
     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
     movie = db.relationship('Movie', backref=db.backref('movie'))
 
