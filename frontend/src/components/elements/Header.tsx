@@ -10,7 +10,6 @@ import {
     UserOutlined,
     HomeOutlined,
     BarsOutlined,
-    SettingOutlined,
     PlusOutlined, SmileOutlined, DownOutlined, SettingFilled
 } from '@ant-design/icons';
 import GetUrl from "../Context/UrlSource";
@@ -40,15 +39,6 @@ const authItems: MenuProps['items'] = [
         key: 'movies',
         icon: <BarsOutlined/>
     },
-    // {
-    //     label: (
-    //         <NavLink to="/setting">
-    //             设置
-    //         </NavLink>
-    //     ),
-    //     key: 'setting',
-    //     icon: <SettingOutlined />
-    // },
     {
         label: (
             <NavLink to="/addentry">
@@ -76,9 +66,9 @@ const settingItems: MenuProps['items'] = [
     {
         key: '1',
         label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.baidu.com">
+            <NavLink to="/user/profile">
                 个人信息
-            </a>
+            </NavLink>
         ),
         icon: <SmileOutlined />
     },
@@ -99,6 +89,7 @@ const settingItems: MenuProps['items'] = [
                 退出当前账号
             </NavLink>
         ),
+        icon: <PoweroffOutlined/>
     },
 ];
 

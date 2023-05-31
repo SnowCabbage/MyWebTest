@@ -13,8 +13,8 @@ import NoMatch from "../views/NoMatch";
 import Header from "./Header";
 import Footer from "./Footer";
 import Test from "../views/Test"
-import UploadImage from "../views/UploadImage";
 import UpdateHomeCover from "../views/UpdateHomeCover";
+import Profile from "../views/Profile";
 
 export default function MainContent() {
     return (
@@ -129,6 +129,15 @@ export default function MainContent() {
                     <>
                         <Header/>
                         <UpdateHomeCover/>
+                        <Footer/>
+                    </>
+                } />
+                <Route path="/user/profile" element={
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <Profile/>
+                        </div>
                         <Footer/>
                     </>
                 } />

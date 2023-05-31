@@ -1,9 +1,8 @@
 import {Modal} from "antd";
-import { redirect } from "react-router-dom";
 import cookie from 'react-cookies';
+import history from '../Units/routerHistory';
 
 export default function handleTokenExpired () {
-    // const navigate = useNavigate()
 
     Modal.warning({
         title: '登录已过期',
@@ -14,7 +13,9 @@ export default function handleTokenExpired () {
             cookie.remove("user", { path: '/' })
 
             //非常简陋
-            window.history.go(-1)
+            // window.history.go(-1)
+            history.push('/home/login')
+            // navigate('/login')
             // window.location.href="/login"
             // return redirect('/login')
         }

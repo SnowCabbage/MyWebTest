@@ -29,7 +29,8 @@ export default function ArticleView() {
         "title": "",
         "update_date": "",
         "create_by": "",
-        "content": ""
+        "content": "",
+        "address": ""
     })
     const [nums, setNums] = useState(0)
     const [comments, setComments] = useState([]);
@@ -275,6 +276,11 @@ export default function ArticleView() {
                                 />
                                 <div className={'comment-text'} style={{display: "flex"}}>
                                     {item.content}
+
+                                </div>
+                                <div style={{display: "flex", flexDirection: "row-reverse"}}>
+                                    {item.update_time}
+                                    {item.address}
                                 </div>
 
 

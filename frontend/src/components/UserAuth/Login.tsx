@@ -89,12 +89,9 @@ export default function Login(){
         console.log('Failed:', errorInfo);
     };
 
-    // const check = ():boolean =>{
-    //     console.log('password:'+!form.isFieldTouched('password'))
-    //     console.log('username:'+!form.isFieldTouched('username'))
-    //     console.log(!form.isFieldTouched('password') || !form.isFieldTouched('username'))
-    //     return true
-    // }
+    const toRegister = () =>{
+        navigate('/home/register')
+    }
 
     return (
         <ConfigProvider
@@ -184,8 +181,6 @@ export default function Login(){
                                     >
                                         登录
                                     </Button>
-
-                                        {/*<SubmitButton form={form} buttonType={'primary'} buttonHtmlType={'submit'}/>*/}
                                         <Button
                                             type="default"
                                             htmlType="button"
@@ -194,6 +189,7 @@ export default function Login(){
                                                 height: 40,
                                                 borderRadius: 16
                                             }}
+                                            onClick={toRegister}
                                         >
                                             注册
                                         </Button>

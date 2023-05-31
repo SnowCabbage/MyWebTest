@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import '../../static/style.css'
-import {Avatar, List, Card, ConfigProvider, Skeleton, PaginationProps, message} from 'antd';
+import {Avatar, List, Card, ConfigProvider, Skeleton, PaginationProps, message, Space} from 'antd';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {NavLink} from "react-router-dom";
 import requests from "../handler/handleRequest";
 import {mainThemeColor} from "../Context/DefaultInfo";
+import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
 
 
 export default function ListMovies()  {
@@ -79,6 +80,12 @@ export default function ListMovies()  {
         // console.log('ans:',ans)
     }
 
+    const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
+        <Space>
+            {React.createElement(icon)}
+            {text}
+        </Space>
+    );
         // @ts-ignore
     return(
         <>
@@ -90,9 +97,9 @@ export default function ListMovies()  {
                 }}
             >
                 {contextHolder}
-                        <Card title="名单" bordered={false} style={{
-                            width: '60vw',
-                            maxWidth: 480,
+                        <Card bordered={false} style={{
+                            width: '80vw',
+                            maxWidth: 800,
                             margin: 'auto',
                             // top: 36,
                             right: 0,
@@ -145,17 +152,48 @@ export default function ListMovies()  {
                                     pageSize:6,
                                     total:nums,
                                     showTotal: showTotalConfig
-                            }}
+                                }}
+                                style={{
+                                    textAlign: 'initial'
+                                }}
+                                className={'list-wrapper'}
                                 itemLayout="vertical"
                                 dataSource={movies}
                                 renderItem={(item) => (
                                     <List.Item
                                         key={item.id}
-                                        actions={[<a onClick={Operate(item.id)}>删除</a>]}
+                                        actions={[
+                                            <IconText icon={StarOutlined} text="666" key="list-vertical-star-o" />,
+                                            <IconText icon={LikeOutlined} text="666" key="list-vertical-like-o" />,
+                                            <IconText icon={MessageOutlined} text="666" key="list-vertical-message" />,
+                                            <a onClick={Operate(item.id)}>删除</a>
+                                        ]}
+                                        extra={
+                                            <div style={{
+                                                width: '100%',
+                                                height: "100%",
+                                                maxHeight: '134px',
+                                                background: '#f6f6fa',
+                                                textAlign: 'center'
+                                            }}>
+                                                <img
+                                                    alt="logo"
+                                                    src={GetUrl('images/' + item.avatar_id)}
+                                                    style={{
+                                                        width: '100%',
+                                                        maxHeight: '100%',
+                                                        // objectFit: 'contain'
+                                                    }}
+                                                />
+                                            </div>
+                                        }
                                     >
                                         <Skeleton loading={loading} active avatar>
                                             <List.Item.Meta
-                                                avatar={<Avatar src={GetUrl('images/' + item.avatar_id)}/>}
+                                                avatar={<Avatar
+                                                    src={GetUrl('images/' + item.avatar_id)}
+                                                    size={50}
+                                                />}
                                                 title={<NavLink to={item.url} rel="noreferrer">{item.name}</NavLink>}
                                                 description={"Last update:" + item.update_date}
                                             />

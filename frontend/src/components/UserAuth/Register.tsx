@@ -48,7 +48,7 @@ export default function Register(){
         setTimeout(()=>{
             // window.location.reload()
             navigate("/home/login");
-        }, 2000)
+        }, 800)
 
     };
 
@@ -61,7 +61,6 @@ export default function Register(){
     };
 
     const onFinish = (values: any) => {
-        // console.log(values)
         setLoading(true)
         sendMsg(values)
     };
@@ -69,7 +68,6 @@ export default function Register(){
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
-        // console.log(form.getFieldsError().filter(({errors})=>errors.length))
     };
 
     return (
@@ -102,12 +100,9 @@ export default function Register(){
                         name="basic"
                         form={form}
                         style={{
-                            // width: '42vw',
-                            // maxWidth: 420,
                             width: '100%',
                             display:"inline-block",
                             position: "relative",
-                            // right:'4vw'
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}

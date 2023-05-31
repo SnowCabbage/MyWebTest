@@ -3,9 +3,10 @@ import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
 import {AuthContext, UserContext} from "./components/Context/AuthContext";
-import {BrowserRouter} from "react-router-dom";
 import MainContent from "./components/elements/MainContent";
 import { HomeCoverContext} from "./components/Context/ElementContext";
+import history from "./components/Units/routerHistory";
+import {CustomRouter} from "./components/Units/CustomRouter";
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
     // const [currentAvatar, setCurrentAvatar] = useState(null)
 
     return (
-        <BrowserRouter>
+        <CustomRouter history={history}>
             <AuthContext.Provider value={!!cookie.load("access_token")}>
                 <UserContext.Provider value={{
                     currentUser,
@@ -45,7 +46,7 @@ function App() {
                     </HomeCoverContext.Provider>
                 </UserContext.Provider>
             </AuthContext.Provider>
-        </BrowserRouter>
+        </CustomRouter>
     );
 }
 export default App;

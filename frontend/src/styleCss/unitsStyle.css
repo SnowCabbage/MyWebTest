@@ -35,3 +35,8 @@
 .my-editor .markdown-body {
     all: initial;
 }
+
+.list-wrapper .ant-list-item-extra {
+    width: 25vw;
+    max-width: 270px;
+}
