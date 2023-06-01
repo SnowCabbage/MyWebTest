@@ -16,6 +16,7 @@ import GetUrl from "../Context/UrlSource";
 import requests from "../handler/handleRequest";
 import cookie from 'react-cookies';
 import {mainThemeColor} from "../Context/DefaultInfo";
+import OnlineStatistic from "./OnlineStatistic";
 
 
 const { Text} = Typography;
@@ -181,6 +182,10 @@ export default function Header() {
                         {currentUser.user===null ? "" :currentUser.user}
                     </Text>
                 </div>
+                <>
+                    <OnlineStatistic/>
+                </>
+
 
                 <Menu  style={{
                     display:'block',

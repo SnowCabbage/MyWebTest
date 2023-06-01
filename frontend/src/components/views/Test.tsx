@@ -1,40 +1,37 @@
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
+import React, {useEffect, useState} from "react";
 import 'github-markdown-css';
+import {Button, Input, Space} from "antd";
+import {socket} from '../Units/socketUnit'
 
 
 export default function Test() {
 
+    const [currentOnline, setCurrentOnline] = useState(0)
+    const onSubmit = (e)=>{
+        console.log(document.getElementById("data").getAttribute('value'))
+        let value = document.getElementById("data").getAttribute('value')
+        socket.emit('message',{'data': value})
+    }
+
+    socket.on('connect', function() {
+        socket.emit('connected', {data: 'I\'m connected!'});
+    });
+
+    socket.on('online', (data) => {
+        console.log(data)
+        let onlineCnt = data['online']
+        setCurrentOnline(onlineCnt)
+    });
 
     return (
         <div>
-            {/*<div*/}
-            {/*    dangerouslySetInnerHTML={{__html: mdParser.render(contentInfo.content) }}*/}
-            {/*    className={'mainText'}*/}
-            {/*    // style={{ backgroundColor: 'white' }}*/}
-            {/*>*/}
-            {/*</div>*/}
-            <ReactMarkdown
-                children={'A paragraph with *emphasis* and **strong importance**.\n' +
-                    '\n' +
-                    '> A block quote with ~strikethrough~ and a URL: https://reactjs.org.\n' +
-                    '\n' +
-                    '* Lists\n' +
-                    '* [ ] todo\n' +
-                    '* [x] done\n' +
-                    '\n' +
-                    'A table:\n' +
-                    '\n' +
-                    '| a | b |\n' +
-                    '| - | - |'}
-                remarkPlugins={[[remarkGfm, {singleTilde: false}]]}
-                rehypePlugins={[rehypeRaw]}
-                // className={'mainText'}
-                className="markdown-body"
-                // style={{ backgroundColor: 'white' }}
-            />
+            <Space.Compact style={{ width: '100%' }}>
+                <Input id={'data'} defaultValue="Combine input and button" />
+                <Button type="primary" onClick={onSubmit}>Submit</Button>
+                <p>
+                    当前在线:{currentOnline}
+                </p>
+            </Space.Compact>
         </div>
     );
 }

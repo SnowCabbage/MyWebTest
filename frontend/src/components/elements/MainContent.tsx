@@ -119,9 +119,7 @@ export default function MainContent() {
                 <Route path="/test" element={
                     <>
                         <Header/>
-                        {/*<div className={"contentStyle"}>*/}
                             <Test/>
-                        {/*</div>*/}
                         <Footer/>
                     </>
                 } />
