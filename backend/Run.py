@@ -11,10 +11,5 @@ import multiprocessing
 
 
 if __name__ == '__main__':
-    # background_process = multiprocessing.Process(name='background_process', target=serverOn)
-    # background_process.daemon = True
-    # background_process.start()
-    # print("This is output")
-
     # serve(app, host='127.0.0.1', port=5000)
     socketio.run(app, port=8080)
