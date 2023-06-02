@@ -5,7 +5,7 @@ from flask_restful import Resource
 from Flaskr import api, db, limiter
 from Flaskr.decorators.authUnit import admin_required
 from Flaskr.decorators.loggerUnit import print_logger
-from Flaskr.models import Movie, Comment
+from Flaskr.models import Movie, Comment, User
 
 movies = Blueprint('movies', __name__)
 
@@ -32,8 +32,9 @@ class MovieListAPI(Resource):
                            'desc': m.desc,
                            'url': m.url,
                            'content': m.content,
-                           'create_by': m.create_by,
-                           'avatar_id': m.avatar_id,
+                           'create_by': m.create_by.username,
+                           'avatar_id': m.create_by.userprofile.image_id,
+                           'cover_id': m.cover_id,
                            })
         data['num'] = num
         data['movies'] = movies
@@ -64,7 +65,10 @@ class MovieListAPI(Resource):
             url = f'/movies/{id_the_last + 1}'
             content = post_data['data']['content']
             create_by = post_data['data']['create_by']
-            avatar_id = post_data['data']['avatar_id']
+            if 'cover_id' in post_data['data']:
+                cover_id = post_data['data']['cover_id']
+            else:
+                cover_id = 2
         except KeyError as e:
             current_app.logger.error("get the invalid request data")
             return {
@@ -72,15 +76,18 @@ class MovieListAPI(Resource):
                 'message': "Invalid request data"
             }
 
+        user_queried = User.query.filter_by(username=create_by).first()
+
         response_object['data'] = post_data['data']
-        m = Movie(title=name,
-                  update_date=update_date,
-                  desc=desc,
-                  url=url,
-                  content=content,
-                  create_by=create_by,
-                  avatar_id=avatar_id
-                  )
+        m = Movie(
+            title=name,
+            update_date=update_date,
+            desc=desc,
+            url=url,
+            content=content,
+            create_by=user_queried,
+            cover_id=cover_id
+        )
         db.session.add(m)
         db.session.commit()
         id_the_new = Movie.query.order_by(Movie.id.desc()).first().id
@@ -105,7 +112,7 @@ class MovieAPI(Resource):
         movie_queried = Movie.query.get_or_404(movie_id, "Nonexistent")
         res = {}
         data = {'desc': movie_queried.desc, 'title': movie_queried.title, 'update_date': movie_queried.update_date,
-                'create_by': movie_queried.create_by, 'content': movie_queried.content}
+                'create_by': movie_queried.create_by.username, 'content': movie_queried.content}
         res['code'] = 'OK'
         res['data'] = data
         return res

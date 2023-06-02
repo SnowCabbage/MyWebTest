@@ -24,6 +24,7 @@ class RequestFormatter(logging.Formatter):
 file_handler = TimedRotatingFileHandler(
     "flask.log", when="D", interval=1, backupCount=3,
     encoding="UTF-8", delay=False)
+file_handler.suffix = "%Y%m%d-%H%M.log"
 formatter = RequestFormatter(
     '[%(asctime)s] %(levelname)s: %(remote_addr)s %(method)s %(url)s\n'
     '---  %(message)s'

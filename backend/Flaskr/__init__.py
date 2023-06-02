@@ -33,22 +33,23 @@ from Flaskr.apis.article.movies import movies
 from Flaskr.apis.user.loginAuth import loginAuth
 from Flaskr.apis.user.informationCheck import informationCheck
 from Flaskr.apis.article.comments import comments
-from Flaskr.apis.files.fileUpload import fileUpload
 from Flaskr.apis.files.images import images
 from Flaskr.apis.article.homeCover import home_cover
+from Flaskr.apis.system.systemFunc import system_func
+from Flaskr.apis.webSocket import webSocket
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
 app.register_blueprint(loginAuth)
 app.register_blueprint(informationCheck)
 app.register_blueprint(comments)
-app.register_blueprint(fileUpload)
 app.register_blueprint(images)
 app.register_blueprint(home_cover)
+app.register_blueprint(system_func)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback
-from Flaskr.apis.webSocket import webSocket
+
 
 
 @app.route('/')

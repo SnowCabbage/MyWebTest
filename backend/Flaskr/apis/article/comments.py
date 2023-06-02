@@ -49,7 +49,6 @@ class CommentListAPI(Resource):
             content = response_data['content']
             author = response_data['author']
             update_time = response_data['update_time']
-            avatar_id = response_data['avatar_id']
         except KeyError as e:
             current_app.logger.error("get the invalid request data")
             return {

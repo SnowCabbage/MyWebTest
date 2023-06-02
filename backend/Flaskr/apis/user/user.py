@@ -10,6 +10,8 @@ from Flaskr.config.host import host
 from Flaskr.decorators.authUnit import user_agent_required
 from Flaskr.decorators.loggerUnit import print_logger
 from Flaskr.models import User, Userprofile
+from Flaskr.support.fileSave import file_save
+from Flaskr.support.userInfoCheck import user_info_check
 
 users = Blueprint('users', __name__)
 
@@ -63,9 +65,7 @@ class UserListAPI(Resource):
             response_object['message'] = 'Invalid username or password'
             return response_object, 400
 
-        check_response = requests.post(f'http://{host}:8080/api/username_check',
-                                       json=json.dumps({'username': username}))
-        check_response = json.loads(check_response.content)
+        check_response = user_info_check({'username': username})
         if check_response['code'] == 'Error':
             return {
                 'code': 'Error',
@@ -170,32 +170,29 @@ class UserAvatarApi(Resource):
         """
         file = request.files
         response_data = request.form
-
         # debug
         # print(file)
         # print(response_data)
-
-        file_name = file.get('file1').filename
-        content = file.get('file1').read()
-        payload_file = {'file1': (file_name, content)}
-        user = response_data.get('user')
+        try:
+            user = response_data.get('user')
+        except AttributeError:
+            return {
+                'code': 'Error',
+                'message': 'the key of user does not exist'
+            }
 
         update_user = User.query.filter_by(username=user).first()
-
         if update_user is None:
             return {
                 'code': 'Error',
                 'message': 'User does not exist'
             }
-
-        payload_data = {'user': user}
-        response = requests.post(f'http://{host}:8080/api/fileImageUpload', files=payload_file, data=payload_data)
-        response = json.loads(response.content)
+        response = file_save(file, response_data)
 
         if response['code'] == 'Error':
             return {
                 'code': 'Error',
-                'message': "Format Error",
+                'message': response['message'],
                 'image_id': ""
             }
 

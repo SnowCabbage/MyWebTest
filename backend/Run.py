@@ -1,5 +1,4 @@
 from Flaskr import app, socketio
-import multiprocessing
 
 
 # def serverOn():
@@ -12,4 +11,5 @@ import multiprocessing
 
 if __name__ == '__main__':
     # serve(app, host='127.0.0.1', port=5000)
-    socketio.run(app, port=8080)
+    socketio.run(app, port=8080, debug=True)
+    # app.run(port=8080)

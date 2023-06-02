@@ -38,6 +38,7 @@ class AuthAPI(Resource):
             "user_profile": {
                 "user": username,
                 "user_avatar": user.userprofile.image_id,
+                "role": user.role,
                 "address": addr
             }
         }
