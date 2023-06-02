@@ -17,10 +17,6 @@ class SystemResetAPI(Resource):
     """
     @print_logger()
     def post(self):
-        # os.system('$env:FLASK_APP="Flaskr"')
-        os.system('dir')
-        # print('$env:FLASK_APP="Flaskr"')
-        os.system('flask --app Flaskr --help')
         os.system('flask --app Flaskr init --drop')
 
         return {
