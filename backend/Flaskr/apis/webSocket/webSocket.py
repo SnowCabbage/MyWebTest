@@ -10,7 +10,7 @@ def on_disconnect():
     global current_online
     current_online -= 1
     emit('online', {'online': current_online}, broadcast=True)
-    print('Disconnected')
+    # print('Disconnected')
 
 
 @socketio.on('connect')
@@ -18,7 +18,7 @@ def on_connect():
     global current_online
     current_online += 1
     emit('online', {'online': current_online}, broadcast=True)
-    print('Connected')
+    # print('Connected')
 
 
 @socketio.on('connected')
