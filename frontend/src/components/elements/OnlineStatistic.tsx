@@ -1,16 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Card, Statistic } from 'antd';
-import {socket} from "../Units/socketUnit";
+import {socket} from "../Context/UrlSource";
+import {OnlineContext} from "../Context/AuthContext";
 
 export default function OnlineStatistic(){
-    const [currentOnline, setCurrentOnline] = useState(0)
-
-
-    socket.on('online', (data) => {
-        console.log(data)
-        let onlineCnt = data['online']
-        setCurrentOnline(onlineCnt)
-    });
+    const {currentOnline} = useContext(OnlineContext)
 
     return(
                 <Card bordered={false} style={{

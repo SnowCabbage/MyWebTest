@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Button, ConfigProvider, Form, Input, message, Card, FormInstance} from "antd";
-import {NavLink, useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
-import {UserContext} from "../Context/AuthContext";
+import { UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
 import {defaultUserInfo, mainThemeColor} from "../Context/DefaultInfo";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -52,14 +52,12 @@ export default function Login(){
 
     const { state } = useLocation();
     const success = () => {
-
         setLoading(false)
         messageApi.open({
             type: 'success',
             content: '登录成功',
         });
         setTimeout(()=>{
-            // window.location.reload()
             toHome()
         }, 800)
 
@@ -71,18 +69,11 @@ export default function Login(){
             type: 'error',
             content: msg,
         });
-        // setTimeout(()=>{
-        //     return navigate('/addentry')
-        // }, 2000)
-
     };
 
     const onFinish = (values: any) => {
         setLoading(true)
         sendMsg(values)
-        // console.log(result)
-        // redirect('/movies')
-        // console.log('Success:', values);
     };
 
     const onFinishFailed = (errorInfo: any) => {

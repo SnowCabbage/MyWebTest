@@ -34,7 +34,7 @@ export default function ImageUploadUnit(prop:Props){
         requests.post(GetUrl(prop.urlName), formData)
             .then(response=>{
                 setFileList([]);
-                prop.update(response.data.image_id)
+                if (prop.update !== undefined) prop.update(response.data.image_id)
                 message.success('修改成功');
             })
             .catch(e=>{

@@ -4,7 +4,7 @@ import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 import {useNavigate} from "react-router-dom";
 import cookie from 'react-cookies';
-import {UserContext} from "../Context/AuthContext";
+import {RoleContext, UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
 import ImageUploadUnit from "../Units/ImageUploadUnit";
 import {mainThemeColor} from "../Context/DefaultInfo";
@@ -17,6 +17,7 @@ export default function Setting() {
     const [form] = Form.useForm()
     const {currentUser} = useContext(UserContext)
     const {setCurrentUser} = useContext(UserContext)
+    const {currentRole} = useContext(RoleContext)
     // const [newUser, setNewUser] = useState(null)
 
     const sendMsg=(data) => {
@@ -38,10 +39,6 @@ export default function Setting() {
                 fail(e.msg)
             })
     };
-
-    // useEffect(()=>{
-    //     setCurrentUser({name: newUser})
-    // },[newUser, setCurrentUser])
 
     const success = (updateUser) => {
         let expiredTime = new Date(new Date().getTime() + 2 * 3600 * 1000);//2h
@@ -191,7 +188,6 @@ export default function Setting() {
                         mode={'user'}
                     />
                 </div>
-
             </Card>
 
         </ConfigProvider>

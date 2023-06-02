@@ -178,7 +178,7 @@ export default function ListMovies()  {
                                             }}>
                                                 <img
                                                     alt="logo"
-                                                    src={GetUrl('images/' + item.avatar_id)}
+                                                    src={GetUrl('images/' + item.cover_id)}
                                                     style={{
                                                         width: '100%',
                                                         maxHeight: '100%',

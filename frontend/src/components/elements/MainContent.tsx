@@ -15,6 +15,7 @@ import Footer from "./Footer";
 import Test from "../views/Test"
 import UpdateHomeCover from "../views/UpdateHomeCover";
 import Profile from "../views/Profile";
+import SystemConfig from "../views/SystemConfig";
 
 export default function MainContent() {
     return (
@@ -137,6 +138,11 @@ export default function MainContent() {
                             <Profile/>
                         </div>
                         <Footer/>
+                    </>
+                } />
+                <Route path="/system" element={
+                    <>
+                        <SystemConfig/>
                     </>
                 } />
                 <Route path='*' element={

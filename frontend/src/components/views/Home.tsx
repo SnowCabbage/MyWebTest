@@ -23,9 +23,7 @@ export default function Home() {
             },
         })
             .then(response=>{
-                // console.log(response.data)
                 setCurrentHomeCover(response.data['covers']['cover'])
-                // setCurrentAvatar(response.data['data']['profile']['avatar_id'])
             })
             .catch(e=>{
                 console.log("Error:", e)
