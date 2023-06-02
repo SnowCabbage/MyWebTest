@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
 from Flaskr import api, db, limiter
+from Flaskr.config.host import host
 from Flaskr.decorators.authUnit import user_agent_required
 from Flaskr.decorators.loggerUnit import print_logger
 from Flaskr.models import User, Userprofile
@@ -62,7 +63,7 @@ class UserListAPI(Resource):
             response_object['message'] = 'Invalid username or password'
             return response_object, 400
 
-        check_response = requests.post('http://127.0.0.1:8080/api/username_check',
+        check_response = requests.post(f'http://{host}:8080/api/username_check',
                                        json=json.dumps({'username': username}))
         check_response = json.loads(check_response.content)
         if check_response['code'] == 'Error':
@@ -188,7 +189,7 @@ class UserAvatarApi(Resource):
             }
 
         payload_data = {'user': user}
-        response = requests.post('http://127.0.0.1:8080/api/fileImageUpload', files=payload_file, data=payload_data)
+        response = requests.post(f'http://{host}:8080/api/fileImageUpload', files=payload_file, data=payload_data)
         response = json.loads(response.content)
 
         if response['code'] == 'Error':

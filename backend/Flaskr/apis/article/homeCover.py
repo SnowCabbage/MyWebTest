@@ -5,6 +5,7 @@ from flask import Blueprint, send_file, request, current_app
 from flask_restful import Resource
 
 from Flaskr import api, limiter, db
+from Flaskr.config.host import host
 from Flaskr.models import HomeCover
 
 home_cover = Blueprint('home_cover', __name__)
@@ -63,7 +64,7 @@ class HomeCoverApi(Resource):
             }
 
         payload_data = {'cover_id': update_home_cover.id}
-        response = requests.post('http://127.0.0.1:8080/api/fileImageUpload', files=payload_file, data=payload_data)
+        response = requests.post(f'http://{host}:8080/api/fileImageUpload', files=payload_file, data=payload_data)
         response = json.loads(response.content)
 
         if response['code'] == 'Error':

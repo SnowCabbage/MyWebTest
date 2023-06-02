@@ -2,6 +2,8 @@
 from flask import make_response, jsonify, request
 from flask_limiter import RequestLimit
 
+from Flaskr.config.host import host
+
 
 def default_error_responder(request_limit: RequestLimit):
     """
@@ -23,4 +25,4 @@ def get_real_ip():
     if 'X-Real-IP' in request.headers:
         return request.headers['X-Real-IP']
     else:
-        return '127.0.0.1'
+        return host

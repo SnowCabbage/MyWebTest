@@ -6,17 +6,19 @@ current_online = 0  # a global variable to keep the current online people
 
 
 @socketio.on('disconnect')
-def on_connect():
+def on_disconnect():
     global current_online
     current_online -= 1
-    emit('online', {'online': current_online})
+    emit('online', {'online': current_online}, broadcast=True)
+    print('Disconnected')
 
 
 @socketio.on('connect')
 def on_connect():
     global current_online
     current_online += 1
-    emit('online', {'online': current_online})
+    emit('online', {'online': current_online}, broadcast=True)
+    print('Connected')
 
 
 @socketio.on('connected')

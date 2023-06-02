@@ -20,7 +20,7 @@ class RequestFormatter(logging.Formatter):
         return super().format(record)
 
 
-# 以天为单位，保存一天天日志，最多备份三个文件
+# 以天为单位，保存一天日志，最多备份三个文件
 file_handler = TimedRotatingFileHandler(
     "flask.log", when="D", interval=1, backupCount=3,
     encoding="UTF-8", delay=False)
