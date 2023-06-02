@@ -9,7 +9,6 @@ def init(drop):
     """Initialize the database."""
     if drop:
         db.drop_all()
-        click.echo('Drop all')
     db.create_all()
 
     user = User(username='admin', role='Admin')
@@ -43,5 +42,3 @@ def init(drop):
         )
         db.session.add(cover)
     db.session.commit()
-
-    click.echo('Initialized database.')
