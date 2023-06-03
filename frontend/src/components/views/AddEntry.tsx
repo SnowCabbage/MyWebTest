@@ -13,8 +13,11 @@ import '../../styleCss/markdownStyle.css'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
+import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm';// 划线、表、任务列表和直接url等的语法扩展
 import rehypeRaw from 'rehype-raw'// 解析标签，支持html语法
+import remarkMath from "remark-math";
+import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
 
 export default function AddEntry() {
 
@@ -192,8 +195,8 @@ export default function AddEntry() {
                                 renderHTML={text => <ReactMarkdown
                                                                 children={text}
                                                                 className={'markdown-body'}
-                                                                remarkPlugins={[[remarkGfm, {singleTilde: false}]]}
-                                                                rehypePlugins={[rehypeRaw]}
+                                                                remarkPlugins={[[remarkGfm, {singleTilde: false}], remarkMath]}
+                                                                rehypePlugins={[rehypeRaw, rehypeKatex]}
                                                                 components={{
                                                                     img(props){
                                                                         return <img {...props} style={{height: 320, width: 320, marginLeft: "50%"}}  alt={'img'}/>

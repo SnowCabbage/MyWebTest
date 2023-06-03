@@ -16,6 +16,8 @@ import Test from "../views/Test"
 import UpdateHomeCover from "../views/UpdateHomeCover";
 import Profile from "../views/Profile";
 import SystemConfig from "../views/SystemConfig";
+import Good from "../views/Good";
+import UploadGoods from "../views/UploadGoods";
 
 export default function MainContent() {
     return (
@@ -126,9 +128,11 @@ export default function MainContent() {
                 } />
                 <Route path="/upload_cover" element={
                     <>
-                        <Header/>
-                        <UpdateHomeCover/>
-                        <Footer/>
+                        <RequireAuth>
+                            <Header/>
+                            <UpdateHomeCover/>
+                            <Footer/>
+                        </RequireAuth>
                     </>
                 } />
                 <Route path="/user/profile" element={
@@ -142,7 +146,31 @@ export default function MainContent() {
                 } />
                 <Route path="/system" element={
                     <>
+                    <RequireAuth>
                         <SystemConfig/>
+                    </RequireAuth>
+                    </>
+                } />
+                <Route path="/goods" element={
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <RequireAuth>
+                                <Good/>
+                            </RequireAuth>
+                        </div>
+                        <Footer/>
+                    </>
+                } />
+                <Route path="/upload_goods" element={
+                    <>
+                        <Header/>
+                        <div className={"contentStyle"}>
+                            <RequireAuth>
+                                <UploadGoods/>
+                            </RequireAuth>
+                        </div>
+                        <Footer/>
                     </>
                 } />
                 <Route path='*' element={

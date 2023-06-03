@@ -8,13 +8,18 @@ import requests from "../handler/handleRequest";
 import {mainThemeColor} from "../Context/DefaultInfo";
 import '../../styleCss/commentsStyle.css'
 import '../../styleCss/markdownStyle.css'
+
 import 'github-markdown-css';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
+
 import {CustomizeCommentsEmpty} from '../config/CustomizeRenderEmpty'
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import {dark} from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkMath from "remark-math";
 
 
 export default function ArticleView() {
@@ -146,8 +151,8 @@ export default function ArticleView() {
             <p>{contentInfo.desc}</p>
             <ReactMarkdown
                 children={contentInfo.content}
-                remarkPlugins={[[remarkGfm, {singleTilde: false}]]}
-                rehypePlugins={[rehypeRaw]}
+                remarkPlugins={[[remarkGfm, {singleTilde: false}], remarkMath]}
+                rehypePlugins={[rehypeRaw, rehypeKatex]}
                 className="markdown-body"
                 components={{
                     img(props){

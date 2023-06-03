@@ -6,6 +6,7 @@ import requests from "../handler/handleRequest";
 import GetUrl from "../Context/UrlSource";
 import {UserContext} from "../Context/AuthContext";
 import { App } from 'antd';
+import cookie from 'react-cookies';
 
 export interface Props {
     update?:any
@@ -26,12 +27,15 @@ export default function ImageUploadUnit(prop:Props){
             formData.append('file' + idx, file as RcFile);
             if (prop.mode === 'user')
                 formData.append(prop.mode, currentUser.user);
-            else formData.append(prop.mode, prop.cover_id);
+            else if (prop.mode === 'cover') formData.append(prop.mode, prop.cover_id);
             idx += 1;
         });
         setUploading(true);
 
-        requests.post(GetUrl(prop.urlName), formData)
+        requests.post(GetUrl(prop.urlName), formData, {headers: {
+                "Content-type": "multipart/form-data",
+                "Authorization": "Bearer " + cookie.load("access_token"),
+            }})
             .then(response=>{
                 setFileList([]);
                 if (prop.update !== undefined) prop.update(response.data.image_id)
@@ -55,7 +59,7 @@ export default function ImageUploadUnit(prop:Props){
         },
         beforeUpload: (file) => {
 
-            //限制只能上产一张图片
+            //限制只能上传一个文件
             let newFileList = [...fileList, file]
             newFileList = newFileList.slice(-1)
             setFileList(newFileList)
@@ -67,7 +71,7 @@ export default function ImageUploadUnit(prop:Props){
     return (
         <App>
             <Upload {...props}>
-                <Button icon={<UploadOutlined />} >选择图像</Button>
+                <Button icon={<UploadOutlined />} >选择文件</Button>
             </Upload>
             <Button
                 type="primary"

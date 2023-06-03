@@ -1,7 +1,6 @@
-import axios from "axios";
 import React, {useEffect, useState} from "react";
 import '../../static/style.css'
-import {Avatar, List, Card, ConfigProvider, Skeleton, PaginationProps, message, Space} from 'antd';
+import {Avatar, List, Card, ConfigProvider, Skeleton, PaginationProps, message, Space, App} from 'antd';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
 import {NavLink} from "react-router-dom";
@@ -51,28 +50,13 @@ export default function ListMovies()  {
                     "Authorization": "Bearer " + cookie.load("access_token"),
                 },
             }).then((response)=>{
-                //debug
-                // console.log("response:", response)
-
-                if(response.data.code === "No permission"){
-                    //debug
-                    // console.log("1111")
-
-                    messageApi.open({
-                        type: 'error',
-                        content: '权限不足',
-                    });
-                }
-                else{
-                    messageApi.open({
-                        type: 'success',
-                        content: '删除成功',
-                    });
+                    message.success("删除成功")
                     let shouldUpdate = update + 1
                     setUpdate(shouldUpdate)
-                }
             }).catch(e => {
                 console.log("Error:", e)
+                console.log('1')
+                message.error(e.msg)
             })
             event.preventDefault();
         }
@@ -88,7 +72,7 @@ export default function ListMovies()  {
     );
         // @ts-ignore
     return(
-        <>
+        <App>
             <ConfigProvider
                 theme={{
                     token: {
@@ -96,7 +80,6 @@ export default function ListMovies()  {
                     },
                 }}
             >
-                {contextHolder}
                         <Card bordered={false} style={{
                             width: '80vw',
                             maxWidth: 800,
@@ -208,7 +191,7 @@ export default function ListMovies()  {
                         </Card>
                     {/*</div>*/}
             </ConfigProvider>
-        </>
+        </App>
     )
 }
 

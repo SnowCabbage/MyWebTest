@@ -4,7 +4,7 @@ import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 import {useNavigate} from "react-router-dom";
 import cookie from 'react-cookies';
-import {RoleContext, UserContext} from "../Context/AuthContext";
+import { UserContext} from "../Context/AuthContext";
 import requests from "../handler/handleRequest";
 import ImageUploadUnit from "../Units/ImageUploadUnit";
 import {mainThemeColor} from "../Context/DefaultInfo";
@@ -17,7 +17,6 @@ export default function Setting() {
     const [form] = Form.useForm()
     const {currentUser} = useContext(UserContext)
     const {setCurrentUser} = useContext(UserContext)
-    const {currentRole} = useContext(RoleContext)
     // const [newUser, setNewUser] = useState(null)
 
     const sendMsg=(data) => {
