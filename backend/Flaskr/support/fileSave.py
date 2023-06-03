@@ -6,11 +6,9 @@ from Flaskr.decorators.loggerUnit import print_logger
 
 
 @print_logger()
-def file_save(file, data):
-
+def file_save(file, *, mode='image', path='Data/Upload/images'):
     # debug
     # print(file)
-    # print(data)
 
     if len(file) == 0:
         # print('1')
@@ -44,7 +42,7 @@ def file_save(file, data):
         # debug
         # print(suffix)
 
-        if suffix != '.jpg' and suffix != '.png':
+        if suffix != '.jpg' and suffix != '.png' and mode == 'image':
             return {
                 'code': 'Error',
                 'message': "Format Error",
@@ -53,13 +51,23 @@ def file_save(file, data):
 
         nowTime.append(str(int(time.time())))  # 获取当前时间戳改文件名
 
-        RESULTS_DIR = 'Data/Upload/images'
-        exists(RESULTS_DIR) or os.makedirs(RESULTS_DIR)
+        # RESULTS_DIR = 'Data/Upload/images'
+        exists(path) or os.makedirs(path)
+        # 保存文件
+        # print(suffix, mode)
+        if mode == 'image':
+            file.save(f'{path}/' + f'{nowTime[0]}' + suffix)
+            return {
+                'code': 'OK',
+                'message': "Upload successfully",
+                'image_id': nowTime[0]
+            }
+        elif mode == 'goods':
+            file.save(f'{path}/goods_data' + suffix)
+            return {
+                'code': 'OK',
+                'message': "Upload successfully",
+                'path': f'{path}/goods_data' + suffix
+            }
 
-        file.save(f'{RESULTS_DIR}/' + f'{nowTime[0]}' + suffix)  # 保存文件
 
-    return {
-        'code': 'OK',
-        'message': "Upload successfully",
-        'image_id': nowTime[0]
-    }

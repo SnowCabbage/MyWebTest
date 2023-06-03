@@ -59,7 +59,7 @@ class HomeCoverApi(Resource):
                 'code': 'Error',
                 'message': 'home_cover does not exist'
             }
-        response = file_save(file, response_data)
+        response = file_save(file)
 
         if response['code'] == 'Error':
             return {

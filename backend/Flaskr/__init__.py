@@ -6,6 +6,7 @@ from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_limiter import Limiter
 from flask_socketio import SocketIO
+
 from Flaskr.support.defaultSetting import get_real_ip, default_error_responder
 from Flaskr.support.logHandler import file_handler
 
@@ -37,6 +38,7 @@ from Flaskr.apis.files.images import images
 from Flaskr.apis.article.homeCover import home_cover
 from Flaskr.apis.system.systemFunc import system_func
 from Flaskr.apis.webSocket import webSocket
+from Flaskr.apis.good.mag import goods
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
@@ -46,10 +48,10 @@ app.register_blueprint(comments)
 app.register_blueprint(images)
 app.register_blueprint(home_cover)
 app.register_blueprint(system_func)
+app.register_blueprint(goods)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback
-
 
 
 @app.route('/')

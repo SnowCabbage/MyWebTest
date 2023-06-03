@@ -8,6 +8,7 @@ class RequestFormatter(logging.Formatter):
     """
     增加访问路由信息和ip地址信息
     """
+
     def format(self, record):
         if has_request_context():
             record.url = request.url
@@ -20,6 +21,8 @@ class RequestFormatter(logging.Formatter):
         return super().format(record)
 
 
+logging.basicConfig(level=logging.INFO)
+
 # 以天为单位，保存一天日志，最多备份三个文件
 file_handler = TimedRotatingFileHandler(
     "flask.log", when="D", interval=1, backupCount=3,
@@ -31,4 +34,3 @@ formatter = RequestFormatter(
 )
 
 file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.INFO)

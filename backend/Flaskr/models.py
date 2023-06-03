@@ -53,3 +53,9 @@ class HomeCover(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cover_id = db.Column(db.String(50))
     cover_name = db.Column(db.String(50))
+
+
+class Goods(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
+    mag = db.Column(db.String(150))

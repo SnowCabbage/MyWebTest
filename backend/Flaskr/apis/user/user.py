@@ -171,8 +171,8 @@ class UserAvatarApi(Resource):
         file = request.files
         response_data = request.form
         # debug
-        # print(file)
-        # print(response_data)
+        print(file)
+        print(response_data)
         try:
             user = response_data.get('user')
         except AttributeError:
@@ -187,7 +187,8 @@ class UserAvatarApi(Resource):
                 'code': 'Error',
                 'message': 'User does not exist'
             }
-        response = file_save(file, response_data)
+        response = file_save(file)
+        print(response)
 
         if response['code'] == 'Error':
             return {
