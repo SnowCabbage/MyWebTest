@@ -1,0 +1,462 @@
+[2023-06-02 16:49:42,766] WARNING: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  The token expired one attempt to access
+[2023-06-02 16:49:54,363] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 16:50:49,729] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:50:50,504] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:50:51,741] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:51:25,919] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:51:26,958] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:51:27,983] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:51:30,073] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 16:51:30,078] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:51:54,058] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:51:56,048] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:51:56,054] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 16:51:57,401] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:52:23,176] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:52:23,945] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:52:25,418] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:52:26,626] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:52:28,774] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 16:52:28,785] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/2
+---  
+[2023-06-02 16:57:58,322] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 16:58:10,798] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:58:11,870] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 16:58:12,961] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/3
+---  
+[2023-06-02 16:59:29,429] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/3
+---  
+[2023-06-02 17:00:23,625] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/comments/3
+---  
+[2023-06-02 17:14:10,062] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:22:03,358] WARNING: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  The token expired one attempt to access
+[2023-06-02 17:22:11,085] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:22:52,558] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:22:53,737] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:22:58,041] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:23:00,802] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:23:28,052] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:25:00,291] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:25:03,718] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:25:12,126] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/1
+---  
+[2023-06-02 17:25:12,157] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:25:24,746] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:25:58,767] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/users
+---  
+[2023-06-02 17:26:13,823] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-02 17:26:17,031] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:26:20,107] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/3
+---  The Non-administrator attempt to operate
+[2023-06-02 17:26:23,175] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/3
+---  The Non-administrator attempt to operate
+[2023-06-02 17:26:59,234] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:27:23,489] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:28:59,294] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:28:59,597] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:29:54,103] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:29:55,234] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:29:55,792] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:29:58,513] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:30:36,349] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:30:36,692] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:30:37,428] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:30:50,683] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:30:53,077] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:30:54,905] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/3
+---  
+[2023-06-02 17:30:54,931] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:30:58,336] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:31:10,458] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-02 17:31:49,351] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:31:50,519] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:14,764] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:32:15,737] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/4
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:17,093] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:31,118] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:32:31,295] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:35,087] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/4
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:37,522] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-02 17:32:37,526] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:32:38,160] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:40,124] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/4
+---  The Non-administrator attempt to operate
+[2023-06-02 17:32:52,443] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:32:52,667] WARNING: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/2
+---  The Non-administrator attempt to operate
+[2023-06-02 17:33:01,948] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:33:02,719] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:33:09,012] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:33:09,672] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:33:11,477] INFO: 127.0.0.1 DELETE http://127.0.0.1:8080/api/movies/5
+---  
+[2023-06-02 17:33:11,499] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:51:04,149] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:52:00,912] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:01,926] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:07,643] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies/6
+---  
+[2023-06-02 17:52:10,869] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:24,190] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:26,529] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:28,766] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:29,942] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:32,530] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-02 17:52:39,341] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:44,728] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:47,283] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:52:52,547] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-02 17:53:47,350] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:35:17,728] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:35:38,273] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:37:48,546] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 12:38:24,299] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-03 12:38:32,251] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-03 12:38:33,489] WARNING: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  The Non-administrator attempt to operate
+[2023-06-03 12:38:37,722] WARNING: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  The Non-administrator attempt to operate
+[2023-06-03 12:44:33,822] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-03 12:44:39,686] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=plpl
+---  
+[2023-06-03 12:49:25,602] WARNING: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  The Non-administrator attempt to operate
+[2023-06-03 12:49:29,855] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-03 12:49:38,902] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:49:47,697] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:49:51,225] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 12:50:24,278] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-03 12:50:29,497] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:50:38,121] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-03 12:50:45,412] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:51:43,202] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:53:58,329] WARNING: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  The token expired one attempt to access
+[2023-06-03 12:54:03,255] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 12:54:25,907] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 12:55:02,473] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:02,501] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:03,013] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:03,013] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:15,268] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:55:22,097] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:22,100] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:22,624] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:22,627] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:37,759] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:37,762] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:38,280] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:55:38,282] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:56:49,906] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:56:55,538] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:57:00,980] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-03 12:57:03,884] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:57:12,255] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-03 12:57:18,838] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:57:18,840] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:57:19,359] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:57:19,361] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:58:09,265] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:58:12,496] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:58:55,773] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:59:23,197] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 12:59:26,520] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:59:26,522] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:59:27,047] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 12:59:27,048] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:00:03,121] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:00:05,972] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:00:05,974] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:00:06,500] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:00:06,502] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:00,820] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:00,837] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:01,354] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:01,356] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:51,923] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:51,942] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:52,459] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:01:52,461] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:03:17,604] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:03:17,620] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:03:18,136] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:03:18,138] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:04:11,054] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:04:11,074] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:04:11,591] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:04:11,593] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:21:00,561] WARNING: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  The token expired one attempt to access
+[2023-06-03 13:21:10,358] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:21:17,541] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:21:17,544] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/avatar
+---  
+[2023-06-03 13:21:17,579] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:21:19,083] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/movies
+---  
+[2023-06-03 13:28:35,346] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:28:40,978] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:28:40,983] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:29:07,130] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:29:07,131] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:36:54,766] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:36:54,768] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:41:38,063] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:41:41,038] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:41:41,039] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:47:43,155] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:47:47,186] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:47:47,187] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:47:47,755] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:47:47,756] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:48:56,876] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:48:56,878] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:50:19,593] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:50:19,595] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:54:51,052] WARNING: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  The token expired one attempt to access
+[2023-06-03 13:54:57,516] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:55:12,064] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 13:55:15,275] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:55:15,277] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:55:15,807] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:55:15,808] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:57:48,715] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:57:48,717] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:58:37,321] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 13:58:37,322] INFO: 127.0.0.1 POST http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:10:14,287] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 14:10:17,695] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 14:10:19,005] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:14:02,113] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/user?user=admin
+---  
+[2023-06-03 14:14:03,602] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:00,286] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:04,914] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:07,519] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:11,677] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:13,973] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:15,060] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:16,100] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:17,380] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:18,315] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:19,277] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:20,276] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:21,480] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:22,930] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:28,831] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:29,917] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:30,856] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:32,198] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:33,156] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:34,536] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:18:35,591] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  
+[2023-06-03 14:20:02,120] INFO: 127.0.0.1 GET http://127.0.0.1:8080/api/goods
+---  

@@ -26,8 +26,8 @@ logging.basicConfig(level=logging.INFO)
 # 以天为单位，保存一天日志，最多备份三个文件
 file_handler = TimedRotatingFileHandler(
     "flask.log", when="D", interval=1, backupCount=3,
-    encoding="UTF-8", delay=False)
-file_handler.suffix = "%Y%m%d-%H%M.log"
+    encoding="UTF-8", delay=True)
+# file_handler.suffix = "%Y%m%d-%H%M.log"
 formatter = RequestFormatter(
     '[%(asctime)s] %(levelname)s: %(remote_addr)s %(method)s %(url)s\n'
     '---  %(message)s'

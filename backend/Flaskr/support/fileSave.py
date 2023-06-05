@@ -21,6 +21,7 @@ def file_save(file, *, mode='image', path='Data/Upload/images'):
     # debug
     # print(len(file))
     nowTime = []
+    image_type = ['.jpg', '.png', '.jpeg', '.dds']
 
     for idx in range(1, len(file) + 1):
         file_id = f'file{idx}'
@@ -42,7 +43,7 @@ def file_save(file, *, mode='image', path='Data/Upload/images'):
         # debug
         # print(suffix)
 
-        if suffix != '.jpg' and suffix != '.png' and mode == 'image':
+        if suffix not in image_type and mode == 'image':
             return {
                 'code': 'Error',
                 'message': "Format Error",

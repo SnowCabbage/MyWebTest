@@ -1,12 +1,8 @@
-import json
-
-import requests
 from flask import Blueprint, request, current_app
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
 from Flaskr import api, db, limiter
-from Flaskr.config.host import host
 from Flaskr.decorators.authUnit import user_agent_required
 from Flaskr.decorators.loggerUnit import print_logger
 from Flaskr.models import User, Userprofile
