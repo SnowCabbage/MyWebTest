@@ -122,6 +122,7 @@ class UserApi(Resource):
         post_data = request.get_json()
         try:
             new_username = post_data['data']['new_username']
+            new_password = post_data['data'].get('new_password', None)
             user = post_data['data']['user']
         except KeyError as e:
             current_app.logger.error("get the invalid request data")
@@ -132,16 +133,25 @@ class UserApi(Resource):
 
         # debug
         # print(user, new_username)
+        # print(new_password)
+        # print(user)
 
-        check_username = User.query.filter_by(username=new_username).first()
-        if check_username is not None:
+        check_res = user_info_check({
+            'old_user': user,
+            'username': new_username,
+            'password': new_password,
+        })
+        print(check_res)
+        if check_res['code'] == 'CHECK':
             return {
-                "code": "Error",
-                "message": "The username has existed"
+                'code': 'Error',
+                'message': check_res['message']
             }
 
         changeUser = User.query.filter_by(username=user).first()
         changeUser.username = new_username
+        if new_password is not None:
+            changeUser.hash_password(new_password)
 
         db.session.commit()
         response_object['code'] = 'OK'

@@ -11,7 +11,6 @@ import {mainThemeColor} from "../Context/DefaultInfo";
 import { App } from 'antd';
 
 export default function Setting() {
-    const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm()
@@ -52,7 +51,7 @@ export default function Setting() {
         message.success('更新成功');
         setTimeout(()=>{
             navigate("/home");
-        }, 2000)
+        }, 800)
 
     };
 
@@ -120,6 +119,7 @@ export default function Setting() {
                         label="新账号"
                         name="new_username"
                         validateFirst={true}
+                        initialValue={currentUser.user}
                         validateTrigger={'onBlur'}
                         rules={[
                             {required: true, message: '请输入新账号'},
@@ -132,25 +132,23 @@ export default function Setting() {
                                     }
 
                                     let sendData = {'username': val}
-                                    axios.post(GetUrl("username_check"),sendData, {
+                                    requests.post(GetUrl("username_check"),sendData, {
                                         headers: {
                                             "Content-type": "application/json",
-                                        },
-                                        timeout: 6000
+                                        }
                                     })
                                         .then(response=>{
-                                            if (response.data['code'] === 'Error'){
-                                                form.setFields([{name: 'username', errors: ['已存在该用户名']}])
-                                            }else {
-                                                callback()
+                                            if (response.data['code'] === 'CHECK'){
+                                                form.setFields([{name: 'new_username', errors: ['已存在该用户名']}])
+                                                //假如我用这种的话会显示是错误的，但是页面上还是可以提交表单数据
+
+                                                // console.log('1111')
+                                                return callback('已存在该用户名')
+                                                //如果使用这种的话页面上根本没有显示，但是上面的正则匹配那里是可以显示的，同时也可以阻塞表单提交
                                             }
                                         })
                                         .catch(e=>{
                                             console.log('Error:', e)
-                                            messageApi.open({
-                                                type: 'error',
-                                                content: '连接超时',
-                                            });
                                         })
 
                                     callback();
@@ -158,11 +156,53 @@ export default function Setting() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入新账号"/>
+                        <Input defaultValue={currentUser.user}/>
                     </Form.Item>
 
-                    <Form.Item style={{display: 'inline-block'}} shouldUpdate>
-                        {() => (
+                    <Form.Item
+                        label="新密码"
+                        name="new_password"
+                        validateFirst={true}
+                        validateTrigger={'onBlur'}
+                        rules={[
+                            {required: true, message: '请输入新密码'},
+                            {min: 6, message: '密码过短'},
+                            { validator:  (rule, val, callback) => {
+                                    let pattern = new RegExp(/^[\u4E00-\u9FA5A-Za-z0-9_]{4,20}$/);
+                                    if (!pattern.test(val) && val){
+                                        return callback('密码仅能由中文、英文、数字或下划线组成');
+                                    }
+
+                                    let sendData = {
+                                        'username': form.getFieldValue('new_username'),
+                                        'password': val
+                                    }
+                                    requests.post(GetUrl("username_check"),sendData, {
+                                        headers: {
+                                            "Content-type": "application/json",
+                                        }
+                                    })
+                                        .then(response=>{
+                                            if (response.data['code'] === 'CHECK'){
+                                                //TODO:try callback?
+                                                form.setFields([{name: 'new_password', errors: ['不能使用重复的密码']}])
+                                            }else {
+                                                callback()
+                                            }
+                                        })
+                                        .catch(e=>{
+                                            console.log('Error:', e)
+                                        })
+
+                                    callback();
+                                },
+                            },
+                        ]}
+                    >
+                        <Input placeholder={'请输入新密码'} type={'password'}/>
+                    </Form.Item>
+
+                    <Form.Item style={{display: 'inline-block'}}>
                             <Button
                                 type="primary"
                                 htmlType="submit"
@@ -174,12 +214,11 @@ export default function Setting() {
                             >
                                 更新
                             </Button>
-                        )}
                     </Form.Item>
                 </Form>
 
                 <div>
-                    <div style={{float: 'left'}} >修改头像(暂时只支持jpg):</div><br/>
+                    <div style={{float: 'left'}} >修改头像(支持jpg,png):</div><br/>
 
                     <ImageUploadUnit
                         update ={onUpdate}
