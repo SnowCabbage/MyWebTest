@@ -2,62 +2,63 @@ import React, {useState} from 'react';
 import './static/style.css'
 import 'antd/dist/reset.css';
 import cookie from 'react-cookies';
-import {AuthContext, UserContext} from "./components/Context/AuthContext";
-import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
-import RequireAuth from "./components/handler/handleRoute";
-import ListMovies from "./components/MovieList";
-import Setting from "./components/Setting";
-import AddEntry from "./components/AddEntry";
-import Login from "./components/UserAuth/Login";
-import Logout from "./components/UserAuth/Logout";
-import Register from "./components/UserAuth/Register";
-import Home from "./components/views/Home";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import {AuthContext, OnlineContext, RoleContext, UserContext} from "./components/Context/AuthContext";
+import MainContent from "./components/elements/MainContent";
+import {HomeCoverContext} from "./components/Context/ElementContext";
+import history from "./components/Units/routerHistory";
+import {CustomRouter} from "./components/Units/CustomRouter";
+import {socket} from "./components/Context/UrlSource";
+
 
 function App() {
 
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState({
+        user: cookie.load('user'),
+        user_avatar: "1"
+    })
+    const [currentOnline, setCurrentOnline] = useState(0)
+    const [currentHomeCover, setCurrentHomeCover] = useState([
+        {
+            cover_name: '1',
+            cover_id: ""
+        },
+        {
+            cover_name: '2',
+            cover_id: ""
+        },
+        {
+            cover_name: '3',
+            cover_id: ""
+        }
+    ])
 
-  // @ts-ignore
+    socket.on('online', (data) => {
+        console.log(data)
+        setCurrentOnline(data['online'])
+    });
+
+    // const [currentAvatar, setCurrentAvatar] = useState(null)
     return (
-        <BrowserRouter>
-            <AuthContext.Provider value={!!cookie.load("access_token")}>
-                <UserContext.Provider value={{
-                    currentUser,
-                    setCurrentUser
-                }}>
-                    <Header/>
-                    <Routes>
-                        <Route path='/' element={ <Navigate to="/home" /> }/>
-                        <Route path="/home" element={<Home />} />
-                            <Route path="/movies" element={
-                                <RequireAuth>
-                                    <ListMovies/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/setting" element={
-                                <RequireAuth>
-                                    <Setting/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/addentry" element={
-                                <RequireAuth>
-                                    <AddEntry/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/login" element={<Login/>} />
-                            <Route path="/logout" element={
-                                <RequireAuth>
-                                    <Logout/>
-                                </RequireAuth>
-                            } />
-                            <Route path="/register" element={<Register/>} />
-                    </Routes>
-                    <Footer/>
-                </UserContext.Provider>
-            </AuthContext.Provider>
-        </BrowserRouter>
+        <CustomRouter history={history}>
+                <AuthContext.Provider value={!!cookie.load("access_token")}>
+                    <UserContext.Provider value={{
+                        currentUser,
+                        setCurrentUser
+                    }}>
+                        <OnlineContext.Provider value={{
+                            currentOnline,
+                            setCurrentOnline
+                        }}>
+                            <HomeCoverContext.Provider value={{
+                                currentHomeCover,
+                                setCurrentHomeCover
+                            }}>
+                                    <MainContent/>
+                            </HomeCoverContext.Provider>
+                        </OnlineContext.Provider>
+                    </UserContext.Provider>
+                </AuthContext.Provider>
+        </CustomRouter>
     );
 }
 export default App;

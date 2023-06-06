@@ -1,15 +1,16 @@
-import React, {useContext, useEffect} from "react";
-import { ConfigProvider, message} from "antd";
-import Header from "../Header";
-import Footer from "../Footer";
-import {useLocation, useNavigate} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from "react";
+import { message} from "antd";
+import { useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import {UserContext} from "../Context/AuthContext";
+import {defaultUserInfo} from "../Context/DefaultInfo";
 
 export default function Logout(){
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const {setCurrentUser} = useContext(UserContext)
+    const {currentUser} = useContext(UserContext)
+    const [user, setUser] = useState(currentUser)
 
     useEffect(()=>{
         success()
@@ -21,26 +22,25 @@ export default function Logout(){
     }
 
     const success = () => {
-        cookie.remove("access_token")
-        cookie.remove("user")
         messageApi.open({
             type: 'success',
             content: '退出成功',
         });
+        cookie.remove("access_token", { path: '/' })
+        cookie.remove("user", { path: '/' })
         setTimeout(()=>{
-            setCurrentUser(null)
+            setUser("")
+            setCurrentUser(defaultUserInfo)
             toHome()
-        }, 1000)
-
-
+        }, 800)
     }
 
     return (
         <>
             {contextHolder}
-            <div className={"contentStyle"}>
+            {/*<div className={"contentStyle"}>*/}
 
-            </div>
+            {/*</div>*/}
         </>
     );
 }

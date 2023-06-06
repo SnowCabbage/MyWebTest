@@ -1,5 +1,7 @@
 *.idea
 __pycache__
-build
 node_modules
 *.db
+migrations
+**/images/*
+!**/images/1.jpg

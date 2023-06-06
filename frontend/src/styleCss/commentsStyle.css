@@ -1,0 +1,8 @@
+.my-wrapper .ant-list-item-meta-title {
+    display: flex;
+}
+
+.comments {
+    display: inline-block;
+    width: 80vw;
+}

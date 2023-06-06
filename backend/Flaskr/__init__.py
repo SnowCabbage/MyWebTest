@@ -1,49 +1,67 @@
-import datetime
-import os
-import sys
-
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
-from flask_httpauth import HTTPBasicAuth
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
+from flask_limiter import Limiter
+from flask_socketio import SocketIO
 
-DEBUG = True
-ENV = 'development'
+from Flaskr.support.defaultSetting import get_real_ip, default_error_responder
+from Flaskr.support.logHandler import file_handler
 
-WIN = sys.platform.startswith('win')
-if WIN:  # 如果是 Windows 系统，使用三个斜线
-    prefix = 'sqlite:///'
-else:  # 否则使用四个斜线
-    prefix = 'sqlite:////'
-
-app = Flask(__name__)
-app.secret_key = 'dev'
+app = Flask(__name__, static_folder='frontend_static', static_url_path='/frontend_static')
 jwt = JWTManager()
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
-app.config['JSON_AS_ASCII'] = False
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
-app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE',
-                                                                                                        'data.db'))
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=30)
-app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config.from_pyfile('./config/default_config.py')
+# app.config.from_pyfile('./config/production_config.py')
 
+app.logger.addHandler(file_handler)
 jwt.init_app(app)
 db = SQLAlchemy(app)
-# 创建认证对象
-auth = HTTPBasicAuth()
+migrate = Migrate(app, db)
+socketio = SocketIO(app, cors_allowed_origins='*')
+limiter = Limiter(key_func=get_real_ip,
+                  app=app,
+                  # storage_uri="redis://localhost:6379",
+                  on_breach=default_error_responder
+                  )
 
-from Flaskr.apis.user import users
-from Flaskr.apis.movies import movies
-from Flaskr.apis.loginAuth import loginAuth
+from Flaskr.apis.user.user import users
+from Flaskr.apis.article.movies import movies
+from Flaskr.apis.user.loginAuth import loginAuth
+from Flaskr.apis.user.informationCheck import informationCheck
+from Flaskr.apis.article.comments import comments
+from Flaskr.apis.files.images import images
+from Flaskr.apis.article.homeCover import home_cover
+from Flaskr.apis.system.systemFunc import system_func
+from Flaskr.apis.webSocket import webSocket
+from Flaskr.apis.good.mag import goods
 
 app.register_blueprint(users)
 app.register_blueprint(movies)
 app.register_blueprint(loginAuth)
+app.register_blueprint(informationCheck)
+app.register_blueprint(comments)
+app.register_blueprint(images)
+app.register_blueprint(home_cover)
+app.register_blueprint(system_func)
+app.register_blueprint(goods)
 
 from Flaskr import models, commands
 from Flaskr.decorators.authUnit import my_expired_token_callback
 
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+# 没找到通配符的方法，暂时这样写
+@app.errorhandler(404)
+def hello(error):
+    # debug
+    # print(get_real_ip())
+    return render_template("index.html")

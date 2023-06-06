@@ -1,35 +1,36 @@
-import React, {useState} from "react";
-import {Avatar, Button, Checkbox, ConfigProvider, Form, Input, Menu, MenuProps, message, Card} from "antd";
-import Header from "../Header";
-import Footer from "../Footer";
-import {useLocation, useNavigate} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from "react";
+import { Button, ConfigProvider, Form, Input, message, Card} from "antd";
+import { useNavigate} from 'react-router-dom';
 import cookie from 'react-cookies';
 import GetUrl from "../Context/UrlSource";
+import axios from "axios";
+import {ContentWidthContext} from "../Context/ElementContext";
+import {mainThemeColor} from "../Context/DefaultInfo";
+import BackIcon from "../Units/BackIcon";
 
 export default function Register(){
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
+    const [form] = Form.useForm()
+    // const [, forceUpdate] = useState({});
+    const [isAble, setIsAble] = useState(true)
+
+    // useEffect(() => {
+    //     forceUpdate({});
+    // }, []);
 
     const sendMsg=(data) => {
-        // console.log(data)
         let sendData = {}
         sendData["data"] = data
-        fetch(
-            // 'http://lee666.sv1.k9s.run:2271/api/login'
-            // 'http://127.0.0.1:5000/api/login'
-            GetUrl("users")
-            ,{
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(sendData),
-                // mode: "no-cors",
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log(data)
+        axios.post(GetUrl("users"),sendData, {
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + cookie.load("access_token"),
+            },
+            timeout: 6000
+        })
+            .then(response=>{
                 success()
             })
             .catch(e=>{
@@ -46,8 +47,8 @@ export default function Register(){
         });
         setTimeout(()=>{
             // window.location.reload()
-            navigate("/login");
-        }, 2000)
+            navigate("/home/login");
+        }, 800)
 
     };
 
@@ -62,10 +63,8 @@ export default function Register(){
     const onFinish = (values: any) => {
         setLoading(true)
         sendMsg(values)
-        // console.log(result)
-        // redirect('/movies')
-        // console.log('Success:', values);
     };
+
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
@@ -75,31 +74,35 @@ export default function Register(){
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#4b5cc4',
+                    colorPrimary: mainThemeColor,
                 },
             }}
         >
-            {/*<Header index={"register"}/>*/}
             {contextHolder}
-            <div className={"contentStyle"}>
-                <Card title="注册" bordered={false} style={{
-                    width: 500,
-                    margin: 'auto',
-                    top: 30,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    background: '#e0f0e9',
+                <Card title="注册"
+                      bordered={false}
+                      extra={
+                        <BackIcon path={'/home/login'}/>
+                      }
+                      className={'my-wrapper'}
+                      style={{
+                            width: '60vw',
+                            maxWidth: 420,
+                            margin: 'auto',
+                            top: 30,
+                            right: 0,
+                            left: 0,
+                            bottom: 0,
+                            background: '#ffffff',
+                            textAlign: 'initial'
                 }}>
                     <Form
                         name="basic"
-                        labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 16 }}
-                        style={{ minWidth: 400,
-                            maxWidth: 600,
+                        form={form}
+                        style={{
+                            width: '100%',
                             display:"inline-block",
                             position: "relative",
-                            right:54
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
@@ -108,8 +111,46 @@ export default function Register(){
                         <Form.Item
                             label="账号"
                             name="username"
+                            labelCol={{ span: 7 }}
+                            wrapperCol={{ span: 17 }}
+                            validateFirst={true}
+                            validateTrigger={'onBlur'}
                             rules={[
                                 {required: true, message: '请输入账号'},
+                                {max: 16, message: '账号名称过长'},
+                                {min: 4, message: '账号名称过短'},
+                                { validator:  (rule, val, callback) => {
+                                        let pattern = new RegExp(/^[\u4E00-\u9FA5A-Za-z0-9_]{4,20}$/);
+                                        if (!pattern.test(val) && val){
+                                            return callback('请输入正确账号,仅能由中文、英文、数字或下划线组成');
+                                        }
+
+                                        let sendData = {'username': val}
+                                        axios.post(GetUrl("username_check"),sendData, {
+                                            headers: {
+                                                "Content-type": "application/json",
+                                            },
+                                            timeout: 6000
+                                        })
+                                            .then(response=>{
+                                                if (response.data['code'] === 'Error'){
+                                                    form.setFields([{name: 'username', errors: ['已存在该用户名']}])
+                                                }else {
+                                                    setIsAble(false)
+                                                    callback()
+                                                }
+                                            })
+                                            .catch(e=>{
+                                                console.log('Error:', e)
+                                                messageApi.open({
+                                                    type: 'error',
+                                                    content: '连接超时',
+                                                });
+                                            })
+
+                                        callback();
+                                    },
+                                },
                             ]}
                         >
                             <Input placeholder="请输入账号"/>
@@ -118,8 +159,11 @@ export default function Register(){
                         <Form.Item
                             label="密码"
                             name="password"
+                            labelCol={{ span: 7 }}
+                            wrapperCol={{ span: 17 }}
                             rules={[
                                 { required: true, message: '请输入密码!' },
+                                {min: 6, message: '密码过短'},
                             ]}
                         >
                             <Input.Password placeholder="请输入密码"/>
@@ -129,6 +173,8 @@ export default function Register(){
                             label="确认密码"
                             name="vertifyPassword"
                             validateTrigger="onBlur"
+                            labelCol={{ span: 7 }}
+                            wrapperCol={{ span: 17 }}
                             rules={[
                                 { required: true, message: '请输入密码!' },
                                 ({getFieldValue})=>({
@@ -146,14 +192,28 @@ export default function Register(){
 
 
 
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button type="primary" htmlType="submit" loading={loading}>
-                                注册
-                            </Button>
+                        <Form.Item shouldUpdate>
+                            {() => (
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={loading}
+                                    disabled={
+                                        !form.isFieldsTouched(true) ||
+                                        !!form.getFieldsError().filter(({errors}) => errors.length).length ||
+                                        isAble
+                                    }
+                                    style={{
+                                        height: 40,
+                                        width: '100%'
+                                    }}
+                                >
+                                    注册
+                                </Button>
+                            )}
                         </Form.Item>
                     </Form>
                 </Card>
-            </div>
         </ConfigProvider>
     );
 }
