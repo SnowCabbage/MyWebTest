@@ -1,6 +1,6 @@
 import click
 from Flaskr import db, app
-from Flaskr.models import Movie, User, Userprofile, HomeCover
+from Flaskr.tables.models import Movie, User, Userprofile, HomeCover
 
 
 @app.cli.command()  # 注册为命令，可以传入 name 参数来自定义命令

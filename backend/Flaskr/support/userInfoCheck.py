@@ -1,6 +1,6 @@
 import json
 
-from Flaskr.models import User
+from Flaskr.tables.models import User
 
 
 def user_info_check(data):
@@ -11,13 +11,18 @@ def user_info_check(data):
     if type(data) != dict:
         data = json.loads(data)
 
-    old_user = data.get('old_user')
+    old_user = data.get('old_user', None)
     username = data.get('username', None)
     password = data.get('password', None)
 
     # print("username:", username)
     # print("password:", password)
     # print("old_user:", old_user)
+    if old_user is None:
+        check_user = User.query.filter_by(username=username).first()
+        if check_user is None:
+            return {'code': 'OK', 'message': ''}
+        return {'code': 'CHECK', 'message': 'username exists'}
 
     current_user = User.query.filter_by(username=old_user).first()
     check_user = User.query.filter_by(username=username).first()

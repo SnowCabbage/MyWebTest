@@ -1,11 +1,9 @@
-import json
-
 from flask import Blueprint, request, current_app
 from flask_restful import Resource
 
 from Flaskr import db, api, limiter
 from Flaskr.decorators.loggerUnit import print_logger
-from Flaskr.models import Comment, User, Movie
+from Flaskr.tables.models import Comment, User, Movie
 
 comments = Blueprint("comments", __name__)
 

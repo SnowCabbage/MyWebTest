@@ -28,7 +28,7 @@ export default function Login(){
                 if('access_token' in response.data){
                     // console.log(response.data['user'])
                     setUser(response.data['user_profile'])
-                    let expiredTime = new Date(new Date().getTime() + 2 * 3600 * 1000);//2h
+                    let expiredTime = new Date(new Date().getTime() + 36 * 3600 * 1000);//2h
                     cookie.save('user', response.data['user_profile']['user'],{path:"/", expires: expiredTime});
                     cookie.save('access_token',response.data['access_token'],{path:"/", expires: expiredTime})
                     success()

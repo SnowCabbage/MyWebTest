@@ -2,7 +2,7 @@ import {Modal} from "antd";
 import cookie from 'react-cookies';
 import history from '../Units/routerHistory';
 
-export default function handleTokenExpired () {
+export function handleTokenExpired () {
 
     Modal.warning({
         title: '登录已过期',
@@ -11,13 +11,13 @@ export default function handleTokenExpired () {
         onOk()  {
             cookie.remove("access_token", { path: '/' })
             cookie.remove("user", { path: '/' })
-
-            //非常简陋
-            // window.history.go(-1)
             history.push('/home/login')
-            // navigate('/login')
-            // window.location.href="/login"
-            // return redirect('/login')
         }
     });
-};
+}
+
+export function freshToken(token){
+    let expiredTime = new Date(new Date().getTime() + 36 * 3600 * 1000);//2h
+    cookie.remove("access_token", { path: '/' })
+    cookie.save('access_token',token,{path:"/", expires: expiredTime})
+}

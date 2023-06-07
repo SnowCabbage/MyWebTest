@@ -1,11 +1,8 @@
-import json
-
-import requests
-from flask import Blueprint, send_file, request, current_app
+from flask import Blueprint, request, current_app
 from flask_restful import Resource
 
 from Flaskr import api, limiter, db
-from Flaskr.models import HomeCover
+from Flaskr.tables.models import HomeCover
 from Flaskr.support.fileSave import file_save
 
 home_cover = Blueprint('home_cover', __name__)

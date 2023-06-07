@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, jsonify, request
+from flask import Flask, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
@@ -50,7 +50,8 @@ app.register_blueprint(home_cover)
 app.register_blueprint(system_func)
 app.register_blueprint(goods)
 
-from Flaskr import models, commands
+from Flaskr import commands
+from Flaskr.tables import models, authModels
 from Flaskr.decorators.authUnit import my_expired_token_callback
 
 

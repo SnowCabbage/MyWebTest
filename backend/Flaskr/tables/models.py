@@ -5,8 +5,6 @@ from Flaskr import db
 
 class Userprofile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    # user = db.relationship('User', backref=db.backref('userprofile'))
     image_id = db.Column(db.String(20))
     sex = db.Column(db.Integer)  # 0 for male, 1 for female
     address = db.Column(db.String(50))
@@ -46,7 +44,7 @@ class Comment(db.Model):
     author = db.relationship('User', backref=db.backref('comment'))
     update_time = db.Column(db.String(30))
     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
-    movie = db.relationship('Movie', backref=db.backref('movie'))
+    movie = db.relationship('Movie', backref=db.backref('comment'))
 
 
 class HomeCover(db.Model):

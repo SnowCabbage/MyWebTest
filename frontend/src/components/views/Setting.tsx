@@ -1,6 +1,5 @@
 import { Button, Card, ConfigProvider, Form, Input, message} from "antd";
 import React, {useContext, useState} from "react";
-import axios from "axios";
 import GetUrl from "../Context/UrlSource";
 import {useNavigate} from "react-router-dom";
 import cookie from 'react-cookies';
@@ -125,32 +124,23 @@ export default function Setting() {
                             {required: true, message: '请输入新账号'},
                             {max: 16, message: '账号名称过长'},
                             {min: 4, message: '账号名称过短'},
-                            { validator:  (rule, val, callback) => {
+                            { validator: async (rule, val, callback) => {
                                     let pattern = new RegExp(/^[\u4E00-\u9FA5A-Za-z0-9_]{4,20}$/);
                                     if (!pattern.test(val) && val){
                                         return callback('请输入正确账号,仅能由中文、英文、数字或下划线组成');
                                     }
 
-                                    let sendData = {'username': val}
-                                    requests.post(GetUrl("username_check"),sendData, {
+                                    let sendData = {'username': val, 'old_user': currentUser.user}
+                                    const response = await requests.post(GetUrl("username_check"),sendData, {
                                         headers: {
                                             "Content-type": "application/json",
                                         }
                                     })
-                                        .then(response=>{
-                                            if (response.data['code'] === 'CHECK'){
-                                                form.setFields([{name: 'new_username', errors: ['已存在该用户名']}])
-                                                //假如我用这种的话会显示是错误的，但是页面上还是可以提交表单数据
 
-                                                // console.log('1111')
-                                                return callback('已存在该用户名')
-                                                //如果使用这种的话页面上根本没有显示，但是上面的正则匹配那里是可以显示的，同时也可以阻塞表单提交
-                                            }
-                                        })
-                                        .catch(e=>{
-                                            console.log('Error:', e)
-                                        })
-
+                                    if (response.data['code'] === 'CHECK'){
+                                        throw new Error('已存在该用户名')
+                                        // console.log('1111')
+                                    }
                                     callback();
                                 },
                             },
@@ -167,32 +157,26 @@ export default function Setting() {
                         rules={[
                             {required: true, message: '请输入新密码'},
                             {min: 6, message: '密码过短'},
-                            { validator:  (rule, val, callback) => {
+                            { validator: async (rule, val, callback) => {
                                     let pattern = new RegExp(/^[\u4E00-\u9FA5A-Za-z0-9_]{4,20}$/);
                                     if (!pattern.test(val) && val){
                                         return callback('密码仅能由中文、英文、数字或下划线组成');
                                     }
 
                                     let sendData = {
-                                        'username': form.getFieldValue('new_username'),
-                                        'password': val
+                                        'password': val,
+                                        'old_user': currentUser.user
                                     }
-                                    requests.post(GetUrl("username_check"),sendData, {
+                                    const response = await requests.post(GetUrl("username_check"),sendData, {
                                         headers: {
                                             "Content-type": "application/json",
                                         }
                                     })
-                                        .then(response=>{
-                                            if (response.data['code'] === 'CHECK'){
-                                                //TODO:try callback?
-                                                form.setFields([{name: 'new_password', errors: ['不能使用重复的密码']}])
-                                            }else {
-                                                callback()
-                                            }
-                                        })
-                                        .catch(e=>{
-                                            console.log('Error:', e)
-                                        })
+                                    if (response.data['code'] === 'CHECK'){
+                                        throw new Error('不能使用重复的密码')
+                                    }else {
+                                        callback()
+                                    }
 
                                     callback();
                                 },

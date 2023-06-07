@@ -1,19 +1,31 @@
 import axios from 'axios';
-import handleTokenExpired from "./handleTokenExpired";
-
+import {handleTokenExpired, freshToken} from "./handleTokenExpired";
+import cookie from 'react-cookies';
 
 //创建一个axios实例
 const requests = axios.create({
     timeout: 5 * 1000, //请求超时时间（5秒后还未接收到数据，就需要再次发送请求）
     retry: 1, //设置全局重试请求次数（最多重试几次请求）
     retryDelay: 500, //设置全局请求间隔
+    headers: {
+        "Content-type": "application/json",
+        "Authorization": "Bearer " + cookie.load("access_token"),
+    },
 });
 
 
 //响应拦截器
 requests.interceptors.response.use((res) => {
+    if (res.data.code === 'CHECK') return res
+    if (res.data.code === 'FRESH'){
+        const config = res.config
+        freshToken(res.data['access_token'])
+        config.headers['Authorization'] = "Bearer " + res.data['access_token']
+        return requests(config)
+    }
     if (res.data.code !== 'OK')
         return Promise.reject({type: "error", msg: res.data.message})
+
     return res;
 }, (error) => {
     //console.log(error);

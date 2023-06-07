@@ -146,9 +146,11 @@ export default function MainContent() {
                 } />
                 <Route path="/system" element={
                     <>
-                    <RequireAuth>
-                        <SystemConfig/>
-                    </RequireAuth>
+                        <Header/>
+                            <RequireAuth>
+                            <SystemConfig/>
+                            </RequireAuth>
+                        <Footer/>
                     </>
                 } />
                 <Route path="/goods" element={

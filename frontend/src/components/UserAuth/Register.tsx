@@ -7,6 +7,7 @@ import axios from "axios";
 import {ContentWidthContext} from "../Context/ElementContext";
 import {mainThemeColor} from "../Context/DefaultInfo";
 import BackIcon from "../Units/BackIcon";
+import requests from "../handler/handleRequest";
 
 export default function Register(){
     const [messageApi, contextHolder] = message.useMessage();
@@ -119,35 +120,25 @@ export default function Register(){
                                 {required: true, message: '请输入账号'},
                                 {max: 16, message: '账号名称过长'},
                                 {min: 4, message: '账号名称过短'},
-                                { validator:  (rule, val, callback) => {
+                                { validator:  async (rule, val, callback) => {
                                         let pattern = new RegExp(/^[\u4E00-\u9FA5A-Za-z0-9_]{4,20}$/);
                                         if (!pattern.test(val) && val){
                                             return callback('请输入正确账号,仅能由中文、英文、数字或下划线组成');
                                         }
 
                                         let sendData = {'username': val}
-                                        axios.post(GetUrl("username_check"),sendData, {
+                                        const response = await requests.post(GetUrl("username_check"),sendData, {
                                             headers: {
                                                 "Content-type": "application/json",
                                             },
                                             timeout: 6000
                                         })
-                                            .then(response=>{
-                                                if (response.data['code'] === 'Error'){
-                                                    form.setFields([{name: 'username', errors: ['已存在该用户名']}])
-                                                }else {
-                                                    setIsAble(false)
-                                                    callback()
-                                                }
-                                            })
-                                            .catch(e=>{
-                                                console.log('Error:', e)
-                                                messageApi.open({
-                                                    type: 'error',
-                                                    content: '连接超时',
-                                                });
-                                            })
-
+                                        if (response.data['code'] === 'CHECK'){
+                                            throw new Error('已存在该用户名')
+                                        }else {
+                                            setIsAble(false)
+                                            callback()
+                                        }
                                         callback();
                                     },
                                 },

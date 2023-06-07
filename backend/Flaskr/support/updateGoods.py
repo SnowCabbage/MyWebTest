@@ -1,7 +1,7 @@
 import json
 
 from Flaskr import db
-from Flaskr.models import Goods
+from Flaskr.tables.models import Goods
 
 
 def update_goods(path):

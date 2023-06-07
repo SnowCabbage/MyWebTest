@@ -31,7 +31,6 @@ export default function Profile() {
         <>
             <div>
                 <h3>
-                    111
                     用户名：{userProfile['username']}
                 </h3>
             </div>

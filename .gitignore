@@ -4,4 +4,12 @@ node_modules
 *.db
 migrations
 **/images/*
-!**/images/1.jpg
+!**/images/default_1.jpg
+!**/images/default_2.jpg
+!**/images/default_3.jpg
+!**/images/default_4.jpg
+!**/images/default_5.jpg
+!**/images/default_6.jpg
+*.log
+*.json
+debug.py

@@ -5,7 +5,7 @@ from flask_restful import Resource
 from Flaskr import api, db, limiter
 from Flaskr.decorators.authUnit import user_agent_required
 from Flaskr.decorators.loggerUnit import print_logger
-from Flaskr.models import User, Userprofile
+from Flaskr.tables.models import User, Userprofile
 from Flaskr.support.fileSave import file_save
 from Flaskr.support.userInfoCheck import user_info_check
 
@@ -35,6 +35,7 @@ class UserListAPI(Resource):
             # print(user.username, user.password_hash)
         data['users']['num'] = num
         data['code'] = 'OK'
+
         # data['user'] = user.username
         return data
 
@@ -62,7 +63,7 @@ class UserListAPI(Resource):
             return response_object, 400
 
         check_response = user_info_check({'username': username})
-        if check_response['code'] == 'Error':
+        if check_response['code'] == 'CHECK':
             return {
                 'code': 'Error',
                 'message': 'Account exist!'
@@ -141,7 +142,7 @@ class UserApi(Resource):
             'username': new_username,
             'password': new_password,
         })
-        print(check_res)
+        # print(check_res)
         if check_res['code'] == 'CHECK':
             return {
                 'code': 'Error',
@@ -177,8 +178,8 @@ class UserAvatarApi(Resource):
         file = request.files
         response_data = request.form
         # debug
-        print(file)
-        print(response_data)
+        # print(file)
+        # print(response_data)
         try:
             user = response_data.get('user')
         except AttributeError:
@@ -194,7 +195,7 @@ class UserAvatarApi(Resource):
                 'message': 'User does not exist'
             }
         response = file_save(file)
-        print(response)
+        # print(response)
 
         if response['code'] == 'Error':
             return {

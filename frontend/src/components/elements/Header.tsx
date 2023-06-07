@@ -172,12 +172,13 @@ export default function Header() {
 
                 <div style={{
                     display: 'inline-block',
-                    top: 15,
+                    top: 10,
                     position: 'absolute',
                 }}>
-                    <Text italic strong style={{
-                        fontSize: 30,
-                        color: '#db5a6b'
+                    <Text style={{
+                        fontFamily: 'Tomatoes',
+                        fontSize: 36,
+                        color: '#525abe'
                     }}>
                         {currentUser.user===null ? "" :currentUser.user}
                     </Text>
@@ -189,7 +190,7 @@ export default function Header() {
 
                 <Menu  style={{
                     display:'block',
-                    background:'#f6f6fa',
+                    background: 'transparent',
                     textAlign:'center',
                     height: 50
                 }}

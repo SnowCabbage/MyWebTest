@@ -1,9 +1,12 @@
+from datetime import datetime, timezone, timedelta
+
 from flask import Blueprint, request
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jti, decode_token
 from flask_restful import Resource
 
-from Flaskr import api, limiter
-from Flaskr.models import User
+from Flaskr import api, limiter, db
+from Flaskr.tables.authModels import TokenBlocklist, TokenManageList
+from Flaskr.tables.models import User
 from Flaskr.support.defaultSetting import get_real_ip
 from Flaskr.support.updateAddress import update_address
 
@@ -30,8 +33,25 @@ class AuthAPI(Resource):
             return {"code": "Error", "message": "Invalid account"}, 200
 
         addr = update_address(user, request_addr)
+        access_token = create_access_token(username, additional_claims={"role": user.role})
+        token_info = TokenManageList.query.filter_by(user=user).first()
 
-        access_token = create_access_token(username, additional_claims={"role": user.role, "user": user.username})
+        if token_info is None:
+            db.session.add(TokenManageList(
+                current_token=get_jti(access_token),
+                user=user,
+                fresh_token=datetime.now(timezone.utc) + timedelta(days=1)
+            ))
+            db.session.commit()
+        else:
+            jti = TokenManageList.query.filter_by(user=user).first().current_token
+            db.session.add(TokenBlocklist(
+                jti=jti,
+                created_at=datetime.now(timezone.utc)
+            ))
+            token_info.current_token = get_jti(access_token)
+            db.session.commit()
+
         return {
             "code": "OK",
             "access_token": access_token,

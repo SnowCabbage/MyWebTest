@@ -6,7 +6,7 @@ from flask_restful import Resource
 from Flaskr import api, limiter
 from Flaskr.decorators.authUnit import admin_required
 from Flaskr.decorators.loggerUnit import print_logger
-from Flaskr.models import Goods
+from Flaskr.tables.models import Goods
 from Flaskr.support.fileSave import file_save
 from Flaskr.support.updateGoods import update_goods
 

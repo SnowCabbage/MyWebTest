@@ -5,7 +5,7 @@ from flask_restful import Resource
 from Flaskr import api, db, limiter
 from Flaskr.decorators.authUnit import admin_required
 from Flaskr.decorators.loggerUnit import print_logger
-from Flaskr.models import Movie, Comment, User
+from Flaskr.tables.models import Movie, Comment, User
 
 movies = Blueprint('movies', __name__)
 
