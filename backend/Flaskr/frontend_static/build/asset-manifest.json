@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/frontend_static/build/static/css/main.56fcdcae.css",
-    "main.js": "/frontend_static/build/static/js/main.976447c2.js",
+    "main.css": "/frontend_static/build/static/css/main.a9f6429b.css",
+    "main.js": "/frontend_static/build/static/js/main.54aaaddb.js",
     "static/js/496.4ad64f5c.chunk.js": "/frontend_static/build/static/js/496.4ad64f5c.chunk.js",
     "static/media/KaTeX_AMS-Regular.ttf": "/frontend_static/build/static/media/KaTeX_AMS-Regular.853be92419a6c3766b9a.ttf",
     "static/media/KaTeX_Main-Regular.ttf": "/frontend_static/build/static/media/KaTeX_Main-Regular.9eba1d77abcf2aa6e94e.ttf",
@@ -64,10 +64,10 @@
     "static/media/KaTeX_Size3-Regular.woff": "/frontend_static/build/static/media/KaTeX_Size3-Regular.7947224e8a9914fa332b.woff",
     "static/media/KaTeX_Size3-Regular.woff2": "/frontend_static/build/static/media/KaTeX_Size3-Regular.e1951519f6f0596f7356.woff2",
     "index.html": "/frontend_static/build/index.html",
-    "main.56fcdcae.css.map": "/frontend_static/build/static/css/main.56fcdcae.css.map"
+    "main.a9f6429b.css.map": "/frontend_static/build/static/css/main.a9f6429b.css.map"
   },
   "entrypoints": [
-    "static/css/main.56fcdcae.css",
-    "static/js/main.976447c2.js"
+    "static/css/main.a9f6429b.css",
+    "static/js/main.54aaaddb.js"
   ]
 }

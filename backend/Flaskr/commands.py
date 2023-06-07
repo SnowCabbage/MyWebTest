@@ -31,13 +31,13 @@ def init(drop):
               url='/movies/1',
               content='This is a test,and this part is a content',
               create_by=user,
-              cover_id=2
+              cover_id='default_4'
               )
     db.session.add(m)
 
     for i in range(1, 4):
         cover = HomeCover(
-            cover_id=i,
+            cover_id='default_' + str(i),
             cover_name='1'
         )
         db.session.add(cover)
