@@ -4,6 +4,8 @@ import {Avatar} from "antd";
 import type { MenuProps } from 'antd';
 import {AuthContext, UserContext} from "../Context/AuthContext";
 import {NavLink, useLocation} from "react-router-dom";
+import type { SearchProps } from 'antd/es/input/Search';
+import { Input, Space } from 'antd';
 import { Button, Tooltip, Typography } from 'antd';
 import {
     PoweroffOutlined,
@@ -20,6 +22,8 @@ import OnlineStatistic from "./OnlineStatistic";
 
 
 const { Text} = Typography;
+const { Search } = Input;
+
 
 const authItems: MenuProps['items'] = [
     {
@@ -34,7 +38,7 @@ const authItems: MenuProps['items'] = [
     {
         label: (
             <NavLink to="/movies">
-                好康的
+                浏览
             </NavLink>
         ),
         key: 'movies',
@@ -156,6 +160,10 @@ export default function Header() {
         setCurrent(e.key)
     }
 
+    const onSearch: SearchProps['onSearch'] = (e) => {
+        console.log(e) //TODO:Search
+    }
+
     return (
         <ConfigProvider
             theme={{
@@ -186,6 +194,22 @@ export default function Header() {
                 <>
                     <OnlineStatistic/>
                 </>
+
+                <div className={"SearchBox"} style={{
+                    width: 500,
+                    position: 'relative'
+                }}>
+                    <Search
+                        placeholder="input search text"
+                        onSearch={onSearch}
+                        enterButton
+                        allowClear
+                        style={{
+                            width: 500
+                        }}
+                    />
+                </div>
+
 
 
                 <Menu  style={{

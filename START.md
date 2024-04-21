@@ -1,0 +1,2 @@
+- 初始化环境：
+  - **$env:FLASK_APP="Flaskr"**：设置app工作目录
